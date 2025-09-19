@@ -37,59 +37,80 @@
         Viel Spaß beim Lernen!<br>
     </p>
 
-    <form action="#" method="post">
+    <!-- after example at https://getbootstrap.com/docs/5.3/forms/validation/ -->
+    <form action="#" method="post" class="needs-validation" novalidate>
 
-        <p>Gender:</p>
-        <input class="form-check-input" type="radio" name="gender" id="weiblich" value="weiblich">
-        <label class="form-check-label" for="weiblich">
-            weiblich
-        </label><br>
-        <input class="form-check-input" type="radio" name="gender" id="männlich" value="männlich">
-        <label class="form-check-label" for="männlich">
-            männlich
-        </label><br>
-        <input class="form-check-input" type="radio" name="gender" id="divers" value=inputDivers>
-        <label class="form-check-label" for="divers">
-            <input type="text" aria-label="Gender divers" id="inputDivers" maxlength="30">
-        </label>
-        <br><br>
 
-        <label for="firstName">Vorname:</label>
-        <input type="text" name="firstName" id="firstName">
-        <br><br>
 
-        <label for="lastName">Nachname:</label>
-        <input type="text" name="lastName" id="lastName">
-        <br><br>
+        <div>Gender:</div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="weiblich" value="weiblich">
+            <label class="form-check-label" for="weiblich">
+                weiblich
+            </label>
+        </div>
 
-        <label for="eMail">E-Mail:*</label>
-        <input type="email" name="eMail" id="eMail" required>
-        <br><br>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="männlich" value="männlich">
+            <label class="form-check-label" for="männlich">
+                männlich
+            </label>
+        </div>
 
-        <span>Land: </span>
-        <select aria-label="Land auswählen">
-            <option selected>Land auswählen</option>
-            <option value="1">Österreich</option>
-            <option value="2">Deutschland</option>
-            <option value="3">Schweiz</option>
-        </select>
-        <br><br>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="radio" name="gender" id="divers" value=inputDivers checked>
+            <label class="form-check-label" for="divers">
+                <input type="text" aria-label="Gender divers" id="inputDivers" maxlength="30" class="form-control"  value="" placeholder="field can be left empty">
+            </label>
+        </div>
 
-        <label for="userName">UserName:*</label>
-        <input type="text" name="userName" id="userName" required>
-        <br><br>
+        <!-- floating labels!? https://getbootstrap.com/docs/5.3/forms/floating-labels/ -->
+        <div class="form-floating mb-3">
+            <input type="text" name="firstName" id="firstName" class="form-control" required placeholder="Vorname">
+            <label for="firstName">Vorname</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" name="lastName" id="lastName" class="form-control" required placeholder="Nachname">
+            <label for="lastName">Nachname</label>
+        </div>
+
+        <div  class="form-floating mb-3">
+            <input type="email" name="eMail" id="eMail"  class="form-control" required placeholder="emailadresse@beispiel.com   ">
+            <label for="eMail">E-Mail</label>
+        </div>
+
+        <!-- after example @ https://getbootstrap.com/docs/5.3/forms/form-control/#datalists -->
+        <!-- not quite working with col-form-label? also slightly undersupported -->
+        <div>
+            <label for="landDataList" class="form-label">Land</label>
+            <input class="form-control" list="datalistOptions" id="landDataList" placeholder="Type to search..." required>
+            <datalist id="datalistOptions">
+                <option value="AT">Österreich</option>
+                <option value="DE">Deutschland</option>
+                <option value="CH">Schweiz</option>
+            </datalist>
+        </div>
+        <!-- but otoh its not clear yet if selects + client validation work well together. TODO -->
+        <!-- https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#built-in_form_validation_examples -->
+
+
+        <div>
+            <label for="userName">UserName:</label>
+            <input type="text" name="userName" id="userName" required class="form-control">
+        </div>
 
         <label for="password">Passwort:*</label>
-        <input type="text" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required>
+        <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control">
         <p>(mind. 12 Zeichen, muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.)</p>
 
         <label for="passwordRepeat">Passwort wiederholen:*</label>
-        <input type="text" name="passwordRepeat" id="passwordRepeat" pattern=password required>
+        <input type="password" name="passwordRepeat" id="passwordRepeat" pattern=password required class="form-control">
         <br><br>
 
 
         <span>Foto hochladen (optional)</span>
-        <input type="file">
+        <input type="file" class="form-control">
         <br><br>
 
         <input type="submit" value="Registrieren">
@@ -97,5 +118,39 @@
     </form>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        // initialization code here
+        console.log("test test test hello world");
+        $('#insert-navbar-here').load('navbar.html');
+
+        // example code from https://getbootstrap.com/docs/5.3/forms/validation/
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+    });
+</script>
+
 </body>
 </html>
