@@ -3,35 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>StuddyBuddy</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
 <div class="mx-auto col-md-6 col-sm-12">
     <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
-
-    <div class="container">
-        <div class="row">Neue Lernkartei erstellen</div>
-        <br><br>
-        <div>
-            <label for="box-title">Titel:</label>
-            <input type="text" name="box-title" id="box-title">
-            <br><br>
-
-            <label for="box-description">Beschreibung</label>
-            <textarea class="text" placeholder="Bitte beschreibe was du mit dieser Kartei lernen kannst. " id="box-description"></textarea>
-        </div>
-
-
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" value="" id="is-public-box" switch>
-            <label class="form-check-label" for="is-public-box">
-                Ich möchte diese Datei mit anderen Teilen
-            </label>
-        </div>
-
-        <a href="012-new-card.html" class="btn btn-primary">Kartei erstellen</a>
-    </div>
+    <h1>Hello, world!</h1>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -41,7 +19,7 @@
     $(document).ready(function() {
         // initialization code here
         console.log("test test test hello world");
-        $('#insert-navbar-here').load('000-navbar.html');
+        $('#insert-navbar-here').load('navbar.html');
     });
 </script>
 
