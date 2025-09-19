@@ -36,57 +36,65 @@
         StudyBuddy, wo Lernen zur guilty pleasure wird.
         Viel Spaß beim Lernen!<br>
     </p>
-    <p>Gender:</p>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="radioDefault" id="weiblich">
+
+    <form action="#" method="post">
+
+        <p>Gender:</p>
+        <input class="form-check-input" type="radio" name="gender" id="weiblich" value="weiblich">
         <label class="form-check-label" for="weiblich">
             weiblich
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="radioDefault" id="männlich">
+        </label><br>
+        <input class="form-check-input" type="radio" name="gender" id="männlich" value="männlich">
         <label class="form-check-label" for="männlich">
             männlich
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="radioDefault" id="divers">
+        </label><br>
+        <input class="form-check-input" type="radio" name="gender" id="divers" value=inputDivers>
         <label class="form-check-label" for="divers">
-            <input class="form-control" type="text" aria-label="Gender divers">
+            <input type="text" aria-label="Gender divers" id="inputDivers" maxlength="30">
         </label>
-    </div>
+        <br><br>
 
-    <p>Vorname:</p>
-    <input class="form-control" type="text" aria-label="Vorname">
-    <p>Nachname:</p>
-    <input class="form-control" type="text" aria-label="Nachname">
-    <p>E-Mail:</p>
-    <input class="form-control" type="text" aria-label="E-Mail">
-    <p>Land:</p>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Land
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Österreich</a></li>
-            <li><a class="dropdown-item" href="#">Deutschland</a></li>
-            <li><a class="dropdown-item" href="#">Schweiz</a></li>
-        </ul>
-    </div>
-    <p>Username:</p>
-    <input class="form-control" type="text" aria-label="Username">
-    <p>Passwort:</p>
-    <input class="form-control" type="text" aria-label="Passwort">
-    <p>Passwort wiederholen:</p>
-    <input class="form-control" type="text" aria-label="Passwort wiederholen">
+        <label for="firstName">Vorname:</label>
+        <input type="text" name="firstName" id="firstName">
+        <br><br>
 
-    <button type="button" class="btn btn-info">Bild hochladen</button>
+        <label for="lastName">Nachname:</label>
+        <input type="text" name="lastName" id="lastName">
+        <br><br>
 
-    <button type="button" class="btn btn-primary">Registrieren</button>
+        <label for="eMail">E-Mail:*</label>
+        <input type="email" name="eMail" id="eMail" required>
+        <br><br>
+
+        <span>Land: </span>
+        <select aria-label="Land auswählen">
+            <option selected>Land auswählen</option>
+            <option value="1">Österreich</option>
+            <option value="2">Deutschland</option>
+            <option value="3">Schweiz</option>
+        </select>
+        <br><br>
+
+        <label for="userName">UserName:*</label>
+        <input type="text" name="userName" id="userName" required>
+        <br><br>
+
+        <label for="password">Passwort:*</label>
+        <input type="text" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required>
+        <p>(mind. 12 Zeichen, muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.)</p>
+
+        <label for="passwordRepeat">Passwort wiederholen:*</label>
+        <input type="text" name="passwordRepeat" id="passwordRepeat" pattern=password required>
+        <br><br>
 
 
+        <span>Foto hochladen (optional)</span>
+        <input type="file">
+        <br><br>
 
+        <input type="submit" value="Registrieren">
 
+    </form>
 
 </div>
 </body>
