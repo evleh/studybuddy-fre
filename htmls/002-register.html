@@ -78,13 +78,13 @@
 
 
         <div class="form-floating mb-3">
-            <input type="text" name="name" id="name" required class="form-control">
+            <input type="text" name="name" id="name" required class="form-control" placeholder="UserName">
             <label for="name">UserName</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control">
-            <label for="password">Passwort*</label>
+            <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
+            <label for="password">Passwort</label>
             <button id="showpw" type="button" class="btn btn-success" onclick="showpassword('password')">Passwort anzeigen</button>
             <button id="hidepw" type="button" class="btn btn-warning" onclick="showpassword('password')">Passwort verstecken</button>
         </div>

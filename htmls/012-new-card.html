@@ -10,7 +10,45 @@
 <body>
 <div class="mx-auto col-md-6 col-sm-12">
     <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
-    <h1>Hello, world!</h1>
+
+    <div class="container">
+        <div class="row mt-3"><div class="col-12"><h1>Neue Frage</h1></div></div>
+        <div class="row"><div class="col-12"><h3>für Lernkartei: Bezirke Wiens</h3></div></div>
+        <div class="row mb-3"><div class="col-12">erstellt von Schwupsdiwups123</div></div>
+        <div class="row"><div class="col-12">
+            <form>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Frage" id="question" name="question" style="height: 6rem"></textarea>
+                    <label for="question">Beschreibung</label>
+                </div>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text secondary" for="optionalnametbd">Bild (optional)</label>
+                    <input type="file" class="form-control" id="optionalnametbd"  aria-label="Upload">
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Antwort" id="answer" name="answer" style="height: 12rem"></textarea>
+                    <label for="answer">Antwort</label>
+                </div>
+
+
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="is-public-box" role="switch">
+                    <label class="form-check-label" for="is-public-box">
+                        Ich möchte diese Kartei mit anderen teilen.
+                    </label>
+                </div>
+
+                <a href="012-new-card.html" class="btn btn-primary">Kartei erstellen</a>
+            </form>
+        </div></div>
+
+        <div class="row mt-3"><div class="col-12">Im nächsten Schritt kannst du Fragen hinzufügen.</div></div>
+
+
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
