@@ -8,26 +8,8 @@
 <body>
 <div class="mx-auto col-md-6 col-sm-12">
 
-    <nav class="navbar navbar-expand-lg bg-info">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">StudyBuddy</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Öffentliche Karteien</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login/Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here">
+
     </nav>
 
     <h1>Anmeldung: </h1>
@@ -85,7 +67,7 @@
         <div>
             <label for="landDataList" class="form-label">Land</label>
             <input class="form-control" list="datalistOptions" id="landDataList" placeholder="Type to search..." required>
-            <datalist id="datalistOptions">
+            <datalist id="datalistOptions" class="insert-country-list-options-here-plz">
                 <option value="AT">Österreich</option>
                 <option value="DE">Deutschland</option>
                 <option value="CH">Schweiz</option>
@@ -126,7 +108,8 @@
     $(document).ready(function() {
         // initialization code here
         console.log("test test test hello world");
-        $('#insert-navbar-here').load('navbar.html');
+        $('#insert-navbar-here').load('000-navbar.html');
+        $('.insert-country-list-options-here-plz').load('elements/countrylist1.html');
 
         // example code from https://getbootstrap.com/docs/5.3/forms/validation/
         // Example starter JavaScript for disabling form submissions if there are invalid fields
