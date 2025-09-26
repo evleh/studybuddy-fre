@@ -48,25 +48,25 @@
 
         <!-- floating labels!? https://getbootstrap.com/docs/5.3/forms/floating-labels/ -->
         <div class="form-floating mb-3">
-            <input type="text" name="firstName" id="firstName" class="form-control" required placeholder="Vorname">
-            <label for="firstName">Vorname</label>
+            <input type="text" name="firstname" id="firstname" class="form-control" required placeholder="Vorname">
+            <label for="firstname">Vorname</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" name="lastName" id="lastName" class="form-control" required placeholder="Nachname">
-            <label for="lastName">Nachname</label>
+            <input type="text" name="lastname" id="lastname" class="form-control" required placeholder="Nachname">
+            <label for="lastname">Nachname</label>
         </div>
 
         <div  class="form-floating mb-3">
-            <input type="email" name="eMail" id="eMail"  class="form-control" required placeholder="emailadresse@beispiel.com   ">
-            <label for="eMail">E-Mail</label>
+            <input type="email" name="email" id="email"  class="form-control" required placeholder="emailadresse@beispiel.com   ">
+            <label for="email">E-Mail</label>
         </div>
 
         <!-- after example @ https://getbootstrap.com/docs/5.3/forms/form-control/#datalists -->
         <!-- not quite working with col-form-label? also slightly undersupported -->
         <div>
             <label for="landDataList" class="form-label">Land</label>
-            <input class="form-control" list="datalistOptions" id="landDataList" placeholder="Type to search..." required>
+            <input name="country" class="form-control" list="datalistOptions" id="landDataList" placeholder="Type to search..." required>
             <datalist id="datalistOptions" class="insert-country-list-options-here-plz">
                 <option value="AT">Österreich</option>
                 <option value="DE">Deutschland</option>
@@ -78,13 +78,13 @@
 
 
         <div>
-            <label for="userName">UserName:</label>
-            <input type="text" name="userName" id="userName" required class="form-control">
+            <label for="name">UserName:</label>
+            <input type="text" name="name" id="name" required class="form-control">
         </div>
 
         <label for="password">Passwort:*</label>
         <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control">
-        <button id="showpw" type="button" class="btn btn-success" onclick="showpassword(password)">Passwort anzeigen</button>
+        <button id="showpw" type="button" class="btn btn-success" onclick="showpassword('password')">Passwort anzeigen</button>
         <button id="hidepw" type="button" class="btn btn-warning">Passwort verstecken</button>
         <script>
             function showpassword (inputid) {
