@@ -3,41 +3,26 @@
     but the customElements.define stuff still counts as "has happened"
  */
 
-const html_template_string = `
-<style>
-.beispiel-komponente { font-style: italic}
-</style>
-<template><div class="beispiel-kxxxomponente">Hello World</div></template>
-`
-
 class BeispielKomponente extends HTMLElement {
-    static observedAttributes = ["color", "size"]; // from bsp at https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
     constructor() {
-        // Always call super first in constructor
         super();
-        this.myShadowTemplate = this.attachShadow({ mode: "open" })
-        this.myShadowTemplate.innerHTML = html_template_string
+        this.attachShadow({ mode: 'open' });
     }
-
     connectedCallback() {
-        console.log("Custom element added to page.");
-        this.appendChild(cloneNode(this.myShadow,true))
-    }
+        // there a more lifecycle things to explore here.
+        // but one way to use it is to just put stuff into the "shadowRoot"
+        // this.shadowRoot.innerHTML = '<img src="../img/placeholderimgs/eigenekarteien.jpg" class="img-fluid" />';
 
-    disconnectedCallback() {
-        console.log("Custom element removed from page.");
-    }
+        // note: the shadow dom needs the same link-ref to bootstrap as the main html to "feel" the css
+        // it is nevertheless only loaded once (in my tests)
+        this.shadowRoot.innerHTML = `
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    connectedMoveCallback() {
-        console.log("Custom element moved with moveBefore()");
-    }
-
-    adoptedCallback() {
-        console.log("Custom element moved to new page.");
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute ${name} has changed.`);
+            <figure class="figure">
+                <img src="../img/placeholderimgs/eigenekarteien.jpg" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">A caption for the above image.</figcaption>
+            </figure>`
     }
 }
+
 customElements.define("beispiel-komponente", BeispielKomponente);
