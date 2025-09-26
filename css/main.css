@@ -4,4 +4,10 @@ body {
 // debug with: background: #0f0 !important;
 }
 
-#hidepw {display: none}
+#showpw, #hidepw {margin-top: 5px;}
+#password[type=password] ~#hidepw {
+    display: none;
+}
+#password[type=text] ~#showpw {
+    display: none;
+}
