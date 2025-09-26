@@ -1,5 +1,7 @@
 /* hello world */
 
 body {
-    // debug with: background: #0f0 !important;
+// debug with: background: #0f0 !important;
 }
+
+#hidepw {display: none}
