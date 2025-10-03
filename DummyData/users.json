@@ -1,0 +1,55 @@
+[
+  {
+  "gender":  "weiblich",
+  "email":  "mini@example.com",
+  "name":  "mini",
+  "firstname": "Jasmin",
+  "lastname": "Jason",
+  "country":  "AT"
+  },
+
+  {
+    "gender":  "männlich",
+    "email":  "maxi@example.com",
+    "name":  "Maxi",
+    "firstname": "Maximilian",
+    "lastname": "Malve",
+    "country":  "DE"
+  },
+
+  {
+    "gender":  "non binary",
+    "email":  "justme@example.com",
+    "name":  "justme",
+    "firstname": "Alex",
+    "lastname": "Allison",
+    "country":  "CH"
+  },
+
+  {
+    "gender":  "weiblich",
+    "email":  "schwupsdiwups@example.com",
+    "name":  "schwupsdiwups",
+    "firstname": "Finja",
+    "lastname": "Funkelstern",
+    "country":  "SE"
+  },
+
+  {
+    "gender":  "männlich",
+    "email":  "freddy@example.com",
+    "name":  "freddy",
+    "firstname": "Frederik",
+    "lastname": "Feierabend",
+    "country":  "DE"
+  },
+
+  {
+    "gender":  "fluid",
+    "email":  "kim@example.com",
+    "name":  "kimDragon",
+    "firstname": "Kim",
+    "lastname": "Kiss",
+    "country":  "LU"
+  }
+]
