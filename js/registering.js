@@ -1,4 +1,5 @@
 import constants from './constants.js';
+import getTokenFromBackendEndpoint from './auth.js'
 
 export default function registerForm2registrationJSONSend() {
     /***
@@ -28,12 +29,8 @@ export default function registerForm2registrationJSONSend() {
 
         Note: this works by creating local scope variables named like the fields noted int the "let" statement.
      ***/
-    //(()=>
-    {
-        let {name, password, email, gender, firstname, lastname, country} = data_as_object;
-        data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
-    }
-    //)();
+    let {name, password, email, gender, firstname, lastname, country} = data_as_object;
+    data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
 
     fetch(constants.URL_USER, {
         method: 'POST',
@@ -45,8 +42,10 @@ export default function registerForm2registrationJSONSend() {
     })
         .then(res => res.json())
         .then((json) => {
-            console.log(res)
+            console.log(json)
             window.sb.registration_result = json
+            // if registering worked -> try logging in = getting a token
+            getTokenFromBackendEndpoint(name,password)
         })
     .catch((err) => { console.log(err) })
 }
