@@ -17,6 +17,11 @@ export default function registerForm2registrationJSONSend() {
     console.log("sending the data is TODO still.")
     console.log(constants.URL_USER)
 
+    // let data_to_send_to_register_endpoint = data_as_json; // later the default
+    let data_to_send_to_register_endpoint = { // backend dev currently only accepts if only username and password
+        name: data_as_object.name,
+        password: data_as_object.password,
+    }
 
     fetch(constants.URL_USER, {
         method: 'POST',
@@ -24,8 +29,14 @@ export default function registerForm2registrationJSONSend() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: data_as_json,
-    }).then(() => {})
+        body: JSON.stringify(data_to_send_to_register_endpoint),
+    })
+        .then(res => res.json())
+        .then((json) => {
+            console.log(res)
+            window.sb.registration_result = json
+        })
+    .catch((err) => { console.log(err) })
 }
 
 if (!window.sb) window.sb = {}
