@@ -11,3 +11,11 @@ body {
 #password[type=text] ~#showpw {
     display: none;
 }
+
+#showpwrep, #hidepwrep {margin-top: 5px;}
+#passwordrep[type=password] ~#hidepwrep {
+    display: none;
+}
+#passwordrep[type=text] ~#showpwrep {
+    display: none;
+}
