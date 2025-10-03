@@ -17,11 +17,23 @@ export default function registerForm2registrationJSONSend() {
     console.log("sending the data is TODO still.")
     console.log(constants.URL_USER)
 
-    // let data_to_send_to_register_endpoint = data_as_json; // later the default
-    let data_to_send_to_register_endpoint = { // backend dev currently only accepts if only username and password
-        name: data_as_object.name,
-        password: data_as_object.password,
+    let data_to_send_to_register_endpoint;
+
+    /***
+        goal of the next part: take some but not all field from the formdata (into the json-to-send object.
+        possibly also 'rename' fields. this is my try for least-code-duplication / annoyity.
+
+        as docs for this syntax are tricky to find, here a link to mdn, keyword = 'destructuring'
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
+
+        Note: this works by creating local scope variables named like the fields noted int the "let" statement.
+     ***/
+    //(()=>
+    {
+        let {name, password, email, gender, firstname, lastname, country} = data_as_object;
+        data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
     }
+    //)();
 
     fetch(constants.URL_USER, {
         method: 'POST',
