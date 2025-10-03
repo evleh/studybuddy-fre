@@ -89,6 +89,13 @@
             <button id="hidepw" type="button" class="btn btn-warning" onclick="showpassword('password')">Passwort verstecken</button>
         </div>
 
+        <div class="form-floating mb-3">
+            <input type="password" name="passwordrep" id="passwordrep" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
+            <label for="passwordrep">Passwort wiederholen:</label>
+            <button id="showpwrep" type="button" class="btn btn-success" onclick="showpassword('passwordrep')">Passwort anzeigen</button>
+            <button id="hidepwrep" type="button" class="btn btn-warning" onclick="showpassword('passwordrep')">Passwort verstecken</button>
+        </div>
+
         <script>
             function showpassword (inputid) {
                 const passwordfield = document.getElementById(inputid);
@@ -100,18 +107,31 @@
         </script>
         <p>(mind. 12 Zeichen, muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.)</p>
 
-        <label for="passwordRepeat">Passwort wiederholen:*</label>
-        <input type="password" name="passwordRepeat" id="passwordRepeat" pattern=password required class="form-control">
-        <br><br>
 
 
-        <span>Foto hochladen (optional)</span>
-        <input type="file" class="form-control">
-        <br><br>
 
-        <input type="submit" value="Registrieren">
+        <div class="input-group mb-3">
+            <label class="input-group-text secondary" for="optionalnametbd">Foto hochladen (optional)</label>
+            <input type="file" class="form-control" id="optionalnametbd"  aria-label="Upload">
+        </div>
+
+
+        <div class="input-group mb-3">
+            <button type="submit" class="btn btn-primary">Registrieren</button>
+
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cheat menu</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" onclick="register_prefill(1)">Prefill with dummy data</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">dummy entry</a></li>
+            </ul>
+        </div>
+
 
     </form>
+    <div class="row" style="height: 6rem;"><div class="span i-cant-get-big-margins-or-something-better-to-work-to-create-whitespace-under-the-form">
+        &nbsp;
+    </div></div>
 
 </div>
 
@@ -121,6 +141,7 @@
 <script type="module" src="../js/default-document-ready-stuff.js"></script>
 <script type="module" src="../js/registering.js"></script>
 <script>
+
     $(document).ready(function() {
         // initialization code here
         console.log("test test test hello world");
@@ -141,6 +162,13 @@
                     if (!form.checkValidity()) {
                         event.preventDefault()
                         event.stopPropagation()
+                    } else {
+                        // stop event or be submitted/posted to the frontend (directly) without delay.
+                        event.preventDefault()
+                        event.stopPropagation()
+
+                        console.log(`form validation passed. further code here.`)
+                        window.sb.register()
                     }
 
                     form.classList.add('was-validated')
@@ -149,6 +177,23 @@
         })()
 
     });
+
+    function register_prefill(set) {
+        console.log('register prefill')
+        if ((set === 1) || true) {
+            let pw = "9AAA-----999aaa"
+            $("#password")[0].value = pw;
+            $("#passwordrep")[0].value = pw;
+            $("#firstname")[0].value = "VornameByCheatMenu"
+            $("#lastname")[0].value = "NachnameByCheatMenu"
+            $("#email")[0].value = "examplecom_reserved_by_rfc_to_not_exist@example.com"
+            console.log($("#datalistOptions option")[0].value)
+            $("#landDataList")[0].value = $("#datalistOptions option")[2].value;
+            $("#name")[0].value = "UsernameWithRandomNumber_4_choosen_by_fair_diceroll"
+
+
+        }
+    }
 </script>
 
 </body>
