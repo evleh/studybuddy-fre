@@ -8,17 +8,8 @@ export default function registerForm2registrationJSONSend(afterSuccessCallback =
      ***/
 
     let registerform = document.getElementById("registerform")
-    // trying formdata api https://developer.mozilla.org/en-US/docs/Web/API/FormData
     let data = new FormData(registerform)
-    console.log(data)
     let data_as_object = Object.fromEntries(data.entries());
-    console.log(data_as_object)
-    let data_as_json = JSON.stringify(data_as_object);
-    console.log(data_as_json)
-    console.log("sending the data is TODO still.")
-    console.log(constants.URL_USER)
-
-    let data_to_send_to_register_endpoint;
 
     /***
         goal of the next part: take some but not all field from the formdata (into the json-to-send object.
@@ -30,8 +21,7 @@ export default function registerForm2registrationJSONSend(afterSuccessCallback =
         Note: this works by creating local scope variables named like the fields noted int the "let" statement.
      ***/
     let {name, password, email, gender, firstname, lastname, country} = data_as_object;
-    data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
-    console.log(password);
+    let data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
 
     fetch(constants.URL_USER, {
         method: 'POST',
@@ -43,13 +33,11 @@ export default function registerForm2registrationJSONSend(afterSuccessCallback =
     })
         .then(res => res.json())
         .then((json) => {
-            console.log(json)
-            window.sb.registration_result = json
-            // backend returns user id in the json of the response to the registration
-            sessionStorage.setItem('currentUserID', json?.id)
-            // if registering worked -> try logging in = getting a token
+
+            // if registering worked -> try getting a token & save it in localstorage => if this worked: callback can redirect
             getTokenFromBackendEndpoint(name,password)
-            afterSuccessCallback()
+                .then(() => afterSuccessCallback())
+
         })
     .catch((err) => { console.log(err) })
 }
