@@ -1,4 +1,5 @@
 import constants from './constants.js';
+import {SBUser} from "./user.js";
 
 export default function getTokenFromBackendEndpoint(username, password) {
 
@@ -14,6 +15,11 @@ export default function getTokenFromBackendEndpoint(username, password) {
         .then((json) => {
             console.log(json)
             window.sb.tokenresult = json
+            sessionStorage.setItem("accessToken", JSON.stringify(json?.accessToken))
+            window.sbuser = new SBUser()
+
+            console.log(window.sbuser)
+
         })
         .catch((err) => { console.log(err) })
 }

@@ -31,6 +31,7 @@ export default function registerForm2registrationJSONSend() {
      ***/
     let {name, password, email, gender, firstname, lastname, country} = data_as_object;
     data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
+    console.log(password);
 
     fetch(constants.URL_USER, {
         method: 'POST',
@@ -44,8 +45,10 @@ export default function registerForm2registrationJSONSend() {
         .then((json) => {
             console.log(json)
             window.sb.registration_result = json
+            // backend returns user id in the json of the response to the registration
+            sessionStorage.setItem('currentUserID', json?.id)
             // if registering worked -> try logging in = getting a token
-            getTokenFromBackendEndpoint(name,password)
+            let token = getTokenFromBackendEndpoint(name,password)
         })
     .catch((err) => { console.log(err) })
 }
