@@ -31,14 +31,12 @@ export class SBUser  {
         })
             .then(res => res.json())
             .then((json) => {
-                console.log(json)
-                this.serverResponse = json;
-                console.log("user data was fetched successfully")
+                this._serverResponse = json;
             })
             .catch((err) => { console.log(err) })
     }
 
-    get username() { return this.serverResponse?.username }
-    get isAdmin() { return this.serverResponse?.admin }
+    get username() { return this._serverResponse?.username }
+    get isAdmin() { return this._serverResponse?.admin }
 
 }

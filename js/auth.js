@@ -42,7 +42,8 @@ export function loginAndRedirectOnSuccessAssumeLoginFormInDom() {
 
     Note: I feel both
       - standalone "frameworks" for Single-Page-Applications **and**
-      - serving the html by server, changing it slightly/situationally (examples: djangoNotRest, PHP, any kind of Node.js thing?)
+      - serving the html by server, changing it slightly/situationally
+        (examples: djangoNotRest, PHP, any kind of Node.js thing?)
         are perfect able deal with this differently, and less complicated, in different ways.
 
     Alas. Our backend[1] **MUST**[2] not serve any HTML, whatsoever.
@@ -52,13 +53,23 @@ export function loginAndRedirectOnSuccessAssumeLoginFormInDom() {
 
  ***/
 
+console.log(`[dev] executing side effect code in auth.js`)
+
 if (!window.sb) window.sb = {}
 window.sb.getToken = getTokenFromBackendEndpoint;
 window.sb.loginAndRedirectOnSuccessAssumeLoginFormInDom = loginAndRedirectOnSuccessAssumeLoginFormInDom;
 
 if (sessionStorage.getItem('accessToken')) {
     // assume accessToken means a user registered and/or logged in.
-    console.log('import side-effect code found accessToken, acting on it')
+    console.log(`[dev] import side-effect code found accessToken, acting on it`)
+
     window.sb.currentUser = new SBUser();
     await window.sb.currentUser.fetchUserData()
+
+    console.log(`[dev] user name according to backend: '${window.sb.currentUser.username}'`)
+
+    if (window.sb.currentUser.isAdmin) console.log(`[dev] user tagged as ADMIN according to backend response`)
+    else console.log(`[dev] user NOT tagged as admin according to backend response`)
+
+
 }
