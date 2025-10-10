@@ -12,7 +12,7 @@ export class SBUser  {
     constructor(id = null) {
         if (id === null) {
             // here self-get by using localstorage?
-            this.id = sessionStorage.getItem('currentUserID')
+            this.id = sessionStorage.getItem('userId')
         } else {
             this.id = id
         }

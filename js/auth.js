@@ -3,7 +3,7 @@ import {SBUser} from "./user.js";
 
 export function getTokenFromBackendEndpoint(username, password) {
 
-    fetch(constants.AUTH_TOKEN_URL, {
+    return fetch(constants.AUTH_TOKEN_URL, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -16,6 +16,7 @@ export function getTokenFromBackendEndpoint(username, password) {
             console.log(json)
             window.sb.tokenresult = json
             sessionStorage.setItem("accessToken", JSON.stringify(json?.accessToken))
+            sessionStorage.setItem("userId", JSON.stringify(json?.userId))
             window.sb.currentUser = new SBUser(json?.userId)
             return window.sb.currentUser.fetchUserData()
 
@@ -30,7 +31,8 @@ export function loginAndRedirectOnSuccessAssumeLoginFormInDom() {
     console.log(loginFormData.get("username"))
     console.log(loginFormData.get("password"))
 
-    getTokenFromBackendEndpoint(loginFormData.get("username"), loginFormData.get('password'));
+    getTokenFromBackendEndpoint(loginFormData.get("username"), loginFormData.get('password'))
+        .then(() => { history.pushState(null, "", "004-home-base.html") });
     // todo: redirect?
 }
 
@@ -40,6 +42,7 @@ window.sb.loginAndRedirectOnSuccessAssumeLoginFormInDom = loginAndRedirectOnSucc
 
 if (sessionStorage.getItem('accessToken')) {
     // assume accessToken means a user registered and/or logged in.
+    console.log('import side-effect code found accessToken, acting on it')
     window.sb.currentUser = new SBUser();
     await window.sb.currentUser.fetchUserData()
 }
