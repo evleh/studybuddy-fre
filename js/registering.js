@@ -1,7 +1,7 @@
 import constants from './constants.js';
-import getTokenFromBackendEndpoint from './auth.js'
+import {getTokenFromBackendEndpoint} from './auth.js'
 
-export default function registerForm2registrationJSONSend() {
+export default function registerForm2registrationJSONSend(afterSuccessCallback = (()=>null)) {
     /***
         Inspired by: https://codetv.dev/blog/get-form-values-as-json
         Documentation for FormData-Api at: https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
@@ -48,7 +48,8 @@ export default function registerForm2registrationJSONSend() {
             // backend returns user id in the json of the response to the registration
             sessionStorage.setItem('currentUserID', json?.id)
             // if registering worked -> try logging in = getting a token
-            let token = getTokenFromBackendEndpoint(name,password)
+            getTokenFromBackendEndpoint(name,password)
+            afterSuccessCallback()
         })
     .catch((err) => { console.log(err) })
 }

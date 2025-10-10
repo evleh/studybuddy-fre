@@ -18,6 +18,7 @@ export class SBUser  {
         }
     }
 
+
     async fetchUserData() {
         return fetch(constants.URL_USER+"/"+this.id, {
             method: 'GET',
@@ -31,8 +32,13 @@ export class SBUser  {
             .then(res => res.json())
             .then((json) => {
                 console.log(json)
+                this.serverResponse = json;
+                console.log("user data was fetched successfully")
             })
             .catch((err) => { console.log(err) })
     }
+
+    get username() { return this.serverResponse?.username }
+    get isAdmin() { return this.serverResponse?.admin }
 
 }
