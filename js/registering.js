@@ -1,7 +1,7 @@
 import constants from './constants.js';
 import {getTokenFromBackendEndpoint} from './auth.js'
 
-export default function registerForm2registrationJSONSend(afterSuccessCallback = (()=>null)) {
+export default function registerForm2registrationJSONSend() {
     /***
         Inspired by: https://codetv.dev/blog/get-form-values-as-json
         Documentation for FormData-Api at: https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
@@ -23,7 +23,7 @@ export default function registerForm2registrationJSONSend(afterSuccessCallback =
     let {name, password, email, gender, firstname, lastname, country} = data_as_object;
     let data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
 
-    fetch(constants.URL_USER, {
+    return fetch(constants.URL_USER, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -34,12 +34,11 @@ export default function registerForm2registrationJSONSend(afterSuccessCallback =
         .then(res => res.json())
         .then((json) => {
 
-            // if registering worked -> try getting a token & save it in localstorage => if this worked: callback can redirect
-            getTokenFromBackendEndpoint(name,password)
-                .then(() => afterSuccessCallback())
+            // if registering worked => try getting a token & save it in localstorage => pass the promise on
+            return getTokenFromBackendEndpoint(name,password)
 
         })
-    .catch((err) => { console.log(err) })
+    .catch((err) => { console.log(err)}) // todo: return err and handle errors downstream
 }
 
 if (!window.sb) window.sb = {}

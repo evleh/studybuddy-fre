@@ -19,3 +19,26 @@ body {
 #passwordrep[type=text] ~#showpwrep {
     display: none;
 }
+
+/***
+    shells of css classes to be styled situationally by javascript?
+    or as a tag;
+
+    one tag;
+    to rule them all;
+    one tag;
+    to find them;
+    one tag;
+    to bring them all;
+    and in the darkness bind them.
+
+    in the browser-DOM, where shadows lie.
+
+    (editor: meaning show/hide them all etc.)
+    (note: with current .remove logic having a css definition is not, in fact, necessary. TODO )
+ ***/
+
+.remove-when-logged-in {
+}
+.remove-when-logged-out {
+}

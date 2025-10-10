@@ -27,7 +27,22 @@ export function loginAndRedirectOnSuccessAssumeLoginFormInDom() {
     let loginFormData = new FormData(loginForm);
 
     getTokenFromBackendEndpoint(loginFormData.get("username"), loginFormData.get('password'))
-        .then(() => { history.pushState(null, "", "004-home-base.html") });
+        .then(() => {
+            history.pushState(null, "", "004-home-base.html");
+            history.forward(); history.go()
+        });
+}
+
+export function logout() {
+    // current function: clear session token and id, then redirect to most login-ish page
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("userId");
+    history.pushState(null, "", "001-start.html");
+    history.forward(); history.go()
+}
+
+export function isLoggedIn() {
+    return !!sessionStorage.getItem("accessToken");
 }
 
 /***
@@ -58,6 +73,8 @@ console.log(`[dev] executing side effect code in auth.js`)
 if (!window.sb) window.sb = {}
 window.sb.getToken = getTokenFromBackendEndpoint;
 window.sb.loginAndRedirectOnSuccessAssumeLoginFormInDom = loginAndRedirectOnSuccessAssumeLoginFormInDom;
+window.sb.logout = logout;
+window.sb.isLoggedIn = isLoggedIn;
 
 if (sessionStorage.getItem('accessToken')) {
     // assume accessToken means a user registered and/or logged in.
@@ -71,5 +88,6 @@ if (sessionStorage.getItem('accessToken')) {
     if (window.sb.currentUser.isAdmin) console.log(`[dev] user tagged as ADMIN according to backend response`)
     else console.log(`[dev] user NOT tagged as admin according to backend response`)
 
-
+} else {
+    console.log(`[dev] import side-effect code found "no-ish" accessToken. TODO: what now?`)
 }
