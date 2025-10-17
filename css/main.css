@@ -42,3 +42,12 @@ body {
 }
 .remove-when-logged-out {
 }
+
+/***
+   For documentation purposes: css classes used for tagging-for-injecting purposes
+ */
+
+.insert-username-here {}
+.insert-user-first-name-here {}
+.insert-user-last-name-here {}
+
