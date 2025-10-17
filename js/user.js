@@ -38,5 +38,18 @@ export class SBUser  {
 
     get username() { return this._serverResponse?.username }
     get isAdmin() { return this._serverResponse?.admin }
+    get firstname() { return this._serverResponse?.firstname }
+    get lastname() { return this._serverResponse?.lastname }
 
+}
+
+export function doDOMInjectsForUserData() {
+    let injects = {
+        username: window.sb.currentUser?.username || "Anonymous User",
+        firstname: window.sb.currentUser?.firstname || "",
+        lastname: window.sb.currentUser?.lastname || "",
+    }
+    $('.insert-username-here').text(injects.username);
+    $('.insert-user-first-name-here').text(injects.firstname);
+    $('.insert-user-last-name-here').text(injects.lastname);
 }
