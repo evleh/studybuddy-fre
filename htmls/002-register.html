@@ -129,6 +129,7 @@
 
 
     </form>
+    <div class="error-message"></div>
     <div class="row" style="height: 6rem;"><div class="span i-cant-get-big-margins-or-something-better-to-work-to-create-whitespace-under-the-form">
         &nbsp;
     </div></div>
@@ -167,12 +168,16 @@
 
                         console.log(`[dev] if you a reading this, then register-form validation must have passed. commence the registering!`)
                         window.sb.register()
-                            .then(() => {
-                                // your redirect code here.
-                                console.log(`[dev] registration & authToken fetch allegedly successful. so ..`)
-                                console.log(`[dev] .. redirecting. To see this message, toggle "Preserve logs" in the console.`)
-                                history.pushState(null, "", "004-home-base.html") // TODO: do a post-register welcome screen?
-                                history.forward(); history.go()
+                            .then(
+                                (success) => {
+                                    // your redirect code here.
+                                    console.log(`[dev] registration & authToken fetch allegedly successful. so ..`)
+                                    console.log(`[dev] .. redirecting. To see this message, toggle "Preserve logs" in the console.`)
+                                    history.pushState(null, "", "004-home-base.html") // TODO: do a post-register welcome screen?
+                                    history.forward(); history.go()
+                                })
+                            .catch((error) => {
+                                $('.error-message').text(error.message || "Ein Fehler ist passiert. Registrierung nicht abgeschlossen.")
                             })
                     }
 
