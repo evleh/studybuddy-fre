@@ -19,3 +19,6 @@ body {
 #passwordrep[type=text] ~#showpwrep {
     display: none;
 }
+
+/*003-shared-boxes*/
+#list-of-shared-boxes {margin-top: 10px; margin-bottom: 10px}
