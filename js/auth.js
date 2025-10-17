@@ -22,7 +22,14 @@ export function getTokenFromBackendEndpoint(username, password) {
         .catch((err) => { console.log(err) })
 }
 
-export function loginAndRedirectOnSuccessAssumeLoginFormInDom() {
+export function loginAndRedirectOnSuccess() {
+    /**
+     * This function tries to get username and password from a login-form in the dom.
+     * With this data it requests a token from the backend.
+     * That request, on success, redirects to the (currently hardcoded) login page.
+     *
+     * Note/Warning: No error handling yet.
+     */
     let loginForm = document.getElementById("login-form");
     let loginFormData = new FormData(loginForm);
 
@@ -72,7 +79,7 @@ console.log(`[dev] executing side effect code in auth.js`)
 
 if (!window.sb) window.sb = {}
 window.sb.getToken = getTokenFromBackendEndpoint;
-window.sb.loginAndRedirectOnSuccessAssumeLoginFormInDom = loginAndRedirectOnSuccessAssumeLoginFormInDom;
+window.sb.loginAndRedirectOnSuccess = loginAndRedirectOnSuccess;
 window.sb.logout = logout;
 window.sb.isLoggedIn = isLoggedIn;
 
