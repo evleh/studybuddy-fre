@@ -1,6 +1,7 @@
 [
   {
     "title" : "Bezirke Wien",
+    "description" : "Mit dieser Kartei kannst du die 23 Wiener Gemeindebezirke lernen",
     "author" : "schwupsdiwups",
     "date" : "03.10.2025",
     "public" : "1"
@@ -8,6 +9,7 @@
 
   {
     "title" : "Griechisch für den Urlaub",
+    "description" : "Diese Kartei enthält einige wichtige Vokabel und Phrasen, die du im nächsten Griechenlandurlaub bestimmt brauchen kannst.",
     "author" : "kimDragon",
     "date" : "23.12.2024",
     "public" : "1"
@@ -15,6 +17,7 @@
 
   {
     "title" : "English classroom vocabulary",
+    "description" : "Important words for things you find in the classroom and at school. Level: Absolute beginners.",
     "author" : "freddy",
     "date" : "09.09.2025",
     "public" : "0"
@@ -22,6 +25,7 @@
 
   {
     "title" : "Knochen Deutsch-Latein",
+    "description" : "Alle Knochen des menschlichen Körpers mit ihren deutschen und lateinischen Bezeichnungen. Für Med-Studis und alle anderen, die Anatomie brauchen :).",
     "author" : "mini",
     "date" : "05.05.2025",
     "public" : "1"
@@ -29,6 +33,7 @@
 
   {
     "title" : "Heilpflanzen Deutsch - Latein",
+    "description" : "Einige wichtige Heilpflanzen mit ihren deutschen und lateinischen Bezeichnungen.",
     "author" : "maxi",
     "date" : "23.04.2023",
     "public" : "1"
@@ -36,6 +41,7 @@
 
   {
     "title" : "English irregular plurals",
+    "description" : "This box contains some common English nouns with irregular plural forms.",
     "author" : "justme",
     "date" : "16.06.2022",
     "public" : "1"
