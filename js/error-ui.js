@@ -14,7 +14,7 @@ export function appendNotification({message, type, title,scrollIntoView}) {
 
     }
     let alertItemHTML = [
-        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `<div class="alert alert-${type} alert-dismissible fade show" role="alert">`,
         `   ${optionalTitleHTML}`,
         `   <div>${message}</div>`,
         '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
