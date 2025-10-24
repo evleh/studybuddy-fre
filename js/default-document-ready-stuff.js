@@ -3,6 +3,7 @@ import load_navbar from "./navbar-loading.js";
 import './auth.js'
 import {processElementsTaggedByCSSClasses} from "./util.js";
 import {doDOMInjectsForUserData} from "./user.js";
+import "./error-ui.js"
 
 
 // assume jquery loaded at this point

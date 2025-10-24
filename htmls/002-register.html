@@ -167,12 +167,26 @@
 
                         console.log(`[dev] if you a reading this, then register-form validation must have passed. commence the registering!`)
                         window.sb.register()
-                            .then(() => {
-                                // your redirect code here.
-                                console.log(`[dev] registration & authToken fetch allegedly successful. so ..`)
-                                console.log(`[dev] .. redirecting. To see this message, toggle "Preserve logs" in the console.`)
-                                history.pushState(null, "", "004-home-base.html") // TODO: do a post-register welcome screen?
-                                history.forward(); history.go()
+                            .then(
+                                (success) => {
+                                    // your redirect code here.
+                                    console.log(`[dev] registration & authToken fetch allegedly successful. so ..`)
+                                    console.log(`[dev] .. redirecting. To see this message, toggle "Preserve logs" in the console.`)
+                                    window.sb.queueNotificationForNextLoad({
+                                        type: window.sb.alertTypes.SUCCESS,
+                                        title: 'Registrierung erfolgreich abgeschlossen',
+                                        message: 'Herzlich willkommen, und viel Spaß in StudyBuddy!'
+                                    })
+                                    history.pushState(null, "", "004-home-base.html") // TODO: do a post-register welcome screen?
+                                    history.forward(); history.go()
+                                })
+                            .catch((error) => {
+                                window.sb.appendNotification({
+                                    title: 'Registrierung nicht erfolgreich',
+                                    type: window.sb.alertTypes.ERROR,
+                                    message: error.message,
+                                    scrollIntoView: true
+                                })
                             })
                     }
 
