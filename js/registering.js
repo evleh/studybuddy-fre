@@ -31,14 +31,41 @@ export default function registerForm2registrationJSONSend() {
         },
         body: JSON.stringify(data_to_send_to_register_endpoint),
     })
-        .then(res => res.json())
-        .then((json) => {
-
-            // if registering worked => try getting a token & save it in localstorage => pass the promise on
-            return getTokenFromBackendEndpoint(name,password)
-
+        .catch((error) => {
+            /* tested with: switching off backend; should trigger this message */
+            return Promise.reject( { message: "Registrierung gescheitert (no response / fetch failed).", error: error})
         })
-    .catch((err) => { console.log(err)}) // todo: return err and handle errors downstream
+        .then(
+            (res) => {
+                if (res.status === 201) {
+                   return res.json()
+                } else {
+                    /**
+                     * note: at the moment we don't get information from the backend, only a 403 without explicit reason
+                     * test e.g. with: using an existing username.
+                     */
+                    return Promise.reject({ message: "Registrierung gescheitert (status).", error: "no 201 from backend", response: res });
+                }
+            })
+        .catch(
+            (error) => {
+                /* not tested yet */
+                return Promise.reject({ message: error.message || "Registrierung gescheitert (201 and no json -> backend confusion?).", error: error})
+            }
+        )
+        .then(
+            (json) => {
+
+                // if registering worked => try getting a token & save it in localstorage => pass the promise on
+                return getTokenFromBackendEndpoint(name,password)
+
+            })
+        .catch(
+            (error) => {
+                /* not sure how this would be triggered atm. backend error perhaps. */
+                return Promise.reject({ message: error.message || "Registrierung gescheitert (AuthToken fetch fail).", error: error})
+            })
+    ;
 }
 
 if (!window.sb) window.sb = {}
