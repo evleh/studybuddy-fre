@@ -1,6 +1,6 @@
 import constants from './constants.js';
 import {SBUser} from "./user.js";
-import {appendNotification, alertTypes} from "./error-ui.js";
+import {appendNotification, alertTypes, queueNotificationForNextLoad} from "./error-ui.js";
 
 export function getTokenFromBackendEndpoint(username, password) {
 
@@ -45,6 +45,11 @@ export function loginAndRedirectOnSuccess() {
 
     getTokenFromBackendEndpoint(loginFormData.get("username"), loginFormData.get('password'))
         .then(() => {
+            queueNotificationForNextLoad({
+                title: 'Login erfolgreich',
+                type: alertTypes.SUCCESS,
+                message: `Willkommen zurück!` // note: greeting user with name would be slightly complicated here. :/
+            });
             history.pushState(null, "", "004-home-base.html");
             history.forward(); history.go()
         })
