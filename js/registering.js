@@ -1,5 +1,5 @@
 import constants from './constants.js';
-import getTokenFromBackendEndpoint from './auth.js'
+import {getTokenFromBackendEndpoint} from './auth.js'
 
 export default function registerForm2registrationJSONSend() {
     /***
@@ -8,17 +8,8 @@ export default function registerForm2registrationJSONSend() {
      ***/
 
     let registerform = document.getElementById("registerform")
-    // trying formdata api https://developer.mozilla.org/en-US/docs/Web/API/FormData
     let data = new FormData(registerform)
-    console.log(data)
     let data_as_object = Object.fromEntries(data.entries());
-    console.log(data_as_object)
-    let data_as_json = JSON.stringify(data_as_object);
-    console.log(data_as_json)
-    console.log("sending the data is TODO still.")
-    console.log(constants.URL_USER)
-
-    let data_to_send_to_register_endpoint;
 
     /***
         goal of the next part: take some but not all field from the formdata (into the json-to-send object.
@@ -30,9 +21,9 @@ export default function registerForm2registrationJSONSend() {
         Note: this works by creating local scope variables named like the fields noted int the "let" statement.
      ***/
     let {name, password, email, gender, firstname, lastname, country} = data_as_object;
-    data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
+    let data_to_send_to_register_endpoint = {username:name, password, email, gender, firstname, lastname, country};
 
-    fetch(constants.URL_USER, {
+    return fetch(constants.URL_USER, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -42,12 +33,12 @@ export default function registerForm2registrationJSONSend() {
     })
         .then(res => res.json())
         .then((json) => {
-            console.log(json)
-            window.sb.registration_result = json
-            // if registering worked -> try logging in = getting a token
-            getTokenFromBackendEndpoint(name,password)
+
+            // if registering worked => try getting a token & save it in localstorage => pass the promise on
+            return getTokenFromBackendEndpoint(name,password)
+
         })
-    .catch((err) => { console.log(err) })
+    .catch((err) => { console.log(err)}) // todo: return err and handle errors downstream
 }
 
 if (!window.sb) window.sb = {}

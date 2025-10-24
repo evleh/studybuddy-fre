@@ -144,9 +144,7 @@
 
     $(document).ready(function() {
         // initialization code here
-        console.log("test test test hello world");
         $('.insert-country-list-options-here-plz').load('elements/countrylist1.html');
-
 
         // example code from https://getbootstrap.com/docs/5.3/forms/validation/
         // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -167,8 +165,15 @@
                         event.preventDefault()
                         event.stopPropagation()
 
-                        console.log(`form validation passed. further code here.`)
+                        console.log(`[dev] if you a reading this, then register-form validation must have passed. commence the registering!`)
                         window.sb.register()
+                            .then(() => {
+                                // your redirect code here.
+                                console.log(`[dev] registration & authToken fetch allegedly successful. so ..`)
+                                console.log(`[dev] .. redirecting. To see this message, toggle "Preserve logs" in the console.`)
+                                history.pushState(null, "", "004-home-base.html") // TODO: do a post-register welcome screen?
+                                history.forward(); history.go()
+                            })
                     }
 
                     form.classList.add('was-validated')
@@ -179,7 +184,6 @@
     });
 
     function register_prefill(set) {
-        console.log('register prefill')
         if ((set === 1) || true) {
             let pw = "9AAA-----999aaa"
             $("#password")[0].value = pw;
@@ -187,11 +191,8 @@
             $("#firstname")[0].value = "VornameByCheatMenu"
             $("#lastname")[0].value = "NachnameByCheatMenu"
             $("#email")[0].value = "examplecom_reserved_by_rfc_to_not_exist@example.com"
-            console.log($("#datalistOptions option")[0].value)
-            $("#landDataList")[0].value = $("#datalistOptions option")[2].value;
+            $("#landDataList")[0].value = $("#datalistOptions option")[2].value; // [2] is 'AT'
             $("#name")[0].value = "UsernameWithRandomNumber_4_choosen_by_fair_diceroll"
-
-
         }
     }
 </script>
