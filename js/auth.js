@@ -52,7 +52,7 @@ export function loginAndRedirectOnSuccess() {
         appendNotification({
             message: err.message,
             title: 'Anmeldung fehlgeschlagen.',
-            type: 'warning',
+            type: alertTypes.WARNING
         })
     });
 }
