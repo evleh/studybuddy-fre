@@ -53,6 +53,8 @@
 <script type="module" src="../js/default-document-ready-stuff.js"></script>
 <script>
 
+import constants from "../js/constants";
+
 $(document).ready(function (){
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (() => {
@@ -84,9 +86,23 @@ $(document).ready(function (){
         var public = $("#is-public-box").val();
         var url = $(this).attr("action");
 
-        $.post(url, {title: title, description: description, public: public}).done(function (data){
-            console.log("post saved");
-            console.log(data);
+        $.ajax(constants.BOXES_URL, {
+            type: "POST",
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data_to_send_to_register_endpoint),
+
+            //title: title, description: description, public: public}).done(function (data){
+
+        }).done(function(data){
+                console.log("post saved");
+                console.log(data);
+                window.location.href = "012-new-card.html";  // URL der Zielseite
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            // Fehlerbehandlung, falls die Anfrage fehlschlägt
+            console.log("Fehler beim Speichern der Daten: ", textStatus, errorThrown);
         });
     })
 

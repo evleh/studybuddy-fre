@@ -3,14 +3,18 @@
     "title" : "Bezirke Wien",
     "author" : "schwupsdiwups",
     "date" : "03.10.2025",
-    "public" : "1"
+    "public" : "1",
+    "description": "DDDD",
+    "id": "01"
   },
 
   {
     "title" : "Griechisch für den Urlaub",
     "author" : "kimDragon",
     "date" : "23.12.2024",
-    "public" : "1"
+    "public" : "1",
+    "description": "DDDD",
+    "id": "02"
   },
 
   {
@@ -18,7 +22,8 @@
     "author" : "freddy",
     "date" : "09.09.2025",
     "public" : "0",
-    "description": "DDDD"
+    "description": "DDDD",
+    "id": "03"
   },
 
   {
@@ -26,7 +31,8 @@
     "author" : "mini",
     "date" : "05.05.2025",
     "public" : "1",
-    "description": "DDDD"
+    "description": "DDDD",
+    "id": "04"
   },
 
   {
@@ -34,7 +40,8 @@
     "author" : "maxi",
     "date" : "23.04.2023",
     "public" : "1",
-    "description": "DDDD"
+    "description": "DDDD",
+    "id": "05"
   },
 
   {
@@ -42,6 +49,7 @@
     "author" : "justme",
     "date" : "16.06.2022",
     "public" : "1",
-    "description": "DDDD"
+    "description": "DDDD",
+    "id": "06"
   }
 ]
