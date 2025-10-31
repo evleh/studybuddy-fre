@@ -17,27 +17,31 @@
     "title" : "English classroom vocabulary",
     "author" : "freddy",
     "date" : "09.09.2025",
-    "public" : "0"
+    "public" : "0",
+    "description": "DDDD"
   },
 
   {
     "title" : "Knochen Deutsch-Latein",
     "author" : "mini",
     "date" : "05.05.2025",
-    "public" : "1"
+    "public" : "1",
+    "description": "DDDD"
   },
 
   {
     "title" : "Heilpflanzen Deutsch - Latein",
     "author" : "maxi",
     "date" : "23.04.2023",
-    "public" : "1"
+    "public" : "1",
+    "description": "DDDD"
   },
 
   {
     "title" : "English irregular plurals",
     "author" : "justme",
     "date" : "16.06.2022",
-    "public" : "1"
+    "public" : "1",
+    "description": "DDDD"
   }
 ]
