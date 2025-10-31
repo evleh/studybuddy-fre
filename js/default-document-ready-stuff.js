@@ -4,6 +4,7 @@ import './auth.js'
 import {processElementsTaggedByCSSClasses} from "./util.js";
 import {doDOMInjectsForUserData} from "./user.js";
 import "./error-ui.js"
+import "./data-abstraction.js"
 
 
 // assume jquery loaded at this point
