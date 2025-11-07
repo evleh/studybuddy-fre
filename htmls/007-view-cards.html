@@ -31,7 +31,6 @@
     }
 
     function htmlForBasicBoxDisplayCard(box, options={}) {
-        // will be inserted into a container div
         let result = [
             `<div class="card mb-2">`,
             `   <div class="card-header">${box.title}</div>`,
@@ -50,7 +49,7 @@
         let params = new URLSearchParams(window.location.search)
         id_as_requested_by_queryParams = params.get('id');
 
-        // check if box with id, do list otherwise
+        // check if box with id is ... gettable. do list otherwise
         window.sb.boxes.getById(id_as_requested_by_queryParams)
             .then((box) => {
                 $('#div-for-box-contents').html(htmlForBasicBoxDisplayCard(box));
@@ -71,12 +70,8 @@
     }
 
     $(document).ready(() => {
-
         show_box_or_boxes()
-
     });
-
-
 
 </script>
 </body>
