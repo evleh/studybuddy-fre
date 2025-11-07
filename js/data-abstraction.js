@@ -4,6 +4,10 @@ let { promise:boxesHaveLoaded, resolve:boxLoadingResolve, reject:boxLoadingRejec
 
 jQuery.getJSON('../DummyData/boxes.json', (data) => {
     dummyBoxes = data;
+    for (let key of dummyBoxes.keys()) {
+        dummyBoxes[key].id = dummyBoxes[key].id || key; // put array index as id in box for dummy data
+    }
+
     boxLoadingResolve(dummyBoxes)
 });
 
