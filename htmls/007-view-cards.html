@@ -22,30 +22,33 @@
 
 <script>
 
-
-    function despair() {
-
+    function show_box_or_boxes() {
         let id_as_requested_by_queryParams = null
         let params = new URLSearchParams(window.location.search)
         id_as_requested_by_queryParams = params.get('id');
 
-        // if null do a list
-        let box = window.sb.boxes.getById(id_as_requested_by_queryParams)
-        if (box) {
-            $('#div-for-box-contents').text(JSON.stringify(box))
-        } else {
-            let boxes = window.sb.boxes.publicBoxes()
+        // check if box with id, do list otherwise
+        window.sb.boxes.getById(id_as_requested_by_queryParams)
+            .then((box) => $('#div-for-box-contents').text(JSON.stringify(box)))
+            .catch((errormessage) => {
+                    console.log(errormessage); // writing the error to console might be unnecessary because
+                    // let us do a box list instead
+                    window.sb.boxes.publicBoxes()
+                        .then((boxes) => {
+                                for (let key of boxes.keys()) {
+                                    let box = boxes[key]
+                                    $("#div-for-box-links").append(`<a href="?id=${key}" class="btn btn-primary m-1">${box.title}</a>`)
+                                }
+                            })
+                })
+    }
 
-            for (let key of boxes.keys()) {
-                box = window.sb.boxes.getById(key)
-                $("#div-for-box-links").append(`<a href="?id=${key}" class="btn btn-primary m-1">${box.title}</a>`)
-            }
-
-        }
-    };
     $(document).ready(() => {
-        setTimeout(despair, 200)
+
+        show_box_or_boxes()
+
     });
+
 
 
 </script>
