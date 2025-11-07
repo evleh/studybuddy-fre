@@ -44,7 +44,7 @@ try {
     console.log(`trying to create user so it exists for sure. result: ${registerResultMessage}`) // failing is an option
 } catch (error) { console.error(error) }
 
-let { promise:bearerToken, resolve:bearerTokenResolve, reject:bearerTokenReject } = Promise.withResolvers()
+let { promise:authTokenPromise, resolve:bearerTokenResolve, reject:bearerTokenReject } = Promise.withResolvers()
 
 let authRequest = new Request(AUTH_ENDPOINT, {
     method: 'POST',
@@ -73,11 +73,14 @@ let { accessToken, userId } = accessTokenAndUserId;
 console.log(accessTokenAndUserId)
 console.log(`token: ${accessToken}; id: ${userId}`)
 
-let dummyBoxes;
+let dummyBoxes = [];
+let {promise:dummyBoxesPromise, resolve:dummyBoxesResolve, reject:dummyBoxesReject} = Promise.withResolvers()
 try {
     const path = '../DummyData/boxes.json';
     dummyBoxes = JSON.parse(fs.readFileSync(path, 'utf8'));
-} catch (e) { console.log(e); dummyBoxes = [] }
+    dummyBoxesResolve(dummyBoxes);
+} catch (e) { console.log(e); dummyBoxes = []; dummyBoxesReject(dummyBoxes)}
+
 
 function makeCreateBoxRequest(box) {
     return new Request(BOXES_ENDPOINT, {
@@ -121,3 +124,4 @@ for (const boxRequest of createBoxRequests()) {
     } catch (e) { console.log(e)}
 }
 
+export {dummyBoxes, dummyBoxesPromise}
