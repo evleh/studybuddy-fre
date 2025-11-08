@@ -14,7 +14,7 @@ $(document).ready(function (){
 
 function renderMyBoxes(data) {
     $.each(data, function (i, boxData) {
-        if (boxData.public == 1) {
+        if (boxData.isPublic !== 1) {
             const $boxItem = $("<div>").addClass("list-group-item d-flex justify-content-between align-items-center");
 
             const $title = $("<span>").text(boxData.title);
@@ -34,8 +34,8 @@ function renderMyBoxes(data) {
                 // .on("click", function() {
                 //     window.location.href = `011-edit-box.html?id=${boxData.id}`;
                 // });
-
-            $boxItem.append($title).append($viewBtn).append($editBtn);
+            const $buttonGroup = $("<div>").addClass("d-flex gap-2").append($editBtn).append($viewBtn);
+            $boxItem.append($title).append($buttonGroup);
             $("#my-boxes").append($boxItem);
         }
     });

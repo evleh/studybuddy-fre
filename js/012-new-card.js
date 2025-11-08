@@ -44,12 +44,23 @@ function renderFormNewCard(data){
 }
 
 function renderCards(data){
-    $.each(data, function(i, question){
+    $.each(data, function(i, card){
         // todo fragen per box filter testen bei erfolgreicher abfrage der aktuellen kartei aus dem backend
         // todo fragen element fertig machen
-        if(question.box === boxTitle){
-            const $questionElement = $("<div>").text("Frage: " + question.question).addClass("list-group-item list-group-item-action");
-            $("#cards").append($questionElement);
+        if(card.box === boxTitle){
+            const $cardElement = $("<div>").addClass("list-group-item list-group-item-action d-flex justify-content-between align-items-center");
+
+            const $title = $("<span>").text("Frage: " + card.question);
+
+            const $editBtn = $("<button>").text("Bearbeiten").addClass("btn btn-sm btn-outline-primary")
+            const $deleteBtn = $("<button>").text("Löschen").addClass("btn btn-sm btn-outline-primary")
+            const $buttonGroup = $("<div>")
+                .addClass("d-flex gap-2")
+                .append($editBtn)
+                .append($deleteBtn);
+
+            $cardElement.append($title).append($buttonGroup);
+            $("#cards").append($cardElement);
         }
 
 
