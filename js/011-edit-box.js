@@ -24,4 +24,10 @@ $(document).ready(function() {
 });
 
 
-function renderBox(){}
+function renderBox(data){
+    $('#box-title').val(data.title);
+    $('#box-description').val(data.description);
+    $('#is-public-box').val(data.isPublic);
+
+
+}

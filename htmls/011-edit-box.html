@@ -14,8 +14,43 @@
 <body>
 <div class="mx-auto col-lg-6 col-md-12">
     <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
-    <h1>Lernkartei:</h1>
-    <div class="row mb-3"><div class="col-12"> <h3>erstellt von: <span class="insert-username-here"></span> </h3></div></div>
+
+    <div class="container">
+        <form id="edit-box" class="needs-validation" novalidate>
+
+            <div class="form-floating mb-3">
+                <div class="row">
+                    <div class="col-3"><h1>Kartei: </h1></div>
+                    <div class="col">
+                        <input type="text" name="box-title" id="box-title" class="form-control" required placeholder="Titel">
+                        <div class="invalid-feedback">Bitte gib deiner neuen Kartei einen Namen.</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-3"><div class="col-12"><h3>erstellt von: <span class="insert-username-here"></span> </h3></div></div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Beschreibung" id="box-description" style="height: 12rem"></textarea>
+            </div>
+
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="is-public-box" role="switch">
+                <label class="form-check-label" for="is-public-box">
+                    Ich möchte diese Kartei mit anderen teilen.
+                </label>
+            </div>
+
+            <div class="row">
+                <button id="save-box-changes" type="submit" class="btn btn-primary col-3">Speichern</button>
+                <button id="" type="submit" class="btn btn-primary col-3">Speichern</button>
+                <button id="delete-box" type="submit" class="btn btn-danger col-3">Löschen</button>
+            </div>
+
+        </form>
+    </div>
+
 </div>
 
 </body>
