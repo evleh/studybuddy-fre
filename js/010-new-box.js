@@ -42,7 +42,7 @@ $(document).ready(function (){
                 headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
                 success: function (data){
                     console.log("Post gespeichert: ", data);
-                    window.location.href = urlRedirect;
+                    window.location.href = urlRedirect + `?id=${data.id}`;
                     console.log("data gespeichert ")
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
