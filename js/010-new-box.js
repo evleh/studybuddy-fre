@@ -43,7 +43,6 @@ $(document).ready(function (){
                 success: function (data){
                     console.log("Post gespeichert: ", data);
                     window.location.href = urlRedirect + `?id=${data.id}`;
-                    console.log("data gespeichert ")
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error("Fehler beim Speichern:", textStatus, errorThrown);
@@ -55,7 +54,7 @@ $(document).ready(function (){
                             title: 'Registrierung nicht erfolgreich',
                             type: window.sb.alertTypes.ERROR,
                             message: msg,
-                            scrollIntoView: false
+                            scrollIntoView: true
                         });
                     } else {
                         alert("Fehler: " + msg); // Fallback
