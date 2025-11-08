@@ -29,7 +29,7 @@ $(document).ready(function (){
             var title = $("#box-title").val();
             var description = $("#box-description").val();
             var isPublic = $("#is-public-box").is(":checked");
-            var urlRedirect = "../htmls/011-edit-box.html";
+            var urlRedirect = "../htmls/012-new-card.html";
 
             const post_data = {title: title, description: description, isPublic:isPublic}
             console.log(post_data)
@@ -42,8 +42,7 @@ $(document).ready(function (){
                 headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
                 success: function (data){
                     console.log("Post gespeichert: ", data);
-                    window.location.href = urlRedirect;
-                    console.log("data gespeichert ")
+                    window.location.href = urlRedirect + `?id=${data.id}`;
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error("Fehler beim Speichern:", textStatus, errorThrown);
@@ -52,10 +51,10 @@ $(document).ready(function (){
 
                     if (window.sb?.appendNotification) {
                         window.sb.appendNotification({
-                            title: 'Registrierung nicht erfolgreich',
+                            title: 'Fehler beim Speichern',
                             type: window.sb.alertTypes.ERROR,
                             message: msg,
-                            scrollIntoView: false
+                            scrollIntoView: true
                         });
                     } else {
                         alert("Fehler: " + msg); // Fallback
