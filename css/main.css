@@ -42,3 +42,16 @@ body {
 }
 .remove-when-logged-out {
 }
+
+/***
+   For documentation purposes: css classes used for tagging-for-injecting purposes
+ */
+
+.insert-username-here {}
+.insert-user-first-name-here {}
+.insert-user-last-name-here {}
+
+
+
+/*003-shared-boxes*/
+#list-of-shared-boxes, #list-of-search-results {margin-top: 10px; margin-bottom: 10px}

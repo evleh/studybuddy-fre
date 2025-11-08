@@ -1,5 +1,6 @@
 import constants from './constants.js';
 import {SBUser} from "./user.js";
+import {appendNotification, alertTypes, queueNotificationForNextLoad} from "./error-ui.js";
 
 export function getTokenFromBackendEndpoint(username, password) {
 
@@ -11,15 +12,24 @@ export function getTokenFromBackendEndpoint(username, password) {
         },
         body: JSON.stringify({username, password}),
     })
-        .then(res => res.json())
+        .catch((error) => {
+            /*  */
+            return Promise.reject( { message: "Verbindung zu Backend fehlgeschlagen.", error: error})
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                return Promise.reject({message: 'Bitte überprüfen Sie ob Sie den richtigen Username und das richtige Passwort eingegeben haben.'})
+            }
+        })
         .then((json) => {
             sessionStorage.setItem("accessToken", json?.accessToken)
             sessionStorage.setItem("userId", json?.userId)
             window.sb.currentUser = new SBUser(json?.userId)
             return window.sb.currentUser.fetchUserData()
-
         })
-        .catch((err) => { console.log(err) })
+
 }
 
 export function loginAndRedirectOnSuccess() {
@@ -35,9 +45,21 @@ export function loginAndRedirectOnSuccess() {
 
     getTokenFromBackendEndpoint(loginFormData.get("username"), loginFormData.get('password'))
         .then(() => {
+            queueNotificationForNextLoad({
+                title: 'Login erfolgreich',
+                type: alertTypes.SUCCESS,
+                message: `Willkommen zurück!` // note: greeting user with name would be slightly complicated here. :/
+            });
             history.pushState(null, "", "004-home-base.html");
             history.forward(); history.go()
-        });
+        })
+    .catch((err) => {
+        appendNotification({
+            message: err.message,
+            title: 'Anmeldung fehlgeschlagen.',
+            type: alertTypes.WARNING
+        })
+    });
 }
 
 export function logout() {

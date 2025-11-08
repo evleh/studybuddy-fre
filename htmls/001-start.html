@@ -15,36 +15,47 @@
 
   <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
 
-  <h1 class="row justify-content-center mt-3 mb-3">
+  <div class="row"><h1 class="justify-content-center mt-3 mb-3">
     Willkommen bei StudyBuddy!
-  </h1>
+  </h1></div>
 
   <div class="container mt-3 remove-when-logged-in">
   <form id="login-form">
-    <div class="row mb-1">
-      <label for="username" class="col-sm-2 col-form-label text-end">Username</label>
-      <div class="col-sm-10 col-md-3">
-        <input type="text" class="form-control" id="username" name="username">
+
+      <div class="form-floating mb-3">
+          <input type="text" name="username" id="username" required class="form-control" placeholder="UserName">
+          <label for="username">UserName</label>
       </div>
-    </div>
-    <div class="row mb-3">
-      <label for="password" class="col-sm-2 col-form-label text-end">Password</label>
-      <div class="col-sm-10 col-md-3">
-        <input type="password" class="form-control" id="password" name="password">
+
+      <div class="form-floating mb-3">
+          <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
+          <label for="password">Passwort</label>
+          <button id="showpw" type="button" class="btn btn-success" onclick="showpassword('password')">Passwort anzeigen</button>
+          <button id="hidepw" type="button" class="btn btn-warning" onclick="showpassword('password')">Passwort verstecken</button>
+          <button type="button" class="btn btn-primary offset-sm-2" onclick="window.sb.loginAndRedirectOnSuccess()">Login</button>
+          <a href="#" role="button" class="btn btn-primary" id="cheat-button-1">cheat</a>
+
       </div>
-    </div>
-    <div>
-      <button type="button" class="btn btn-primary offset-sm-2" onclick="window.sb.loginAndRedirectOnSuccess()">Login</button>
-      <a href="#" role="button" class="btn btn-primary" id="cheat-button-1">cheat</a>
-    </div>
+
+      <script>
+          function showpassword (inputid) {
+              const passwordfield = document.getElementById(inputid);
+              if(passwordfield.type === "password") {
+                  passwordfield.type = "text";
+              }
+              else {passwordfield.type = "password";}
+          }
+      </script>
+
+
   </form>
   </div>
 
 
   <div class="container mt-3">
   <div class="row mb-3 remove-when-logged-in">
-  <p class="col offset-sm-2">Noch nicht registriert?</p>
-    <div class="offset-sm-2">
+  <p class="col ">Noch nicht registriert?</p>
+    <div >
       <a role="button" class="btn btn-primary"  href="002-register.html">Jetzt registrieren</a>
     </div>
   </div>
@@ -55,7 +66,25 @@
   </div>
 
   <h2>So lernst du spielend leicht mit StudyBuddy</h2>
-  <p>StudyBuddy ist eine mega super Lernapp.  Blablabla \n jefbiudfiuHEFHIqdfö</p>
+  <p>
+      Bereitest du dich auf eine Prüfung vor? Erlernst du eine neue Sprache?
+      Lernkarteien sind eine seit Jahrzehnten beliebte und bewährte Lernmethode.
+      Möchtest du sie jederzeit nützen können, ohne ständig einen schweren Karteikasten mit dir herumzuschleppen?
+  </p>
+  <p>
+      Dann ist StudyBuddy genau das Richtige für dich!
+      Hier findest du schon eine Menge Lernkarteien zu den verschiedensten Themen, mit denen du gleich loslegen kannst.
+      Schau doch mal <a href="003-shared-boxes.html">hier</a>, welche Karteien es schon gibt!
+  </p>
+  <p>
+      Ist für deine Interessen noch nicht die richtige Lernkartei dabei?
+      Kein Problem! Du kannst selbst eine Kartei erstellen und entscheiden, ob du sie mit anderen teilen möchtest oder nicht.
+  </p>
+  <p>
+    Und das Beste überhaupt: Hin und wieder taucht ein random Kätzchen auf, um dich zu motivieren :)!
+  </p>
+
+  <img src="https://cdn.pixabay.com/photo/2024/11/08/12/57/cat-9183327_1280.jpg" width="50%">
 
 </div>
 
