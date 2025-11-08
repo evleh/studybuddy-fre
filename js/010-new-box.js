@@ -1,21 +1,5 @@
 import constants from "./constants.js";
 
-// insert dynamic variables to HTML
-// Warten, bis die Seite vollständig geladen ist und die Daten verfügbar sind
-function setUsernameWhenAvailable() {
-    const checkInterval = setInterval(() => {
-        if (window.sb && window.sb.currentUser && window.sb.currentUser.username) {
-            document.querySelector(".username").textContent =
-                "erstellt von " + window.sb.currentUser.username;
-            clearInterval(checkInterval);
-        }
-        // else {
-        //     document.querySelector(".username").textContent =
-        //         "erstellt von cant' acess username";
-        // }
-    }, 200);
-}
-setUsernameWhenAvailable();
 
 $(document).ready(function (){
         // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -33,39 +17,51 @@ $(document).ready(function (){
                         event.stopPropagation()
                     }
 
-
                     form.classList.add('was-validated')
                 }, false)
             })
         })()
 
-        // <!-- todo: kartei anlegen und auf "012-new-card.html" weiterleiten -->
-        $("#create-box").submit(function (e){
+        // POST Request
+        $("#new-box").on("submit", function (e){
             e.preventDefault();
 
             var title = $("#box-title").val();
             var description = $("#box-description").val();
-            var is_public = $("#is-public-box").val();
-            var url = $(this).attr("action");
+            var isPublic = $("#is-public-box").is(":checked");
+            var urlRedirect = "../htmls/011-edit-box.html";
 
-            $.ajax(constants.BOXES_URL, {
+            const post_data = {title: title, description: description, isPublic:isPublic}
+            console.log(post_data)
+            $.ajax({
+                url: constants.BOXES_URL,
                 type: "POST",
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
+                contentType: "application/json",
+                data: JSON.stringify(post_data),
+                timeout: 3000, // nach 3 Sekunden abbrechen
+                headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
+                success: function (data){
+                    console.log("Post gespeichert: ", data);
+                    window.location.href = urlRedirect;
+                    console.log("data gespeichert ")
                 },
-                body: JSON.stringify(data_to_send_to_register_endpoint),
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Fehler beim Speichern:", textStatus, errorThrown);
 
-                //title: title, description: description, public: public}).done(function (data){
+                    const msg = jqXHR.responseJSON?.message || errorThrown || "Unbekannter Fehler";
 
-            }).done(function(data){
-                console.log("post saved");
-                console.log(data);
-                window.location.href = "012-new-card.html";  // URL der Zielseite
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                // Fehlerbehandlung, falls die Anfrage fehlschlägt
-                console.log("Fehler beim Speichern der Daten: ", textStatus, errorThrown);
-            });
+                    if (window.sb?.appendNotification) {
+                        window.sb.appendNotification({
+                            title: 'Registrierung nicht erfolgreich',
+                            type: window.sb.alertTypes.ERROR,
+                            message: msg,
+                            scrollIntoView: false
+                        });
+                    } else {
+                        alert("Fehler: " + msg); // Fallback
+                    }
+                }
+            })
         })
 
     }
