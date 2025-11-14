@@ -15,6 +15,8 @@ $(document).ready(function (){
                     if (!form.checkValidity()) {
                         event.preventDefault()
                         event.stopPropagation()
+                    } else {
+                        do_post_request(event)
                     }
 
                     form.classList.add('was-validated')
@@ -23,7 +25,7 @@ $(document).ready(function (){
         })()
 
         // POST Request
-        $("#new-box").on("submit", function (e){
+        function do_post_request(e){
             e.preventDefault();
 
             var title = $("#box-title").val();
@@ -61,7 +63,7 @@ $(document).ready(function (){
                     }
                 }
             })
-        })
+        }
 
     }
 
