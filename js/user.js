@@ -7,6 +7,11 @@ import constants from './constants.js';
 
 // todo: how would one organize this with ECMAScript classes?
 
+/** new code for a promise-approach after doing the dummy boxes; seemed to work well there */
+let {promise:selfUserData, resolve:resolveSelfUserData, reject:rejectSelfUserData} = Promise.withResolvers()
+export {selfUserData}
+if (!window.sb) window.sb = {}
+window.sb.selfUserData = selfUserData;
 
 export class SBUser  {
     constructor(id = null) {
@@ -32,8 +37,10 @@ export class SBUser  {
             .then(res => res.json())
             .then((json) => {
                 this._serverResponse = json;
+                resolveSelfUserData(json);
+                return json;
             })
-            .catch((err) => { console.log(err) })
+            .catch((err) => { console.log(err) ; rejectSelfUserData("err"); return err })
     }
 
     get username() { return this._serverResponse?.username }
