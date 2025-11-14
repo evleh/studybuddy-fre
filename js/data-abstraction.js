@@ -23,8 +23,9 @@ export class Boxes extends Object {
     getById(id) {
         return boxesHaveLoaded.then(
             (boxesResolved) => {
-                if (boxesResolved.hasOwnProperty(id)) {
-                    return Promise.resolve(boxesResolved[id])
+                let boxesMatching = boxesResolved.filter((box) => box.id === id);
+                if (boxesMatching.length > 0) {
+                    return Promise.resolve(boxesMatching[0]);
                 } else {
                     return Promise.reject(`no box found with id ${id}`)
                 }
