@@ -1,6 +1,7 @@
 import constants from "./constants.js";
 
 
+
 $(document).ready(function (){
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (() => {
@@ -16,7 +17,7 @@ $(document).ready(function (){
                         event.preventDefault()
                         event.stopPropagation()
                     } else {
-                        do_post_request(event)
+                        createBox(event)
                     }
 
                     form.classList.add('was-validated')
@@ -25,7 +26,7 @@ $(document).ready(function (){
         })()
 
         // POST Request
-        function do_post_request(e){
+        function createBox(e){
             e.preventDefault();
 
             var title = $("#box-title").val();
