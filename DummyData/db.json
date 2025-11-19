@@ -1,11 +1,9 @@
 {
   "boxes": [
     {
-      "title" : "Bezirke Wien",
-      "author" : "schwupsdiwups",
-      "date" : "03.10.2025",
-      "public" : "1",
+      "title": "Bezirke Wien",
       "description": "DDDD",
+      "isPublic": false,
       "id": "1"
     },
     {
@@ -383,7 +381,9 @@
       "firstname": "Jasmin",
       "lastname": "Jason",
       "country": "AT",
-      "id": "9dd5"
+      "id": "9dd5",
+      "registeredAt": "2023-01-12T10:23:00Z",
+      "lastActiveAt": "2025-02-18T15:47:00Z"
     },
     {
       "gender": "männlich",
@@ -392,7 +392,9 @@
       "firstname": "Maximilian",
       "lastname": "Malve",
       "country": "DE",
-      "id": "5eb2"
+      "id": "5eb2",
+      "registeredAt": "2023-01-12T10:23:00Z",
+      "lastActiveAt": "2025-02-18T15:47:00Z"
     },
     {
       "gender": "non binary",
@@ -401,7 +403,9 @@
       "firstname": "Alex",
       "lastname": "Allison",
       "country": "CH",
-      "id": "bf6a"
+      "id": "bf6a",
+      "registeredAt": "2023-01-12T10:23:00Z",
+      "lastActiveAt": "2025-02-18T15:47:00Z"
     },
     {
       "gender": "weiblich",
@@ -410,7 +414,9 @@
       "firstname": "Finja",
       "lastname": "Funkelstern",
       "country": "SE",
-      "id": "f463"
+      "id": "f463",
+      "registeredAt": "2023-01-12T10:23:00Z",
+      "lastActiveAt": "2025-02-18T15:47:00Z"
     },
     {
       "gender": "männlich",
@@ -419,7 +425,9 @@
       "firstname": "Frederik",
       "lastname": "Feierabend",
       "country": "DE",
-      "id": "12b3"
+      "id": "12b3",
+      "registeredAt": "2023-01-12T10:23:00Z",
+      "lastActiveAt": "2025-02-18T15:47:00Z"
     },
     {
       "gender": "fluid",
@@ -428,7 +436,9 @@
       "firstname": "Kim",
       "lastname": "Kiss",
       "country": "LU",
-      "id": "1657"
+      "id": "1657",
+      "registeredAt": "2023-01-12T10:23:00Z",
+      "lastActiveAt": "2025-02-18T15:47:00Z"
     }
   ]
 }
