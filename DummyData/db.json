@@ -2,8 +2,10 @@
   "boxes": [
     {
       "title": "Bezirke Wien",
+      "author": "kimDragon",
+      "date": "24.12.2024",
       "description": "DDDD",
-      "isPublic": false,
+      "public": false,
       "id": "1"
     },
     {
@@ -383,7 +385,8 @@
       "country": "AT",
       "id": "9dd5",
       "registeredAt": "2023-01-12T10:23:00Z",
-      "lastActiveAt": "2025-02-18T15:47:00Z"
+      "lastActiveAt": "2025-02-18T15:47:00Z",
+      "profilePic": "../img/dummy-profile-pic.png"
     },
     {
       "gender": "männlich",
@@ -394,7 +397,8 @@
       "country": "DE",
       "id": "5eb2",
       "registeredAt": "2023-01-12T10:23:00Z",
-      "lastActiveAt": "2025-02-18T15:47:00Z"
+      "lastActiveAt": "2025-02-18T15:47:00Z",
+      "profilePic": "../img/dummy-profile-pic.png"
     },
     {
       "gender": "non binary",
@@ -405,7 +409,8 @@
       "country": "CH",
       "id": "bf6a",
       "registeredAt": "2023-01-12T10:23:00Z",
-      "lastActiveAt": "2025-02-18T15:47:00Z"
+      "lastActiveAt": "2025-02-18T15:47:00Z",
+      "profilePic": "../img/dummy-profile-pic.png"
     },
     {
       "gender": "weiblich",
@@ -416,7 +421,8 @@
       "country": "SE",
       "id": "f463",
       "registeredAt": "2023-01-12T10:23:00Z",
-      "lastActiveAt": "2025-02-18T15:47:00Z"
+      "lastActiveAt": "2025-02-18T15:47:00Z",
+      "profilePic": "../img/dummy-profile-pic.png"
     },
     {
       "gender": "männlich",
@@ -427,7 +433,8 @@
       "country": "DE",
       "id": "12b3",
       "registeredAt": "2023-01-12T10:23:00Z",
-      "lastActiveAt": "2025-02-18T15:47:00Z"
+      "lastActiveAt": "2025-02-18T15:47:00Z",
+      "profilePic": "../img/dummy-profile-pic.png"
     },
     {
       "gender": "fluid",
@@ -438,7 +445,101 @@
       "country": "LU",
       "id": "1657",
       "registeredAt": "2023-01-12T10:23:00Z",
-      "lastActiveAt": "2025-02-18T15:47:00Z"
+      "lastActiveAt": "2025-02-18T15:47:00Z",
+      "profilePic": "../img/dummy-profile-pic.png"
+    }
+  ],
+  "comments": [
+    {
+      "commentId": 1,
+      "commentBox": "English classroom vocabulary",
+      "boxId": "02",
+      "author": "mini",
+      "createdAt": "2024-01-10T10:15:00Z",
+      "updatedAt": "2024-01-10T10:15:00Z",
+      "text": "Die Karte ist echt hilfreich – danke fürs Teilen!"
+    },
+    {
+      "commentId": 2,
+      "commentBox": "English classroom vocabulary",
+      "boxId": "03",
+      "author": "justme",
+      "createdAt": "2024-01-11T12:30:00Z",
+      "updatedAt": "2024-01-11T12:30:00Z",
+      "text": "Hier fehlt vielleicht noch eine kurze Erklärung, aber sonst top."
+    },
+    {
+      "commentId": 3,
+      "boxId": "04",
+      "author": "schwupsdiwups",
+      "createdAt": "2024-01-12T08:22:00Z",
+      "updatedAt": "2024-01-12T08:22:00Z",
+      "text": "Sehr gut verständlich und übersichtlich aufgebaut!"
+    },
+    {
+      "commentId": 4,
+      "commentBox": "Knochen Deutsch-Latein",
+      "boxId": "05",
+      "author": "kimDragon",
+      "createdAt": "2024-01-13T18:00:00Z",
+      "updatedAt": "2024-01-13T18:00:00Z",
+      "text": "Hat mir beim Lernen richtig weitergeholfen 🧠✨"
+    },
+    {
+      "commentId": 5,
+      "commentBox": "Knochen Deutsch-Latein",
+      "boxId": "06",
+      "author": "freddy",
+      "createdAt": "2024-01-14T09:10:00Z",
+      "updatedAt": "2024-01-14T09:10:00Z",
+      "text": "Cooles Deck! Vielleicht könnte man noch ein Beispiel hinzufügen."
+    },
+    {
+      "commentId": 6,
+      "commentBox": "Heilpflanzen Deutsch - Latein",
+      "boxId": "02",
+      "author": "mini",
+      "createdAt": "2024-01-15T14:00:00Z",
+      "updatedAt": "2024-01-15T14:00:00Z",
+      "text": "Ich habe etwas Ähnliches gemacht – deins ist deutlich schöner!"
+    },
+    {
+      "commentId": 7,
+      "commentBox": "Heilpflanzen Deutsch - Latein",
+      "boxId": "03",
+      "author": "justme",
+      "createdAt": "2024-01-16T11:45:00Z",
+      "updatedAt": "2024-01-16T11:45:00Z",
+      "text": "Kann ich das Deck irgendwie exportieren? Wäre super praktisch."
+    },
+    {
+      "commentId": 8,
+      "commentBox": "Heilpflanzen Deutsch - Latein",
+      "boxId": "04",
+      "author": "schwupsdiwups",
+      "createdAt": "2024-01-17T16:30:00Z",
+      "updatedAt": "2024-01-17T16:30:00Z",
+      "text": "Habe ein paar Fehler gefunden, aber insgesamt sehr gut!"
+    },
+    {
+      "commentId": 9,
+      "commentBox": "English irregular plurals",
+      "boxId": "05",
+      "author": "kimDragon",
+      "createdAt": "2024-01-18T19:20:00Z",
+      "updatedAt": "2024-01-18T19:20:00Z",
+      "text": "Sehr motivierend – ich lerne direkt weiter 🔥"
+    },
+    {
+      "commentId": 10,
+      "commentBox": "English irregular plurals",
+      "boxId": "06",
+      "author": "freddy",
+      "createdAt": "2024-01-19T07:50:00Z",
+      "updatedAt": "2024-01-19T07:50:00Z",
+      "text": "Super Ergänzung zur Box von letzter Woche, danke!"
     }
   ]
+
+
 }

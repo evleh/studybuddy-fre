@@ -1,0 +1,73 @@
+[
+  {
+    "comment_id": 1,
+    "boxId": "02",
+    "createdBy": "mini",
+    "createdAt": "2024-01-10T10:15:00Z",
+    "updatedAt": "2024-01-10T10:15:00Z"
+  },
+  {
+    "comment_id": 2,
+    "boxId": "03",
+    "createdBy": "justme",
+    "createdAt": "2024-01-11T12:30:00Z",
+    "updatedAt": "2024-01-11T12:30:00Z"
+  },
+  {
+    "comment_id": 3,
+    "boxId": "04",
+    "createdBy": "schwupsdiwups",
+    "createdAt": "2024-01-12T08:22:00Z",
+    "updatedAt": "2024-01-12T08:22:00Z"
+  },
+  {
+    "comment_id": 4,
+    "boxId": "05",
+    "createdBy": "kimDragon",
+    "createdAt": "2024-01-13T18:00:00Z",
+    "updatedAt": "2024-01-13T18:00:00Z"
+  },
+  {
+    "comment_id": 5,
+    "boxId": "06",
+    "createdBy": "freddy",
+    "createdAt": "2024-01-14T09:10:00Z",
+    "updatedAt": "2024-01-14T09:10:00Z"
+  },
+  {
+    "comment_id": 6,
+    "boxId": "02",
+    "createdBy": "mini",
+    "createdAt": "2024-01-15T14:00:00Z",
+    "updatedAt": "2024-01-15T14:00:00Z"
+  },
+  {
+    "comment_id": 7,
+    "boxId": "03",
+    "createdBy": "justme",
+    "createdAt": "2024-01-16T11:45:00Z",
+    "updatedAt": "2024-01-16T11:45:00Z"
+  },
+  {
+    "comment_id": 8,
+    "boxId": "04",
+    "createdBy": "schwupsdiwups",
+    "createdAt": "2024-01-17T16:30:00Z",
+    "updatedAt": "2024-01-17T16:30:00Z"
+  },
+  {
+    "comment_id": 9,
+    "boxId": "05",
+    "createdBy": "kimDragon",
+    "createdAt": "2024-01-18T19:20:00Z",
+    "updatedAt": "2024-01-18T19:20:00Z"
+  },
+  {
+    "comment_id": 10,
+    "boxId": "06",
+    "createdBy": "freddy",
+    "createdAt": "2024-01-19T07:50:00Z",
+    "updatedAt": "2024-01-19T07:50:00Z",
+    "text": "text"
+  }
+]
