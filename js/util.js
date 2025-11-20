@@ -10,3 +10,13 @@ export function processElementsTaggedByCSSClasses() {
 
 if (!window.sb) window.sb = {}
 window.sb.processElementsTaggedByCSSClasses = processElementsTaggedByCSSClasses;
+
+export function searchTable(searchId, searchTable){
+    $(`#${searchId}`).on("keyup", function(){
+        const searchInput = $(this).val().toLowerCase();
+        $(`#${searchTable} tr`).each(function(){
+            const row = $(this).text().toLowerCase();
+            $(this).toggle(row.includes(searchInput));
+        })
+    })
+}
