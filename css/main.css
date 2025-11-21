@@ -54,7 +54,7 @@ body {
 
 
 /*003-shared-boxes*/
-#list-of-shared-boxes, #list-of-search-results {margin-top: 10px; margin-bottom: 10px}
+#list-of-shared-boxes, #list-of-search-results, #list-of-all-boxes {margin-top: 10px; margin-bottom: 10px}
 
 .img-w-margin {
     margin-top: 10px;
