@@ -1,0 +1,24 @@
+{
+  "name": "studybuddy-fre",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/evleh/studybuddy-fre#readme",
+  "bugs": {
+    "url": "https://github.com/evleh/studybuddy-fre/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evleh/studybuddy-fre.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "nosuchfile.js",
+  "scripts": {
+    "jsonserver": "json-server --watch DummyData/db.json --port 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
