@@ -33,7 +33,6 @@
           <button id="showpw" type="button" class="btn btn-success" onclick="showpassword('password')">Passwort anzeigen</button>
           <button id="hidepw" type="button" class="btn btn-warning" onclick="showpassword('password')">Passwort verstecken</button>
           <button type="button" class="btn btn-primary offset-sm-2" onclick="window.sb.loginAndRedirectOnSuccess()">Login</button>
-          <a href="#" role="button" class="btn btn-primary" id="cheat-button-1">cheat</a>
 
       </div>
 
@@ -92,14 +91,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script type="module" src="../js/default-document-ready-stuff.js"></script>
-<script>
-    $('#cheat-button-1').on("click",function (event) {
-            $('#username')[0].value = "UsernameWithRandomNumber_4_choosen_by_fair_diceroll";
-            $('#password')[0].value = "9AAA-----999aaa";
-            event.preventDefault()
-            event.stopPropagation()
-    });
-</script>
 
 </body>
 </html>
