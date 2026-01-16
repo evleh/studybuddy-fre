@@ -118,13 +118,6 @@
 
         <div class="input-group mb-3">
             <button type="submit" class="btn btn-primary">Registrieren</button>
-
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Cheat menu</button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" onclick="register_prefill(1)">Prefill with dummy data</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">dummy entry</a></li>
-            </ul>
         </div>
 
 
@@ -197,18 +190,7 @@
 
     });
 
-    function register_prefill(set) {
-        if ((set === 1) || true) {
-            let pw = "9AAA-----999aaa"
-            $("#password")[0].value = pw;
-            $("#passwordrep")[0].value = pw;
-            $("#firstname")[0].value = "VornameByCheatMenu"
-            $("#lastname")[0].value = "NachnameByCheatMenu"
-            $("#email")[0].value = "examplecom_reserved_by_rfc_to_not_exist@example.com"
-            $("#landDataList")[0].value = $("#datalistOptions option")[2].value; // [2] is 'AT'
-            $("#name")[0].value = "UsernameWithRandomNumber_4_choosen_by_fair_diceroll"
-        }
-    }
+
 </script>
 
 </body>
