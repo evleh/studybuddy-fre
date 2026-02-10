@@ -2,6 +2,13 @@ import {acquire_token} from "./bae-connect-token.js";
 import {get_me_ownboxes, get_me_userinfo} from "./bae-connect-me.js";
 import {create_box, change_box, read_box, delete_box, read_all_boxes} from "./bae-connect-boxes.js";
 import {change_card, create_card, delete_card, read_all_cards, read_card} from "./bae-connect-cards.js";
+import {
+    change_comment,
+    create_comment,
+    delete_comment,
+    read_all_comments,
+    read_comment
+} from "./bae-connect-comments.js";
 
 function string2cssClassAndRole(str) {
     let kind = str?.toUpperCase?.() ?? (str?'OK':'ERROR');
@@ -165,6 +172,105 @@ try {
 } catch(e) {
     appendAlertDiv(`Deletion of box fails even though cards were deleted `, 'ERROR')
 }
+
+/**
+ * Testing comment endpoint
+ */
+
+try {
+    let newBoxForComments = await create_box({
+        'title': 'box for testing comment endpoint', description: 'description of box for comment testing',
+        'public': true, 'ownerId': meUserInfo.id
+    })
+
+    let textOfComment = `text for comment test with random number ${Math.round(Math.random()*100)}`;
+    try {
+        let createCommentResponse = await create_comment({
+            'boxId': newBoxForComments.id,
+            'text': textOfComment,
+            'authorId': meUserInfo.id, // TODO: refactor API / BAE changes? perhaps authorId automatic
+        })
+        appendAlertDiv(`comment: comment creation request did not throw.`)
+
+        try {
+            let readBoxDataAgain = await read_box(newBoxForComments.id);
+            appendAlertDiv(`comments: adding comment to new box makes box have one comment.`,
+                readBoxDataAgain.commentIds.length === 1)
+        } catch(e) {
+            appendAlertDiv(`comment: check of number of comments in box did not work out/threw.`)
+        }
+
+        // first read check
+        let readCommentResponse;
+        try {
+            readCommentResponse = await read_comment(createCommentResponse.id);
+            appendAlertDiv(`comment: read after create did not throw.`);
+            appendAlertDiv(`comment text read same as intended to be written.`, readCommentResponse.text === textOfComment);
+        } catch (e) {
+            appendAlertDiv(`comment: some unexpected throw in the read/update/read chain`)
+        }
+
+        // update
+        let updatedCommentText = `updated comment text with random number ${Math.round(Math.random()*100)}`;
+        try {
+            let updateResponse = await change_comment(readCommentResponse.id, {
+                'text': updatedCommentText
+            })
+            appendAlertDiv(`comment: update did not throw.`);
+            let readCommentAfterUpdate = await read_comment(readCommentResponse.id);
+            appendAlertDiv(`comment: text after update changed correctly `,
+                readCommentAfterUpdate.text === updatedCommentText)
+        } catch(e) {
+            appendAlertDiv(`comment: update failed`, 'ERROR')
+        }
+
+        try {
+            let readAllCommentsResponse = await read_all_comments();
+            appendAlertDiv(`comment: read all endpoint query ok.`)
+            appendAlertDiv(`comment: read all when >1 comments returns >1 elements`,
+                readAllCommentsResponse.length >1)
+        } catch(e) {
+            appendAlertDiv(`comments: read all failed.`, 'ERROR')
+        }
+
+        // now for deletion
+        try {
+            let deleteCommentResponse = await delete_comment(readCommentResponse.id);
+            appendAlertDiv(`comment: deleted comment did not throw.`)
+            // try reading now -> should fail
+            try {
+                let readAfterDeleteResponse = await read_comment(readCommentResponse.id);
+                appendAlertDiv(`comment: read after delete was a thing?`, 'ERROR')
+            } catch(e) {
+                appendAlertDiv(`comment: read after delete failed, as it should`)
+            }
+        } catch (e) {
+            appendAlertDiv(`comment: deletion failed unexpectedly.`, 'ERROR')
+        }
+        // check double deletion behavior
+        try {
+            await delete_comment(readCommentResponse.id);
+            appendAlertDiv(`comment: double delete did not throw.`, 'ERROR')
+        } catch(e) {
+            appendAlertDiv(`comment: deletion of deleted comments did fail. seems ok.`)
+        }
+
+
+    } catch(e) {
+        appendAlertDiv(`creating a comment failed.`, 'ERROR')
+        console.log(e);
+    }
+
+} catch(e) {
+    appendAlertDiv(`creating box for testing comments failed.`, 'ERROR')
+}
+
+
+
+
+
+
+
 
 
 appendAlertDiv(`If you see this testing code ran until the end`, 'INFO')
