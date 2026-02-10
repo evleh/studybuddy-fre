@@ -11,6 +11,12 @@ import {
 } from "./bae-connect-comments.js";
 import {appendNotification} from "./error-ui.js";
 import {get_public_boxes} from "./bae-connect-public.js";
+import {change_user, create_user, delete_user, read_all_users, read_user} from "./bae-connect-users.js";
+
+
+/**
+ * output convenience functions
+ */
 
 function string2cssClassAndRole(str) {
     let kind = str?.toUpperCase?.() ?? (str?'OK':'ERROR');
@@ -19,18 +25,27 @@ function string2cssClassAndRole(str) {
         case "OK": return 'class="alert alert-success" role="alert"';
         case "ERROR": return 'class="alert alert-danger" role="alert"';
         case "INFO": return 'class="alert alert-info" role="alert"';
+        case "WARN": return 'class="alert alert-warning" role="alert"';
         default: return 'class="alert alert-primary" role="alert"';
     }
 }
 function appendAlertDiv(msg, kind) {
-    $('#test-results-output-col').append(`<div ${string2cssClassAndRole(kind)}>${msg}</div>`);
+    const custom_style = 'padding-top: 0.25em; padding-bottom: 0.25em;'
+    $('#test-results-output-col').append(`<div ${string2cssClassAndRole(kind)} style="${custom_style}">${msg}</div>`);
+}
+
+/**
+ * this ... simplifies ... things.
+ */
+async function acquire_default_admin_token() {
+    return await acquire_token({username: 'admin', password: 'admin'});
 }
 
 /**
  * Main code path starts here
  */
 
-let tokenRes = await acquire_token({username:'admin', password:'admin'});
+let tokenRes = await acquire_default_admin_token()
 //console.log(tokenRes);
 appendAlertDiv('token request did not fail throwing.')
 
@@ -311,9 +326,161 @@ try {
     appendNotification(`public boxes: unresolved throw in testing routing`)
 }
 
+/**
+ * testing of user endpoint
+ */
+
+try {
+    // basic check: assuming we are logged in and admin a read_all_users should have > 0 results
+    try {
+        let allUsersResult = await read_all_users();
+        appendAlertDiv(`user: read_all did not throw`)
+        appendAlertDiv(`user: read_all.length > 0`, allUsersResult.length > 0)
+    } catch(e) {
+        appendAlertDiv(`user: read_all did throw - at least assumption error here.`, 'ERROR');
+    }
+
+    let verySimplePassword = `verySimplePassword${Math.round(Math.random()*100)}`;
+    let randomUserName = `randomUser${Math.round(Math.random()*100)}`;
+    let basic_user_to_create =
+    {
+        "username": randomUserName,
+        "password": verySimplePassword,
+        "email": `rfc2606compliant${Math.round(Math.random()*100)}@example.com`,
+        "gender": `required${Math.round(Math.random()*100)}`,
+        "firstname": `test-firstname${Math.round(Math.random()*100)}`,
+        "lastname": `test-lastname${Math.round(Math.random()*100)}`,
+        "country": `randomCountry${Math.round(Math.random()*100)}`,
+    }
+    ;
+
+    let basicUserCreationResponse;
+    try{
+        basicUserCreationResponse = await create_user(basic_user_to_create)
+        appendAlertDiv(`user: creation of basic test user did not throw`)
+
+        // try reading the user data via user EP
+        let basicUserRead = await read_user(basicUserCreationResponse.id)
+        appendAlertDiv(`user: read after create did not throw (as admin).`)
+
+        let values_to_compare = Object.getOwnPropertyNames(basic_user_to_create) // compare all keys
+            .filter((v) => v!=='password');             // expect password plz
+        //console.log(values_to_compare)
+        for (const value_to_compare of values_to_compare) {
+            appendAlertDiv(`user: comparing value after read for: ${value_to_compare}`,
+                basicUserRead[value_to_compare] === basic_user_to_create[value_to_compare]);
+        }
+        //console.log(basic_user_to_create);
+        //console.log(basicUserRead);
+
+        // try getting a token for the user now
+        try {
+            let authResponse = acquire_token({
+                username: basic_user_to_create.username,
+                password: basic_user_to_create.password
+            })
+            appendAlertDiv(`user: request for auth token did not throw.`)
+            appendAlertDiv(`user: request for auth token returned json with an auth token`,
+                authResponse.accessToken)
+        } catch(e) {
+            appendAlertDiv(`user: trying to get token with userdata after creation did throw`, 'ERROR')
+        }
+        // reset admin auth
+        await acquire_default_admin_token()
+
+        // try updating only one value (lets say firstname)
+        try{
+            let newFirstName = `newFirstName${Math.round(Math.random()*100)}`
+            // note: ATM, for dto/entity/validation/codepath reasons the update must send (some) required values
+            // even if they don't change.
+
+            let dataForUserUpdateRequest = {
+                "firstname": newFirstName,
+                "lastname": basic_user_to_create.lastname,
+                "gender": basic_user_to_create.gender,
+                "country": basic_user_to_create.country,
+                "email": basic_user_to_create.email, // send email or it gets changed to "" (atm)
+            };
+            let updateResponse = await change_user(basicUserRead.id, dataForUserUpdateRequest)
+            appendAlertDiv(`user: request to change user data did not throw`)
+
+            let readAfterUpdate = await read_user(basicUserRead.id);
+            appendAlertDiv(`user: read after update did not throw.`)
+
+            appendAlertDiv(`user: update of firstname changed value correctly`,
+                readAfterUpdate.firstname === dataForUserUpdateRequest.firstname)
+            appendAlertDiv(`user: updating firstname does not change lastname, as requested?`,
+                readAfterUpdate.lastname === dataForUserUpdateRequest.lastname)
+
+            // try again getting an auth token; just to be safe ...
+            try {
+                let authResponse = await acquire_token({
+                    username: basic_user_to_create.username,
+                    password: basic_user_to_create.password
+                })
+                appendAlertDiv(`user: (second) request for auth token did not throw.`)
+                appendAlertDiv(`user: (second) request for auth token returned json with an auth token`,
+                    authResponse?.accessToken !== null)
+            } catch(e) {
+                appendAlertDiv(`user: (second) trying to get token with userdata after creation did throw`, 'ERROR')
+            }
+            // reset admin auth
+            await acquire_default_admin_token()
+
+            // try with wrong password, should not work now?
+            try {
+                let authResponse = await acquire_token({
+                    username: basic_user_to_create.username,
+                    password: "notAPassword"+basic_user_to_create.password+"byAddingData"
+                })
+                appendAlertDiv(`user: (wrongpw) request for auth token did not throw.`, 'ERROR')
+                appendAlertDiv(`user: (wrongpw) request for auth token did not return an auth token????`,
+                    authResponse?.accessToken === null)
+            } catch(e) {
+                appendAlertDiv(`user: (wrongpw) trying to get token with wrong password does throw. yay.`)
+            }
+            // reset admin auth
+            await acquire_default_admin_token()
+
+            /**
+             * check admin bit stuff.
+             */
+            let updateToAdminBody = dataForUserUpdateRequest;
+            updateToAdminBody.admin = true;
+
+            let elevateToAdminResponse = await change_user(basicUserRead.id, updateToAdminBody);
+            console.log(updateToAdminBody);
+            console.log(elevateToAdminResponse)
+            appendAlertDiv(`user: request to change admin flag to ture did not throw.`)
+            appendAlertDiv(`user: admit bit set in update response - unclear judgement`,
+                (elevateToAdminResponse.admin === updateToAdminBody.admin)?
+                    'WARN':'WARN'); // todo: what does it mean?
 
 
 
+
+        } catch(e) {
+            appendAlertDiv(`user: updating basic test user failed throwing.`, 'ERROR')
+        }
+
+
+        // deletion best done in the try-block of create
+        try {
+            let deletionResponse = await delete_user(basicUserCreationResponse.id);
+            appendAlertDiv(`user: cleanup/deletion of test user did not throw.`)
+        } catch(e) {
+            appendAlertDiv(`user: cleanup/deletion of test user did throw, assumed failed:(`, false)
+        }
+
+    } catch(e) {
+        appendAlertDiv(`user: creation of basic user did throw :( `, false)
+    }
+
+
+
+} catch(e) {
+    appendAlertDiv(`user EP: uncaught throw in testing routine`, 'ERROR')
+}
 
 
 
