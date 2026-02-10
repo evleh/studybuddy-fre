@@ -139,6 +139,14 @@ try {
     appendAlertDiv(`card: error: change card testing threw unexpectedly.`, 'ERROR')
 }
 
+// what happens if we try deleting a box that still has cards?
+try {
+    let suddenBoxDeletionResponse = await delete_box(newBoxForCardTesting.id);
+    appendAlertDiv(`Deletion of box was done even though it still has cards?`, 'ERROR')
+} catch(e) {
+    appendAlertDiv(`Deletion of box fails if it has cards`, 'OK')
+}
+
 // delete card
 try {
     let deletionResponse = await delete_card(newCard.id)
@@ -150,6 +158,13 @@ try {
     appendAlertDiv(`Card: Something threw in the delete card testing.`, 'ERROR')
 }
 
+// delete box after deleting all cards = works?
+try {
+    let responsibleBoxDeletionResponse = await delete_box(newBoxForCardTesting.id);
+    appendAlertDiv(`Cards: Deletion of card-testing box successful`, 'OK')
+} catch(e) {
+    appendAlertDiv(`Deletion of box fails even though cards were deleted `, 'ERROR')
+}
 
 
 appendAlertDiv(`If you see this testing code ran until the end`, 'INFO')
