@@ -9,6 +9,8 @@ import {
     read_all_comments,
     read_comment
 } from "./bae-connect-comments.js";
+import {appendNotification} from "./error-ui.js";
+import {get_public_boxes} from "./bae-connect-public.js";
 
 function string2cssClassAndRole(str) {
     let kind = str?.toUpperCase?.() ?? (str?'OK':'ERROR');
@@ -271,7 +273,43 @@ try {
     appendAlertDiv(`creating box for testing comments failed.`, 'ERROR')
 }
 
+/**
+ * test public boxes endpoint
+ */
 
+try {
+    // get current public boxes for comparison and basic check
+    let firstPublicBoxesResult = await get_public_boxes();
+    appendAlertDiv(`p/b: did not throw;`)
+    let box1 = await create_box(
+        {
+            "title": "box1 - public",
+            "description": "box1 - public",
+            "ownerId": meUserInfo.id,
+            "public": true
+        }
+    );
+    let box2 = await create_box(
+        {
+            "title": "box2 - not public",
+            "description": "box2 - not public",
+            "ownerId": meUserInfo.id,
+            "public": false
+        }
+    );
+    appendAlertDiv(`p/b: creating a public and a non-public box did not throw.`)
+
+    let secondPublicBoxesResult = await get_public_boxes();
+    appendAlertDiv(`p/b: number of public boxes should increase by 1 if 1 public and 1 nonpublic boxes created`,
+        secondPublicBoxesResult.length === firstPublicBoxesResult.length+1);
+
+    await delete_box(box1.id);
+    await delete_box(box2.id);
+    appendAlertDiv(`p/b: cleanup of test-boxes did not throw.`);
+
+} catch(e) {
+    appendNotification(`public boxes: unresolved throw in testing routing`)
+}
 
 
 
