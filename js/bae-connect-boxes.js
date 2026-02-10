@@ -19,10 +19,18 @@ export function change_box(boxid, boxdata) {
         .then(response => response.json())
 }
 
-export function read_box(boxid, boxdata) {
-    let reqInit = request_initializer({
-        method: "GET",
-    })
-    return fetch(constants.BOXES_URL+`/${boxid}`, reqInit)
+export function read_box(boxid) {
+    return fetch(constants.BOXES_URL+`/${boxid}`, request_initializer())
+        .then(response => response.json())
+}
+
+export function read_all_boxes() {
+    return fetch(constants.BOXES_URL, request_initializer())
+        .then(response => response.json())
+}
+
+
+export function delete_box(boxid) {
+    return fetch(constants.BOXES_URL+`/${boxid}`, request_initializer({method: 'DELETE'}))
         .then(response => response.json())
 }
