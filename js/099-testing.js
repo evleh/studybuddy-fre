@@ -205,7 +205,7 @@ try {
         let createCommentResponse = await create_comment({
             'boxId': newBoxForComments.id,
             'text': textOfComment,
-            'authorId': meUserInfo.id, // TODO: refactor API / BAE changes? perhaps authorId automatic
+            'authorId': 0, // for testing the auto-author setting
         })
         appendAlertDiv(`comment: comment creation request did not throw.`)
 
@@ -223,6 +223,7 @@ try {
             readCommentResponse = await read_comment(createCommentResponse.id);
             appendAlertDiv(`comment: read after create did not throw.`);
             appendAlertDiv(`comment text read same as intended to be written.`, readCommentResponse.text === textOfComment);
+            appendAlertDiv(`comment: author id set correctly.`, readCommentResponse.authorId === meUserInfo.id)
         } catch (e) {
             appendAlertDiv(`comment: some unexpected throw in the read/update/read chain`)
         }
@@ -358,6 +359,20 @@ try {
     try{
         basicUserCreationResponse = await create_user(basic_user_to_create)
         appendAlertDiv(`user: creation of basic test user did not throw`)
+        try {
+            await create_user(basic_user_to_create);
+            appendAlertDiv(`user: second creation of user did not throw, but should.`, 'ERROR')
+        } catch(e) {
+            appendAlertDiv(`user: creation of same user twice forbidden, and it did throw as expected`);
+        }
+        try {
+            let userDataEmptyUsername = Object.assign({},basic_user_to_create);
+            userDataEmptyUsername.username = '';
+            await create_user(userDataEmptyUsername);
+            appendAlertDiv(`user: creation of user with empty string as username did not fail.`, 'ERROR')
+        } catch(e) {
+            appendAlertDiv(`user: creation of user with empty string very forbidden and did fail`);
+        }
 
         // try reading the user data via user EP
         let basicUserRead = await read_user(basicUserCreationResponse.id)
