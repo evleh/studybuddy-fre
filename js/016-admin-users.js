@@ -1,4 +1,5 @@
 import {searchTable} from "./util.js";
+import {read_all_users} from "./bae-connect-users.js";
 
 
 $(document).ready(function() {
@@ -9,19 +10,23 @@ $(document).ready(function() {
 
 function getUsers(){
     console.log("lalala")
-    $.ajax({
-        url: "http://localhost:3000/users/",
-        method: "GET",
-        dataType: "json",
-        headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-        success: function (data){
-            console.log("successfully loaded users");
-            console.log(data);
-            renderUsers(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error("Fehler beim Laden der user:", textStatus, errorThrown);
-        }
+    // $.ajax({
+    //     url: "http://localhost:3000/users/",
+    //     method: "GET",
+    //     dataType: "json",
+    //     headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
+    //     success: function (data){
+    //         console.log("successfully loaded users");
+    //         console.log(data);
+    //         renderUsers(data);
+    //     },
+    //     error: function (jqXHR, textStatus, errorThrown) {
+    //         console.error("Fehler beim Laden der user:", textStatus, errorThrown);
+    //     }
+    // })
+    let readUsersResponse = read_all_users();
+    readUsersResponse.then(users => {
+        renderUsers(users)
     })
 }
 
@@ -30,7 +35,7 @@ function renderUsers(data){
     tbl.append(`<thead><tr> <th> Name </th> <th>Registriert am </th> <th> zuletzt aktiv am </th> </tr></thead>`);
     tbl.append("<tbody>")
     $.each(data, function(i, user) {
-        const $row = $(`<tr> <td>${user.name}</td> <td>${user.registeredAt}</td> <td>${user.lastActiveAt}</td> </tr>`);
+        const $row = $(`<tr> <td>${user.username}</td> <td>${user.registeredAt}</td> <td>${user.lastActiveAt}</td> </tr>`);
         $row.on("click", function () {
             window.location.href = `019-user-detail.html?id=${user.id}`;
         });
