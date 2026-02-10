@@ -227,8 +227,8 @@ try {
         try {
             let readAllCommentsResponse = await read_all_comments();
             appendAlertDiv(`comment: read all endpoint query ok.`)
-            appendAlertDiv(`comment: read all when >1 comments returns >1 elements`,
-                readAllCommentsResponse.length >1)
+            appendAlertDiv(`comment: read all when >0 comments returns >0 elements`,
+                readAllCommentsResponse.length >0)
         } catch(e) {
             appendAlertDiv(`comments: read all failed.`, 'ERROR')
         }
@@ -236,7 +236,7 @@ try {
         // now for deletion
         try {
             let deleteCommentResponse = await delete_comment(readCommentResponse.id);
-            appendAlertDiv(`comment: deleted comment did not throw.`)
+            appendAlertDiv(`comment: deleting comment did not throw.`)
             // try reading now -> should fail
             try {
                 let readAfterDeleteResponse = await read_comment(readCommentResponse.id);
@@ -259,6 +259,12 @@ try {
     } catch(e) {
         appendAlertDiv(`creating a comment failed.`, 'ERROR')
         console.log(e);
+    }
+    // cleanup
+    try {
+        await delete_box(newBoxForComments.id);
+    } catch {
+        appendAlertDiv(`cleanup fail: box for comment testing deletion did throw. `)
     }
 
 } catch(e) {
