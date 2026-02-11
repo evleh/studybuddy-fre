@@ -1,3 +1,6 @@
+import {read_user} from "./bae-connect-users.js";
+import {read_all_boxes} from "./bae-connect-boxes.js";
+import {read_all_comments} from "./bae-connect-comments.js";
 
 $(document).ready(async function() {
     const params = new URLSearchParams(window.location.search);
@@ -9,7 +12,7 @@ $(document).ready(async function() {
         renderUser(user);
         renderUserActions(user);
 
-        const boxes = await getBoxes(user.name);
+        const boxes = await getBoxes(user.id);
         renderUserBoxes(boxes);
 
         const comments = await getUserComments(user.name);
@@ -22,32 +25,15 @@ $(document).ready(async function() {
 });
 
 async function getUser(id){
-    try {
-        const data = await $.ajax({
-            method: "GET",
-            url: "http://localhost:3000/users" + "/" + id,
-            dataType: "json",
-            headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
-        });
-        return data;
-    } catch (err) {
-        console.error("API Fehler:", err);
-        throw err;
-    }
+    return await read_user(id);
 }
 
-async function getBoxes(author){
+async function getBoxes(ownerId){
     try {
-        const data = await $.ajax({
-            method: "GET",
-            url: "http://localhost:3000/boxes?author=" + author,
-            dataType: "json",
-            headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
-        })
-        return data;
-    } catch (err){
-        console.error("API Fehler when loading boxes:", err);
-        throw err;
+        let allBoxes = await read_all_boxes();
+        return allBoxes.filter((box) => box.ownerId === ownerId);
+    } catch(e) {
+        return []; // empty array good fallback if something iterates over the result methinks
     }
 }
 
@@ -90,18 +76,12 @@ function renderUserBoxes(boxes){
 
 }
 
-async function getUserComments(author){
+async function getUserComments(authorId){
     try {
-        const data = await $.ajax({
-            method: "GET",
-            url: "http://localhost:3000/comments?author=" + author,
-            dataType: "json",
-            headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
-        })
-        return data;
-    } catch (err){
-        console.error("API Fehler when loading boxes:", err);
-        throw err;
+        let allComments = await read_all_comments();
+        return allComments.filter((comment) => comment.authorId === authorId);
+    } catch(e) {
+        return []; // empty array good fallback if something iterates over the result methinks
     }
 }
 
@@ -112,7 +92,7 @@ function renderUserComments(comments){
     $tbl.append( $("<tbody>"))
 
     $.each(comments, function (i, comment){
-        const $row = $(`<tr> <td>${comment.commentBox}</td> <td>${comment.createdAt}</td> <td>${comment.text}</td> </tr>`);
+        const $row = $(`<tr> <td>${comment.boxId}</td> <td>${comment.createdAt}</td> <td>${comment.text}</td> </tr>`);
 
         const $deleteBtn = $("<button>").text("Löschen").addClass("btn btn-sm btn-primary")
         const $td = $('<td></td>');

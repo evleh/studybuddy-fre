@@ -1,41 +1,42 @@
 import constants from "./constants.js";
+import {read_box} from "./bae-connect-boxes.js";
+import {read_card} from "./bae-connect-cards.js";
 
 let boxTitle = "Bezirke Wien"
-$(document).ready(function() {
 
+async function readBoxAndQuestionData() {
     // get query-parameters from url
     const params = new URLSearchParams(window.location.search);
     const boxId = params.get("id")
     console.log(boxId)
 
-    // Get info from current box
-    $.ajax({
-        method: "GET",
-        url: constants.BOXES_URL + "/" + boxId,
-        dataType: "json",
-        headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-        success:function (data){
-            console.log(data);
-            boxTitle = data.title;
-            renderFormNewCard(data);
-        },
-        error: function (){ // Todo: ordentlich machen wenn request nicht durchgeht
+    let box = await read_box(boxId)
+        .then((box) => {
+            boxTitle = box.title
+            renderFormNewCard(box)
+            return Promise.resolve(box); // to be able to wait at the read_box level.
+        })
+        .catch(() => {
+            // Todo: ordentlich machen wenn request nicht durchgeht
             console.log("error")
-        }
-    })
+            return Promise.resolve("aaaaaaaaaaaa"); // to be able to wait at the read_box level.
+        })
 
-    // Show existing Questions
-    $.ajax({
-        method: "GET",
-        url: "../DummyData/questions.json",
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-            renderCards(data);
-        }
-    })
+    // does this work?
+    console.log(box);
+    console.log(box.cardIds)
+    let cards = box.cardIds.map(async (cardId) => {
+        let cardRead = await read_card(cardId)
+        return cardRead;
+    });
 
+    renderCards(cards);
+}
 
+$(document).ready(async function() {
+
+    await readBoxAndQuestionData();
+    // todo: register handler on button "neue frage erstellen" und make that work
 
 });
 
@@ -43,26 +44,23 @@ function renderFormNewCard(data){
     $('#box-title').append(data.title);
 }
 
-function renderCards(data){
-    $.each(data, function(i, card){
+function renderCards(cards){
+    $.each(cards, function(i, card){
         // todo fragen per box filter testen bei erfolgreicher abfrage der aktuellen kartei aus dem backend
         // todo fragen element fertig machen
-        if(card.box === boxTitle){
-            const $cardElement = $("<div>").addClass("list-group-item list-group-item-action d-flex justify-content-between align-items-center");
+        const $cardElement = $("<div>").addClass("list-group-item list-group-item-action d-flex justify-content-between align-items-center");
 
-            const $title = $("<span>").text("Frage: " + card.question);
+        const $title = $("<span>").text("Frage: " + card.question);
 
-            const $editBtn = $("<button>").text("Bearbeiten").addClass("btn btn-sm btn-outline-primary")
-            const $deleteBtn = $("<button>").text("Löschen").addClass("btn btn-sm btn-outline-primary")
-            const $buttonGroup = $("<div>")
-                .addClass("d-flex gap-2")
-                .append($editBtn)
-                .append($deleteBtn);
+        const $editBtn = $("<button>").text("Bearbeiten").addClass("btn btn-sm btn-outline-primary")
+        const $deleteBtn = $("<button>").text("Löschen").addClass("btn btn-sm btn-outline-primary")
+        const $buttonGroup = $("<div>")
+            .addClass("d-flex gap-2")
+            .append($editBtn)
+            .append($deleteBtn);
 
-            $cardElement.append($title).append($buttonGroup);
-            $("#cards").append($cardElement);
-        }
-
+        $cardElement.append($title).append($buttonGroup);
+        $("#cards").append($cardElement);
 
     })
 
