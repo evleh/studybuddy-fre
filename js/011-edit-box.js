@@ -1,14 +1,16 @@
 import constants from "./constants.js";
 import { initFormValidation } from "./formValidation.js";
+import {change_box, delete_box} from "./bae-connect-boxes.js";
 
 $(document).ready(function() {
     initFormValidation();
 
     // get query-parameters from url
     const params = new URLSearchParams(window.location.search);
-    //const boxId = params.get("id");
-    const boxId = 1;
+    const boxId = params.get("id");
+    //const boxId = 1;
     loadBox(boxId);
+    console.log(boxId)
 
     $('#edit-box').on("submit", function(e) {
         e.preventDefault();
@@ -31,8 +33,8 @@ function loadBox(boxId){
     console.log("load box");
     $.ajax({
         method: "GET",
-        url: "http://localhost:3000/boxes" + "/" + boxId,
-        //url: constants.BOXES_URL + "/" + boxId,
+        //url: "http://localhost:3000/boxes" + "/" + boxId,
+        url: constants.BOXES_URL + "/" + boxId,
         dataType: "json",
         headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
         success:function (data){
@@ -48,7 +50,7 @@ function loadBox(boxId){
 function renderBox(data){
     $('#box-title').val(data.title);
     $('#box-description').val(data.description);
-    $('#is-public-box').val(data.isPublic);
+    $('#is-public-box').val(data.public);
 }
 
 function updateBox(e, boxId){
@@ -59,52 +61,57 @@ function updateBox(e, boxId){
     var description = $("#box-description").val();
     var isPublic = $("#is-public-box").is(":checked");
 
-    const post_data = { title: title, description: description, isPublic: isPublic};
+    const post_data = { title: title, description: description, public: isPublic};
 
-    $.ajax({
-        //url: constants.BOXES_URL,
-        url: "http://localhost:3000/boxes" + "/" + boxId,
-        type: "PUT",
-        data: JSON.stringify(post_data),
-        timeout: 3000,
-        headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-        success: function (data){
+    change_box(boxId, post_data)
+        .then((data) => {
             console.log("Update erfolgreich: ", data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error("Fehler beim Update:", textStatus, errorThrown);
-
-            const msg = jqXHR.responseJSON?.message || errorThrown || "Unbekannter Fehler";
-
             if (window.sb?.appendNotification) {
                 window.sb.appendNotification({
-                    title: 'Fehler beim Update',
-                    type: window.sb.alertTypes.ERROR,
-                    message: msg,
+                    title: 'Update erfolgreich',
+                    type: window.sb.alertTypes.SUCCESS,
+                    message: `Kartei ${data.title} gespeichert.`,
                     scrollIntoView: true
                 });
-            } else {
-                alert("Fehler: " + msg); // Fallback
             }
-        }
+        })
+        .catch((jqXHR, textStatus, errorThrown) => { // todo: these likely query params, not jsonres params?
+                    console.error("Fehler beim Update:", textStatus, errorThrown);
 
-    })
+                    const msg = jqXHR.responseJSON?.message || errorThrown || "Unbekannter Fehler";
+
+                    if (window.sb?.appendNotification) {
+                        window.sb.appendNotification({
+                            title: 'Fehler beim Update',
+                            type: window.sb.alertTypes.ERROR,
+                            message: msg,
+                            scrollIntoView: true
+                        });
+                    } else {
+                        alert("Fehler: " + msg); // Fallback
+                    }
+                })
+    ;
+
 }
 
 function deleteBox(e, boxId){
     e.preventDefault();
-
-    $.ajax({
-        url: "http://localhost:3000/boxes" + "/" + boxId,
-        method: 'DELETE',
-        timeout: 3000,
-        headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },
-        success: function (data){
+    delete_box(boxId)
+        .then((data) => {
             console.log("Löschen erfolgreich: ", data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
+            // TODO: redirect? notification?
+            if (window.sb?.appendNotification) {
+                window.sb.appendNotification({
+                    title: 'Löschen erfolgreich',
+                    type: window.sb.alertTypes.WARNING,
+                    message: `Kartei ${data.title} wurde gelöscht.`,
+                    scrollIntoView: true
+                });
+            }
+        })
+        .catch(() => {
             console.log("Löschen nicht erfolgreich");
-        }
-
-    })
+        })
+    ;
 }
