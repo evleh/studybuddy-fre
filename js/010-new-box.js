@@ -34,7 +34,7 @@ $(document).ready(function (){
             var isPublic = $("#is-public-box").is(":checked");
             var urlRedirect = "../htmls/012-new-card.html";
 
-            const post_data = {title: title, description: description, isPublic:isPublic}
+            const post_data = {title: title, description: description, public:isPublic}
             console.log(post_data)
             $.ajax({
                 url: constants.BOXES_URL,
