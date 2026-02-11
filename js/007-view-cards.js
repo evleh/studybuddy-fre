@@ -1,33 +1,34 @@
 import {read_public_boxes} from "./bae-connect-public.js";
+import {read_box} from "./bae-connect-boxes.js";
 
 function setMainHeading(text) {
     $('#main-h1-element').text(text)
 }
 
-function htmlForBasicBoxDisplayCard(box, options = {}) {
+function htmlForBasicQuestionDisplayCard(question) {
     let result = [
         `<div class="card mb-2">`,
-        `   <div class="card-header">${box.title}</div>`,
+        `   <div class="card-header">${question.question}</div>`,
         `   <div class="card-body">`,
-        `       <div>${box.description}</div>`,
+        `       <div>${question.answer}</div>`,
         `   </div>`,
         `</div>`
     ].join('')
     return result;
 }
 
-function show_boxes() {
+async function show_questions(boxId) {
 
-    setMainHeading('Öffentliche Lernkarteien')
+    let box = await read_box(boxId);
+    let questionIds = box.questionIds;
+    console.log(questionIds)
 
-    read_public_boxes()
-        .then((boxes) => {
-            for (let box of boxes) {
-                $("#div-for-box-links").append(htmlForBasicBoxDisplayCard(box, {withLink: true}))
-            }
-        });
+    setMainHeading(`Fragen für Kartei '${box.title}'`)
+
+    // was:
+    // $("#div-for-box-links").append(htmlForBasicBoxDisplayCard(box, {withLink: true}))
 }
 
 $(document).ready(() => {
-    show_boxes()
+    show_questions(6)
 });
