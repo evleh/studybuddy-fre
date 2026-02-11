@@ -8,7 +8,6 @@ $(document).ready(function() {
     // get query-parameters from url
     const params = new URLSearchParams(window.location.search);
     const boxId = params.get("id");
-    //const boxId = 1;
     loadBox(boxId);
     console.log(boxId)
 
@@ -33,7 +32,6 @@ function loadBox(boxId){
     console.log("load box");
     $.ajax({
         method: "GET",
-        //url: "http://localhost:3000/boxes" + "/" + boxId,
         url: constants.BOXES_URL + "/" + boxId,
         dataType: "json",
         headers: { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` },

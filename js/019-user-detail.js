@@ -33,7 +33,7 @@ async function getBoxes(ownerId){
         let allBoxes = await read_all_boxes();
         return allBoxes.filter((box) => box.ownerId === ownerId);
     } catch(e) {
-        return []; // empty array good fallback if something iterates over the result
+        return []; // empty array good fallback if something iterates over the result methinks
     }
 }
 
@@ -81,7 +81,7 @@ async function getUserComments(authorId){
         let allComments = await read_all_comments();
         return allComments.filter((comment) => comment.authorId === authorId);
     } catch(e) {
-        return []; // empty array good fallback if something iterates over the result
+        return []; // empty array good fallback if something iterates over the result methinks
     }
 }
 

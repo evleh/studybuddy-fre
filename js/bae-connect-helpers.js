@@ -1,7 +1,6 @@
 
 
 export function request_initializer(options={method:'GET'}) {
-    //console.log(options);
     let token = sessionStorage.getItem('accessToken');
     let result = {
         method: options.method,
@@ -12,7 +11,6 @@ export function request_initializer(options={method:'GET'}) {
         },
     }
     if (options.body) result.body = JSON.stringify(options.body);
-    //console.log(result);
     return result;
 }
 
