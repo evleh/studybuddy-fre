@@ -10,7 +10,7 @@ import {
     read_comment
 } from "./bae-connect-comments.js";
 import {appendNotification} from "./error-ui.js";
-import {get_public_boxes} from "./bae-connect-public.js";
+import {read_public_boxes} from "./bae-connect-public.js";
 import {change_user, create_user, delete_user, read_all_users, read_user} from "./bae-connect-users.js";
 
 
@@ -295,7 +295,7 @@ try {
 
 try {
     // get current public boxes for comparison and basic check
-    let firstPublicBoxesResult = await get_public_boxes();
+    let firstPublicBoxesResult = await read_public_boxes();
     appendAlertDiv(`p/b: did not throw;`)
     let box1 = await create_box(
         {
@@ -315,7 +315,7 @@ try {
     );
     appendAlertDiv(`p/b: creating a public and a non-public box did not throw.`)
 
-    let secondPublicBoxesResult = await get_public_boxes();
+    let secondPublicBoxesResult = await read_public_boxes();
     appendAlertDiv(`p/b: number of public boxes should increase by 1 if 1 public and 1 nonpublic boxes created`,
         secondPublicBoxesResult.length === firstPublicBoxesResult.length+1);
 
