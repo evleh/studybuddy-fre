@@ -59,12 +59,14 @@ function renderUserActions(user){
 
 function renderUserBoxes(boxes){
     const $tbl = $("#box-table");
-    const $header = $(`<thead><tr> <td>Titel</td> <td>Erstellt am</td></tr></thead>`)
+    const $header = $(`<thead><tr> <td>Titel</td> <td>Erstellt am</td><td>Zuletzt geändert</td></tr></thead>`)
     $tbl.append($header);
     $tbl.append( $("<tbody>"))
 
     $.each(boxes, function (i, box){
-        const $row = $(`<tr> <td>${box.title}</td> <td>${box.date}</td></tr>`);
+        const createdAt = new Date(box.createdAt);
+        const updatedAt = new Date(box.updatedAt);
+        const $row = $(`<tr> <td>${box.title}</td> <td>${createdAt.toUTCString()}</td><td>${updatedAt.toUTCString()}</td></tr>`);
         $row.on("click", function () {
             window.location.href = `019-user-detail.html?id=${user.id}`; // todo wo führt das hin???
         });
@@ -87,12 +89,14 @@ async function getUserComments(authorId){
 
 function renderUserComments(comments){
     const $tbl = $("#comments-table");
-    const $header = $(`<thead><tr> <td>Zu Kartei:</td> <td>Erstellt am</td> <td>Kommentar</td> <td>Löschen</td> </tr></thead>`)
+    const $header = $(`<thead><tr> <td>Zu Kartei:</td> <td>Erstellt am</td> <td>Geändert am</td> <td>Kommentar</td> <td>Löschen</td> </tr></thead>`)
     $tbl.append($header);
     $tbl.append( $("<tbody>"))
 
     $.each(comments, function (i, comment){
-        const $row = $(`<tr> <td>${comment.boxId}</td> <td>${comment.createdAt}</td> <td>${comment.text}</td> </tr>`);
+        const createdAt = new Date(comment.createdAt);
+        const updatedAt = new Date(comment.updatedAt);
+        const $row = $(`<tr> <td>${comment.boxId}</td> <td>${createdAt.toUTCString()}</td> <td>${updatedAt.toUTCString()}</td> <td>${comment.text}</td> </tr>`);
 
         const $deleteBtn = $("<button>").text("Löschen").addClass("btn btn-sm btn-primary")
         const $td = $('<td></td>');
