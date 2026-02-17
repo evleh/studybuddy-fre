@@ -9,7 +9,6 @@ import {
     read_all_comments,
     read_comment
 } from "./bae-connect-comments.js";
-import {appendNotification} from "./error-ui.js";
 import {read_public_boxes} from "./bae-connect-public.js";
 import {change_user, create_user, delete_user, read_all_users, read_user} from "./bae-connect-users.js";
 
@@ -324,7 +323,7 @@ try {
     appendAlertDiv(`p/b: cleanup of test-boxes did not throw.`);
 
 } catch(e) {
-    appendNotification(`public boxes: unresolved throw in testing routing`)
+    appendAlertDiv(`public boxes: unresolved throw in testing routing`)
 }
 
 /**
