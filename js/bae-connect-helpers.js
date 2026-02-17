@@ -19,3 +19,10 @@ export function request_initializer_noToken(options) {
     delete normal.headers.Authorization;
     return normal;
 }
+
+export function request_initializer_noContentType_BodyNoStringify(options) {
+    let normal = request_initializer(options);
+    delete normal.headers["Content-Type"];
+    if (options.body) normal.body = options.body
+    return normal;
+}

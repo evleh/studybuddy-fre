@@ -1,5 +1,11 @@
 import {acquire_token} from "./bae-connect-token.js";
-import {get_all_fileInfo, get_all_filenames, make_link_from_fileName} from "./bae-connect-files.js";
+import {
+    delete_uploaded_file,
+    get_all_fileInfo,
+    get_all_filenames,
+    make_link_from_fileName,
+    upload_file
+} from "./bae-connect-files.js";
 
 /**
  * output convenience functions
@@ -98,4 +104,33 @@ try {
 } catch(e) {
     appendAlertDiv(`all fileINFO endpoint *did*  throw (for admin)`, 'ERROR');
 
+}
+
+/**
+ * lots of vibe here initially
+ */
+
+try {
+    // here be dragons?
+    const svgString = `
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="40" fill="blue" />
+</svg>
+`;
+
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    console.log(svgBlob);
+    let uploadResponse1 = await upload_file({
+        fileOrBlob: svgBlob,
+        filename: 'testingSVGno1.svg'
+    });
+    console.log(uploadResponse1)
+    appendAlertDiv(`upload did not throw, returned: '${uploadResponse1.toString()}'`)
+
+    // try deleting the thing.
+    let deleteResponse = await delete_uploaded_file(uploadResponse1.toString())
+
+
+} catch(e) {
+    appendAlertDiv("Dragons happened.", 'WARN')
 }
