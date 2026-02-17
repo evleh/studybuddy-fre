@@ -39,7 +39,7 @@ async function getBoxes(ownerId){
 
 function renderUser(user){
     $("#titel").append(user.name);
-    const img = $(`<img src="${user.profilePic}">`)
+    const img = $(`<img src="${user.foto}">`)
     $("#profile-pic").append(img);
 
     $("#profile-info").append($(`<p>Anrede: ${user.gender}</p>`))
