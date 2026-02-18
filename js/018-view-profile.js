@@ -6,8 +6,6 @@ $(document).ready(function () {
     // special initialization code here if needed
     window.sb.selfUserData
         .then((userData) => {
-            console.log("yay data");
-            console.log(userData);
             $('#inputDivers')[0].value = userData?.gender;
             $('#firstname')[0].value = userData?.firstname;
             $('#lastname')[0].value = userData?.lastname;
@@ -18,7 +16,6 @@ $(document).ready(function () {
             previewImg.setAttribute('src', make_link_from_fileName(userData.foto));
         })
         .catch((error) => {
-            console.log("boo error");
             console.log(error);
         });
 });
@@ -52,12 +49,8 @@ $(document).ready(function () {
                     let changeUserRequest = {};
 
                     // if there is a file: upload the file, clear the form field, take note of the return value
-                    //console.log(form)
                     let formData = new FormData(form)
-                    //console.log(formData);
-                    window.dbgform = formData;
                     let fotoField = formData.get('foto');
-                    console.log(fotoField)
 
                     // no file chosen manifests as filename === "" afaict.
                     if (fotoField.name !== "") {
