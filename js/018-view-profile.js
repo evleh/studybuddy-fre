@@ -1,4 +1,4 @@
-import {upload_file} from "./bae-connect-files.js";
+import {make_link_from_fileName, upload_file} from "./bae-connect-files.js";
 import {change_user} from "./bae-connect-users.js";
 import {alertTypes, appendNotification} from "./error-ui.js";
 
@@ -13,6 +13,9 @@ $(document).ready(function () {
             $('#lastname')[0].value = userData?.lastname;
             $('#email')[0].value = userData?.email;
             $('#landDataList')[0].value = userData?.country;
+
+            const previewImg = document.getElementById("currentFoto");
+            previewImg.setAttribute('src', make_link_from_fileName(userData.foto));
         })
         .catch((error) => {
             console.log("boo error");
@@ -70,6 +73,7 @@ $(document).ready(function () {
                         // did.
                         const fileInput = document.getElementById("foto");
                         fileInput.value = '';
+
                     }
 
                     // send an update request with the right values and foto string set to return value of upload
@@ -82,12 +86,17 @@ $(document).ready(function () {
                         changeUserRequest.gender = formData.get('inputDivers')
                     }
                     let userId = (await window.sb.selfUserData).id
-                    change_user(userId, changeUserRequest)
-                        .then(() => appendNotification({message:'Änderung erfolgreich'}))
+                    await change_user(userId, changeUserRequest)
+                        .then((res) => {
+                            appendNotification({message:'Änderung erfolgreich'});
+                        })
                         .catch(() => appendNotification({
                             message:'Änderung nicht erfolgreich',
                             type: alertTypes.ERROR
-                        }))
+                        }));
+
+                    const previewImg = document.getElementById("currentFoto");
+                    previewImg.setAttribute('src', make_link_from_fileName(changeUserRequest.foto));
 
                 }
 
