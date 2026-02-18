@@ -4,7 +4,10 @@ import {
 } from "./bae-connect-helpers.js";
 import constants from "./constants.js";
 
-export function make_link_from_fileName(filename) {
+export function make_link_from_fileName(filename, fallback="") {
+    if (filename === undefined || filename === null || filename === "") {
+        return fallback;
+    }
     return constants.FILE_VIEW_URL+"/"+filename;
 }
 
