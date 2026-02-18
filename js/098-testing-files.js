@@ -111,7 +111,14 @@ try {
  */
 
 try {
-    // here be dragons?
+    // here be dragons? testing upload and delete
+
+    // first get the current number of files (both ways)
+    let beforeUploadCount = {
+        minIOCount: (await get_all_filenames()).length,
+        infoCount: (await get_all_fileInfo()).length
+    }
+
     const svgString = `
 <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
   <circle cx="50" cy="50" r="40" fill="blue" />
@@ -122,14 +129,36 @@ try {
     console.log(svgBlob);
     let uploadResponse1 = await upload_file({
         fileOrBlob: svgBlob,
-        filename: 'testingSVGno1.svg'
+        filename: 'testing space SVG.no.1.svg', // user provided filenames likely to contain spaces on occasion. test.
     });
     console.log(uploadResponse1)
     appendAlertDiv(`upload did not throw, returned: '${uploadResponse1.toString()}'`)
 
-    // try deleting the thing.
-    let deleteResponse = await delete_uploaded_file(uploadResponse1.toString())
+    // get the numbers of files after upload
+    let afterUploadCount = {
+        minIOCount: (await get_all_filenames()).length,
+        infoCount: (await get_all_fileInfo()).length
+    }
 
+    // try deleting the uploaded file.
+    let deleteResponse = await delete_uploaded_file(uploadResponse1.toString())
+    appendAlertDiv(`delete  did not throw, returned: ${deleteResponse.toString()}`)
+
+    // get the numbers of files after upload
+    let afterDeletionCount = {
+        minIOCount: (await get_all_filenames()).length,
+        infoCount: (await get_all_fileInfo()).length
+    }
+
+    console.log({afterDeletionCount,afterUploadCount,beforeUploadCount})
+    let numberCheckOut =
+        (beforeUploadCount.minIOCount === afterDeletionCount.minIOCount ) &&
+        (beforeUploadCount.infoCount === afterDeletionCount.infoCount) &&
+        (beforeUploadCount.minIOCount+1 === afterUploadCount.minIOCount) &&
+        (beforeUploadCount.infoCount+1 === afterUploadCount.infoCount)
+    ;
+    appendAlertDiv(`number of files increases by one by upload and reduces by one by deletion.`,
+        numberCheckOut);
 
 } catch(e) {
     appendAlertDiv("Dragons happened.", 'WARN')

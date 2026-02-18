@@ -39,5 +39,9 @@ export function upload_file(options = {
 }
 
 export function delete_uploaded_file(filename) {
-    return Promise.resolve("")
+    // sending filename as part of the url opens the problem of having to encoding space, other characters.
+    const full_deletion_uri = constants.FILE_DELETE_URL + "/" + encodeURIComponent(filename);
+    console.log(full_deletion_uri);
+    return fetch(full_deletion_uri, request_initializer({method: 'DELETE'}))
+        .then(response => response.text())
 }
