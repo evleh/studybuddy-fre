@@ -4,47 +4,15 @@ import {read_card} from "./bae-connect-cards.js";
 
 $(document).ready(function() {
     setupInitialUI();
-
+    registerEventHandlers();
     loadBoxes();
-
-    $(document).on('click', '.btn-showQuestions', function () {
-        const selectedBoxTitle = $(this).data('title');
-        const rawItem = $(this).attr("data-item");
-        const selectedItem = JSON.parse(decodeURIComponent(rawItem));
-
-        $("#backToBoxes").show();
-        $(document).on('click', '#backToBoxes', function () {
-            $("#questionsTitle").hide();
-            $("#list-of-questions").hide();
-            $("#list-of-all-boxes").show();
-            $("#backToBoxes").hide();
-        });
-
-        $("#list-of-all-boxes").hide();
-        $("#questionsTitle").show();
-        document.getElementById("questionsTitle").textContent = selectedBoxTitle;
-        // cardIds aus item raus holen und jedes einzeln aus dem backend holen + rendern
-        // wenn keine karten text anzeigen: diese kartei enthlt noch keine Fragen
-        if (!selectedItem.cardIds || selectedItem.cardIds.length === 0) {
-            $("#questionsTitle").append(
-                "<div>Die Kartei ist leer.</div>"
-            );
-        } else {
-            loadCards(selectedItem.cardIds);
-        }
-        $("#list-of-questions").show();
-
-        $("#list-of-questions").empty();
-
-
-
-    });
 });
 
+/* Functions to load data from backend */
 async function loadBoxes(){
     try {
         const boxes = await read_all_boxes();
-        renderBoxes(boxes);
+        await renderBoxes(boxes);
     } catch (error) {
         $("#admin-boxes-content").append("<div> Fehler beim Laden der Lernkarteien. </div>");
     }
@@ -52,9 +20,7 @@ async function loadBoxes(){
 
 async function loadCards(cardIds) {
     try {
-        const questions = await Promise.all(
-            cardIds.map(cardId => read_card(cardId))
-        );
+        const questions = await Promise.all(cardIds.map(cardId => read_card(cardId)));
 
         if (questions.length === 0) {
             $("#questionsTitle").append("<div>Keine Fragen gefunden.</div>");
@@ -68,6 +34,7 @@ async function loadCards(cardIds) {
     }
 }
 
+/* Functions to render data */
 function renderCards(cards){
     cards.forEach(card => {
             $("#list-of-questions").append(
@@ -79,13 +46,16 @@ function renderCards(cards){
     });
 }
 
-
-
-function renderBoxes(boxes){
+async function renderBoxes(boxes) {
     boxes = boxes.sort((a, b) => a.title.localeCompare(b.title));
 
-    $.each(boxes, async function (index, item) {
-        let author = await read_user(item.ownerId);
+    // load authors outside the rendering loop. order of authors array corresponds to boxes
+    const authors = await Promise.all(
+        boxes.map(box => read_user(box.ownerId))
+    );
+
+    $.each(boxes, function (index, item) {
+        let author = authors[index];
         let statusPublic;
         if (item.public === true) {
             statusPublic = "&#x1F7E2; öffentlich";
@@ -105,6 +75,43 @@ function renderBoxes(boxes){
             + "</li>");
 
     });
+}
+
+
+/* Event handling */
+function registerEventHandlers() {
+    $(document).on("click", ".btn-showQuestions", handleShowQuestions);
+    $(document).on("click", "#backToBoxes", handleBackToBoxes);
+}
+
+async function handleShowQuestions() {
+    const selectedBoxTitle = $(this).data("title");
+    const rawItem = $(this).attr("data-item");
+    const selectedItem = JSON.parse(decodeURIComponent(rawItem));
+
+    showQuestionsView(selectedBoxTitle);
+
+    if (!selectedItem.cardIds || selectedItem.cardIds.length === 0) {
+        $("#questionsTitle").append("<div>Keine Fragen gefunden.</div>");
+        return;
+    }
+
+    await loadCards(selectedItem.cardIds);
+}
+
+function handleBackToBoxes() {
+    $("#questionsTitle").hide().empty();
+    $("#list-of-questions").hide().empty();
+    $("#list-of-all-boxes").show();
+    $("#backToBoxes").hide();
+}
+
+/* UI helpers */
+function showQuestionsView(title) {
+    $("#list-of-all-boxes").hide();
+    $("#backToBoxes").show();
+    $("#questionsTitle").text(title).show();
+    $("#list-of-questions").empty().show();
 }
 
 function setupInitialUI() {
