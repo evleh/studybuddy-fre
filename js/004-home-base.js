@@ -11,11 +11,11 @@ $(document).ready(async function () {
 
     $.each(own_boxes, function (index, item) {
 
-        urlEdit = "http://localhost:63343/studybuddy-fre/htmls/011-edit-box.html?id="+item.id;
+        urlEdit = "011-edit-box.html?id="+item.id;
         //TODO: Refers to 012-new-card as a quick fix
         // -> make new site to see questions and flip open answers in 007-view-cards!
 
-        urlQuestions = "http://localhost:63343/studybuddy-fre/htmls/012-new-card.html?id="+item.id;
+        urlQuestions = "012-new-card.html?id="+item.id;
 
 
 
