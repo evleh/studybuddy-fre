@@ -16,7 +16,7 @@ $(document).ready(async function() {
         const boxes = await getBoxes(user.id);
         renderUserBoxes(boxes);
 
-        const comments = await getUserComments(user.name);
+        const comments = await getUserComments(user.id);
         renderUserComments(comments);
 
     } catch (err){
