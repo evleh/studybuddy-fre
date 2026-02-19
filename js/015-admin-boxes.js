@@ -49,13 +49,13 @@ function renderCards(cards){
 async function renderBoxes(boxes) {
     boxes = boxes.sort((a, b) => a.title.localeCompare(b.title));
 
-    // load authors outside the rendering loop. order of authors array corresponds to boxes
+    const uniqueAuthorIds = [...new Set(boxes.map(box => box.ownerId))];
     const authors = await Promise.all(
-        boxes.map(box => read_user(box.ownerId))
+        uniqueAuthorIds.map(id => read_user(id))
     );
 
     $.each(boxes, function (index, item) {
-        let author = authors[index];
+        let author = authors.find(author => author.id === item.ownerId);
         let statusPublic;
         if (item.public === true) {
             statusPublic = "&#x1F7E2; öffentlich";
