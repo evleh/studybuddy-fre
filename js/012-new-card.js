@@ -1,9 +1,9 @@
 import constants from "./constants.js";
 import {read_box} from "./bae-connect-boxes.js";
-import {create_card, read_card} from "./bae-connect-cards.js";
+import {create_card, delete_card, read_card} from "./bae-connect-cards.js";
 
 let boxTitle = "Bezirke Wien"
-
+const domIdOfCardDataForm = 'new-card-form';
 
 function boxIdFromParams() {
     const params = new URLSearchParams(window.location.search);
@@ -41,9 +41,8 @@ async function readBoxAndQuestionData() {
 $(document).ready(async function() {
 
     await readBoxAndQuestionData();
-    // todo: register handler on button "neue frage erstellen" und make that work
 
-    const newCardForm = document.getElementById('new-card-form');
+    const newCardForm = document.getElementById(domIdOfCardDataForm);
     newCardForm.addEventListener('submit', async event => {
         // event handler function for pressing new card button
         event.preventDefault()
@@ -72,10 +71,15 @@ function renderFormNewCard(data){
     $('#box-title').empty().append(data.title);
 }
 
+function setTitleOfSubForm(title) {
+    document.getElementById('card-data-form-h3-tag').innerText = title;
+}
+
 function renderCards(cards){
     $("#cards").empty();
     $.each(cards, async function (i, cardPromise) {
         let card = await cardPromise;
+        console.log(card);
         // todo fragen per box filter testen bei erfolgreicher abfrage der aktuellen kartei aus dem backend
         // todo fragen element fertig machen
         const $cardElement = $("<div>").addClass("list-group-item list-group-item-action d-flex justify-content-between align-items-center");
@@ -88,6 +92,17 @@ function renderCards(cards){
             .addClass("d-flex gap-2")
             .append($editBtn)
             .append($deleteBtn);
+
+        $deleteBtn.click(async event => {
+            await delete_card(card.id)
+            await readBoxAndQuestionData();
+        });
+        $editBtn.click(async event => {
+            window.stateStashCardEditId = card.id;
+            setTitleOfSubForm("Frage bearbeiten");
+            document.getElementById('question').value = card.question;
+            document.getElementById('answer').value = card.answer;
+        })
 
         $cardElement.append($title).append($buttonGroup);
         $("#cards").append($cardElement);
