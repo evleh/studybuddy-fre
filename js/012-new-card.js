@@ -1,13 +1,18 @@
 import constants from "./constants.js";
 import {read_box} from "./bae-connect-boxes.js";
-import {read_card} from "./bae-connect-cards.js";
+import {create_card, read_card} from "./bae-connect-cards.js";
 
 let boxTitle = "Bezirke Wien"
 
+
+function boxIdFromParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id")
+}
+
 async function readBoxAndQuestionData() {
     // get query-parameters from url
-    const params = new URLSearchParams(window.location.search);
-    const boxId = params.get("id")
+    const boxId = boxIdFromParams();
     console.log(boxId)
 
     let box = await read_box(boxId)
@@ -38,14 +43,39 @@ $(document).ready(async function() {
     await readBoxAndQuestionData();
     // todo: register handler on button "neue frage erstellen" und make that work
 
+    const newCardForm = document.getElementById('new-card-form');
+    newCardForm.addEventListener('submit', async event => {
+        // event handler function for pressing new card button
+        event.preventDefault()
+        event.stopPropagation()
+
+        const formData = new FormData(newCardForm);
+
+        let boxId = boxIdFromParams()
+        let cardToCreate = {
+            'boxId': boxId,
+            'question': formData.get('question'),
+            'answer': formData.get('answer')
+        };
+
+        // TODO media upload and clearing of form
+
+        await create_card(cardToCreate)
+
+        await readBoxAndQuestionData();
+
+    });
+
 });
 
 function renderFormNewCard(data){
-    $('#box-title').append(data.title);
+    $('#box-title').empty().append(data.title);
 }
 
 function renderCards(cards){
-    $.each(cards, function(i, card){
+    $("#cards").empty();
+    $.each(cards, async function (i, cardPromise) {
+        let card = await cardPromise;
         // todo fragen per box filter testen bei erfolgreicher abfrage der aktuellen kartei aus dem backend
         // todo fragen element fertig machen
         const $cardElement = $("<div>").addClass("list-group-item list-group-item-action d-flex justify-content-between align-items-center");
