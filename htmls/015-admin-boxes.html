@@ -15,7 +15,7 @@
             <div class="col">
                 <h1>Lernkarteien </h1>
                 <div>
-                    <span class="insert-username-here"></span>
+                    <h3>Hallo <span class="insert-username-here"></span></h3>
                 </div>
             </div>
             <div class="col">
@@ -25,7 +25,7 @@
             <div class="col">
                 <a class="btn btn-primary" id="backToBoxes">zurück zu Karteien</a>
             </div>
-            <div>
+            <div id="admin-boxes-content">
 
                 <ul class="list-group" id="list-of-all-boxes">
                 </ul>
@@ -45,83 +45,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script type="module" src="../js/default-document-ready-stuff.js"></script>
-<script>
-    $(document).ready(function() {
-        //potential changes to be made once data is imported from database (e.g. problems might occur if boxtitles contain html-tags)
-        let boxes = [];
-
-        $("#list-of-questions").hide();
-        $("#questionsTitle").hide();
-        $("#backToBoxes").hide();
-        $.getJSON("../DummyData/boxes.json", function (data) {
-            $.each(data, function (index, item) {
-                boxes.push(item);
-            });
-            boxes = boxes.sort((a, b) => a.title.localeCompare(b.title));
-
-            $.each(boxes, function (index, item) {
-                let statusPublic;
-                if (item.public === "1") {
-                    statusPublic = "&#x1F7E2; öffentlich";
-                } else {
-                    statusPublic = "&#128993; privat";
-                }
-
-                let buttonHtml = `<button class='btn-showQuestions' data-title='${item.title.replace(/'/g, "&apos;")}'>Fragen anzeigen</button>`;
-
-
-                $(document.getElementById("list-of-all-boxes")).append('<li class="list-group-item">'
-                    + "<p>" + "<b>Titel:</b> " + "<b>" + item.title + "</b>" + "</p>"
-                    + "<p>" + "<b>erstellt von:</b> " + item.author + "</p>"
-                    + "<p>" + "<b>Beschreibung:</b> " + item.description + "</p>"
-                    + "<p>" + "<b>erstellt am:</b> " + item.date + "</p>"
-                    + "<p>" + "<b>Sichtbarkeit: </b>" + statusPublic + "</p>"
-                    + buttonHtml
-                    + "</li>");
-
-            });
-
-        });
-
-        $(document).on('click', '.btn-showQuestions', function () {
-            const selectedBoxTitle = $(this).data('title');
-
-
-            $("#backToBoxes").show();
-            $(document).on('click', '#backToBoxes', function () {
-                $("#questionsTitle").hide();
-                $("#list-of-questions").hide();
-                $("#list-of-all-boxes").show();
-                $("#backToBoxes").hide();
-            });
-
-            $("#list-of-all-boxes").hide();
-            $("#questionsTitle").show();
-            document.getElementById("questionsTitle").textContent = selectedBoxTitle;
-            $("#list-of-questions").show();
-
-            $("#list-of-questions").empty();
-
-
-            let questions = [];
-            $.getJSON("../DummyData/questions.json", function (data) {
-                $.each(data, function (index, item) {
-                    questions.push(item);
-                });
-                $.each(questions, function (index, item) {
-                    if (item.box === selectedBoxTitle) {
-                        $(document.getElementById("list-of-questions")).append(
-                            '<li class="list-group-item">'
-                            + "<p><b>Frage: </b>" + item.question + "</p>"
-                            + "<p><b>Antwort: </b>" + item.answer + "</p>"
-                            + "</li>"
-                        );
-                    }
-                });
-            });
-        });
-    });
-
-</script>
+<script type="module" src="../js/015-admin-boxes.js"></script>
 </body>
 </html>
