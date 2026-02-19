@@ -1,6 +1,7 @@
 import {read_user} from "./bae-connect-users.js";
 import {read_all_boxes} from "./bae-connect-boxes.js";
 import {read_all_comments} from "./bae-connect-comments.js";
+import {make_link_from_fileName} from "./bae-connect-files.js";
 
 $(document).ready(async function() {
     const params = new URLSearchParams(window.location.search);
@@ -15,7 +16,7 @@ $(document).ready(async function() {
         const boxes = await getBoxes(user.id);
         renderUserBoxes(boxes);
 
-        const comments = await getUserComments(user.name);
+        const comments = await getUserComments(user.id);
         renderUserComments(comments);
 
     } catch (err){
@@ -39,7 +40,7 @@ async function getBoxes(ownerId){
 
 function renderUser(user){
     $("#titel").append(user.name);
-    const img = $(`<img src="${user.foto}">`)
+    const img = $(`<img src="${make_link_from_fileName(user.foto)}">`)
     $("#profile-pic").append(img);
 
     $("#profile-info").append($(`<p>Anrede: ${user.gender}</p>`))
