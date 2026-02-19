@@ -48,7 +48,7 @@ function loadBox(boxId){
 function renderBox(data){
     $('#box-title').val(data.title);
     $('#box-description').val(data.description);
-    $('#is-public-box').val(data.public);
+    $('#is-public-box').prop('checked', data.public);
 }
 
 function updateBox(e, boxId){
