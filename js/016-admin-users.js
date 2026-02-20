@@ -1,36 +1,72 @@
-import {searchTable} from "./util.js";
+import {searchCards} from "./util.js";
 import {read_all_users} from "./bae-connect-users.js";
 
 
 $(document).ready(function() {
     getUsers();
-    searchTable("user-search", "user-table");
+
+    $("#user-search").on("input", function () {
+        const value = $(this).val();
+        searchCards(value);
+    });
 
 });
 
 function getUsers(){
     let readUsersResponse = read_all_users();
-    readUsersResponse.then(users => {
-        renderUsers(users)
-    })
+    readUsersResponse
+        .then(users => { renderUsers(users) })
+        .catch(() => {
+            const $element = $("#users");
+            $element.append("<div>Fehler beim Laden der Userdaten.</div>")
+        })
 }
 
 function renderUsers(data){
-    const tbl = $("#user-table")
-    tbl.append(`<thead><tr> <th> Name </th> <th>Registriert am </th> <th> zuletzt aktiv am </th> </tr></thead>`);
-    tbl.append("<tbody>")
-    $.each(data, function(i, user) {
-        // convert iso string to date for formating-options
-        const createdDate = new Date(user.createdAt)
-        const createdDateFormated = createdDate.toLocaleDateString()
-        const lastLoginDateFormated = user.lastLogin?(new Date(user.lastLogin)).toDateString():'never/unknown'
-        const $row = $(`<tr> <td>${user.username}</td> <td>${createdDateFormated}</td> <td>${lastLoginDateFormated}</td> </tr>`);
-        $row.on("click", function () {
-            window.location.href = `019-user-detail.html?id=${user.id}`;
-        });
-        tbl.append($row);
+
+    const $element = $("#users");
+    data.forEach(user => {
+        console.log(user)
+        const cardHtml = `
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex flex-column">
+            
+                        <!-- Content -->
+                        <div>
+                            <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                                ${user.username}${user.admin ? '<span class="badge bg-danger ms-auto">Admin</span>' : ''}
+                            </h5>
+                            <div class="text-muted">${user.firstname} ${user.lastname}</div>
+                            <div class="text-muted small mb-2">${user.email}</div>
+            
+                            <div class="text-muted small mb-3">
+                                <div>📅 Registriert: ${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'unknown'}</div>
+                                <div>⏱ Letzter Login: ${user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'unknown'}</div>
+                            </div>
+            
+                            <div class="d-flex gap-3 small text-muted border-top pt-2">
+                                <div><strong class="text-dark">${user.boxIds.length}</strong> Karteien</div>
+                                <div><strong class="text-dark">${user.boxCommentIds.length}</strong> Kommentare</div>
+                            </div>
+                        </div>
+            
+                        <!-- Button -->
+                        <div class="mt-3">
+                            <a href="019-user-detail.html?id=${user.id}" 
+                               class="btn btn-outline-primary btn-sm w-100">
+                               Details ansehen
+                            </a>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+            `;
+
+        $element.append(cardHtml);
     })
-    tbl.append("</tbody>")
 }
+
 
 
