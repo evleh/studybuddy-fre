@@ -46,8 +46,6 @@ function htmlForBasicQuestionDisplayCard(question) {
 async function show_questions(boxId) {
     let box = await read_box(boxId);
     let cardIds = box.cardIds;
-    console.log(cardIds)
-    let cards = [];
 
     setMainHeading(`Kartei: '${box.title}'`)
 

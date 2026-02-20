@@ -8,9 +8,7 @@ $(document).ready(async function () {
     $.each(own_boxes, function (index, item) {
 
         let urlEdit = "011-edit-box.html?id="+item.id;
-        //TODO: Refers to 012-new-card as a quick fix
-        // -> make new site to see questions and flip open answers in 007-view-cards!
-        let urlQuestions = "012-new-card.html?id="+item.id;
+        let urlQuestions = "007-view-cards.html?id="+item.id;
 
         let listItem = $(
             '<li class="list-group-item">' +
