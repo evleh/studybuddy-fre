@@ -67,8 +67,6 @@ $(document).ready(async function() {
             'question': formData.get('question'),
             'answer': formData.get('answer')
         };
-        //
-
 
         // TODO media upload and clearing of form
         let imageField = formData.get('imageInput');
