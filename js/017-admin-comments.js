@@ -40,32 +40,19 @@ async function renderComments(data) {
         const cardHtml = `
         <div class="col-md-6">
     <div class="card shadow-sm h-100">
-        
-        <!-- Header -->
-<!--        <div class="card-header bg-light d-flex justify-content-between align-items-center">-->
-<!--            <div class="small text-muted">-->
-<!--                Kommentar-ID: <strong>#3</strong>-->
-<!--            </div>-->
-<!--            <span class="badge bg-secondary">Box #4</span>-->
-<!--        </div>-->
-        <!-- Kommentartext -->
-            <div class="p-3 bg-light rounded flex-grow-1">
-                <div class="fw-semibold">${comment.text}</div>
-<!--                <div>-->
-<!--                    Erstellt von schwupsdiwups-->
-<!--                </div>-->
+            <div class="pt-3 px-3 rounded flex-grow-1">
+                <div class="fw-semibold mb-1">${comment.text}</div>
+                <div class="small text-muted">
+                    Kartei: ${box.title}
+                </div>
             </div>
 
         <!-- Body -->
-        <div class="card-body d-flex flex-column">
-            <!-- Meta Infos -->
-            <div class="mb-3 small text-muted">
-                <div>Author*in: ${author.username}</div>
-                <div>zu Kartei: ${box.title}</div>
-            </div>
+        <div class="card-body d-flex flex-column ">
             
             <!-- Meta Infos -->
-            <div class="mb-3 small text-muted">
+            <div class="mb-3 small text-muted border-top pt-2 gap-3 ">
+                <div>👤 Author*in: ${author.username}</div>
                 <div>📅 Erstellt: ${comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : 'unknown'}</div>
                 <div>✏️ Aktualisiert:  ${comment.updatedAt ? new Date(comment.updatedAt).toLocaleDateString() : 'unknown'}</div>
             </div>
