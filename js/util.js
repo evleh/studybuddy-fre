@@ -31,8 +31,10 @@ export function searchCards(searchTerm) {
 
         if (cardText.includes(term)) {
             card.show();
+            card.parent().show();
         } else {
             card.hide();
+            card.parent().hide();
         }
     });
 }
