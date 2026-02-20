@@ -26,14 +26,17 @@ function renderUsers(data){
 
     const $element = $("#users");
     data.forEach(user => {
+        console.log(user)
         const cardHtml = `
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
             
                         <!-- Content -->
                         <div>
-                            <h5 class="fw-bold mb-1">${user.username}</h5>
+                            <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                                ${user.username}${user.admin ? '<span class="badge bg-danger ms-auto">Admin</span>' : ''}
+                            </h5>
                             <div class="text-muted">${user.firstname} ${user.lastname}</div>
                             <div class="text-muted small mb-2">${user.email}</div>
             
