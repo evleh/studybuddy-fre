@@ -7,7 +7,7 @@ import {read_box} from "./bae-connect-boxes.js";
 $(document).ready(function() {
     getComments();
 
-    $("#user-search").on("input", function () {
+    $("#comment-search").on("input", function () {
         const value = $(this).val();
         searchCards(value);
     });
