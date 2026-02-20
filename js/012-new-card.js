@@ -96,7 +96,7 @@ $(document).ready(async function() {
             } else {
                 // check if there is previous media that needs deletion
                 if (cardToCreate.media) { // this being set means: code above uploaded new media and set the property
-                    // in that case get the (currently - we have not changed the card yet)
+                    // in that case get the current/previous value - we have not changed the card yet at this point
                     mediaNameToDeleteOrUndefined = (await read_card(assumedCardId)).media
                 }
             }
