@@ -89,19 +89,30 @@ $(document).ready(async function() {
         if (window[secretStashName]) {
             // secret stash should contain the card-id
             let assumedCardId = window[secretStashName]
-            let mediaNameOrUndefined;
+            let mediaNameToDeleteOrUndefined;
 
             // if media to clear keep the name in a local var for after-change-deletion
             if ($('#clear-image-checkbox').is(":checked")) {
-                mediaNameOrUndefined = (await read_card(assumedCardId)).media
+                mediaNameToDeleteOrUndefined = (await read_card(assumedCardId)).media
                 cardToCreate.media = ''; // null does not work for the backend, so complete clear not possible it seems.
+            } else {
+                // check if there is previous media that needs deletion
+                if (cardToCreate.media) { // this being set means: code above uploaded new media and set the property
+                    // in that case get the (currently - we have not changed the card yet)
+                    mediaNameToDeleteOrUndefined = (await read_card(assumedCardId)).media
+                }
             }
 
             await change_card(assumedCardId, cardToCreate);
 
-            if ($('#clear-image-checkbox').is(":checked")) {
-                await delete_uploaded_file(mediaNameOrUndefined)
+            // only delete old media after change successful.
+            if (mediaNameToDeleteOrUndefined) {
+                // falsy includes undefined, null, other things, and also the empty string so the if can look like this
+                // https://developer.mozilla.org/en-US/docs/Glossary/Falsy
+                // empty string important because (reasons) that might be the value indicating "none".
+                await delete_uploaded_file(mediaNameToDeleteOrUndefined)
             }
+
             clearSecretStash();
             setUIToCreate();
         } else {
