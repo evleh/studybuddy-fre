@@ -1,4 +1,4 @@
-import {searchTable, searchCards} from "./util.js";
+import {searchCards} from "./util.js";
 import {read_all_users} from "./bae-connect-users.js";
 
 
@@ -9,7 +9,6 @@ $(document).ready(function() {
         const value = $(this).val();
         searchCards(value);
     });
-
 
 });
 
@@ -27,18 +26,40 @@ function renderUsers(data){
 
     const $element = $("#users");
     data.forEach(user => {
-        const cardHtml =
-            `<div class="card mb-3" style="width: 100% !important;">
-                <div class="card-body">
-                    <h5 class="card-title">${user.username}</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Name: ${user.firstname} ${user.lastname}</h6>
-                    
-                    <div class="card-text">Registriert seit: ${user.createdAt?(new Date(user.createdAt)).toLocaleDateString():'unknown'}</div>
-                    <div class="card-text">Letzter Login: ${user.lastLogin?(new Date(user.lastLogin)).toLocaleDateString():'unknown'}</div>
+        const cardHtml = `
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body d-flex flex-column">
             
-                    <a href="019-user-detail.html?id=${user.id}" class="card-link">Details ansehen</a>
+                        <!-- Content -->
+                        <div>
+                            <h5 class="fw-bold mb-1">${user.username}</h5>
+                            <div class="text-muted">${user.firstname} ${user.lastname}</div>
+                            <div class="text-muted small mb-2">${user.email}</div>
+            
+                            <div class="text-muted small mb-3">
+                                <div>📅 Registriert: ${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'unknown'}</div>
+                                <div>⏱ Letzter Login: ${user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'unknown'}</div>
+                            </div>
+            
+                            <div class="d-flex gap-3 small text-muted border-top pt-2">
+                                <div><strong class="text-dark">${user.boxIds.length}</strong> Karteien</div>
+                                <div><strong class="text-dark">${user.boxCommentIds.length}</strong> Kommentare</div>
+                            </div>
+                        </div>
+            
+                        <!-- Button -->
+                        <div class="mt-3">
+                            <a href="019-user-detail.html?id=${user.id}" 
+                               class="btn btn-outline-primary btn-sm w-100">
+                               Details ansehen
+                            </a>
+                        </div>
+            
+                    </div>
                 </div>
-            </div>`;
+            </div>
+            `;
 
         $element.append(cardHtml);
     })
