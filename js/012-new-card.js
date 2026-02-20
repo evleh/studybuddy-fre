@@ -1,10 +1,8 @@
-import constants from "./constants.js";
 import {read_box} from "./bae-connect-boxes.js";
 import {change_card, create_card, delete_card, read_card} from "./bae-connect-cards.js";
 import {make_link_from_fileName, upload_file} from "./bae-connect-files.js";
 import {alertTypes, appendNotification} from "./error-ui.js";
 
-let boxTitle = "Bezirke Wien"
 const domIdOfCardDataForm = 'new-card-form';
 const domIdOfMainButton = 'new-card-button';
 const secretStashName = 'stateStashCardEditId'
@@ -23,7 +21,6 @@ async function readBoxAndQuestionData() {
 
     let box = await read_box(boxId)
         .then((box) => {
-            boxTitle = box.title
             renderFormNewCard(box)
             return Promise.resolve(box); // to be able to wait at the read_box level.
         })
