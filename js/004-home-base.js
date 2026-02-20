@@ -11,13 +11,19 @@ $(document).ready(async function () {
         //TODO: Refers to 012-new-card as a quick fix
         // -> make new site to see questions and flip open answers in 007-view-cards!
         let urlQuestions = "012-new-card.html?id="+item.id;
+        let statusPublic;
+        if (item.public === true) {
+            statusPublic = "&#x1F7E2; öffentlich";
+        } else {
+            statusPublic = "&#128993; privat";
+        }
 
         let listItem = $(
             '<li class="list-group-item">' +
             "<p><b>Titel:</b> <b>" + item.title + "</b></p>" +
             "<p><b>Beschreibung:</b> " + item.description + "</p>" +
             //TODO: Wrap boolean isPublic in a nicer way (e.g. colour coded icon)
-            "<p><b>Sichtbarkeit:</b> " + item.public + "</p>" +
+            "<p><b>Sichtbarkeit:</b> " + statusPublic + "</p>" +
             '<button class="btn btn-primary btn-questions" style="margin-right: 2%">Fragen ansehen</button>' +
             '<button class="btn btn-primary btn-edit">Bearbeiten</button>' +
             "</li>"
