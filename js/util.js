@@ -20,3 +20,21 @@ export function searchTable(searchId, searchTable){
         })
     })
 }
+
+export function searchCards(searchTerm) {
+    const term = searchTerm.toLowerCase();
+
+    $(".card").each(function () {
+        const card = $(this);
+
+        const cardText = card.text().toLowerCase();
+
+        if (cardText.includes(term)) {
+            card.show();
+            card.parent().show();
+        } else {
+            card.hide();
+            card.parent().hide();
+        }
+    });
+}
