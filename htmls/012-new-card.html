@@ -20,8 +20,8 @@
         <div class="card">
 
             <div class="col-12 card-body">
-                <h3 class="card-title">Neue Frage:</h3>
-                <form>
+                <h3 class="card-title" id="card-data-form-h3-tag">Neue Frage:</h3>
+                <form id="new-card-form">
                     <div class="form-floating mb-3">
                         <input class="form-control needs-validation" placeholder="Frage" id="question" name="question" style="height: 3rem"></input>
                         <label for="question">Gib hier deine Frage ein.</label>
@@ -33,11 +33,12 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <label class="input-group-text secondary" for="optionalnametbd">Bild (optional)</label>
-                        <input type="file" class="form-control" id="optionalnametbd"  aria-label="Upload">
+                        <label class="input-group-text secondary" for="imageInput">Bild (optional)</label>
+                        <input type="file" class="form-control" id="imageInput" name="imageInput" aria-label="Upload">
                     </div>
+                    <div id="currentImagePreview"></div>
 
-                    <a href="012-new-card.html" class="btn btn-primary">Frage erstellen</a>
+                    <button id="new-card-button" class="btn btn-primary">Frage erstellen</button>
                 </form>
             </div>
         </div>
