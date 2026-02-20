@@ -1,7 +1,17 @@
-import {get_me_ownboxes} from "./bae-connect-me.js";
+import {get_me_ownboxes, get_me_userinfo} from "./bae-connect-me.js";
+import {make_link_from_fileName} from "./bae-connect-files.js";
 
 
 $(document).ready(async function () {
+    let userinfo = await get_me_userinfo();
+    let profilepictureUrl = "https://cdn.pixabay.com/photo/2016/06/22/21/18/cat-1474092_1280.jpg"
+    if (userinfo.foto) {
+        profilepictureUrl = make_link_from_fileName(userinfo.foto);
+    }
+    const profilepicture = document.getElementById("profilepicture");
+    profilepicture.setAttribute('src', profilepictureUrl);
+    console.log(profilepictureUrl);
+
     let own_boxes = await get_me_ownboxes();
 
 
