@@ -1,0 +1,96 @@
+import {searchCards} from "./util.js";
+import {delete_comment, read_all_comments} from "./bae-connect-comments.js";
+import {read_user} from "./bae-connect-users.js";
+import {read_box} from "./bae-connect-boxes.js";
+
+
+$(document).ready(function() {
+    getComments();
+
+    $("#comment-search").on("input", function () {
+        const value = $(this).val();
+        searchCards(value);
+    });
+
+    $(document).on("click", ".delete-btn", function () {
+        const commentId = $(this).data("id");
+        deleteComment(commentId);
+    });
+
+
+});
+
+function getComments(){
+    let readCommentsResponse = read_all_comments();
+    readCommentsResponse
+        .then(comments => { renderComments(comments) })
+        .catch(() => {
+            const $element = $("#comments");
+            $element.append("<div>Fehler beim Laden der Kommentare.</div>")
+        })
+}
+
+async function renderComments(data) {
+    const uniqueAuthorIds = [...new Set(data.map(comment => comment.authorId))];
+    const authors = await Promise.all(uniqueAuthorIds.map(userId => read_user(userId)));
+
+    const uniqueBoxIds = [...new Set(data.map(comment => comment.boxId))];
+    const boxes = await Promise.all(uniqueBoxIds.map(boxId => read_box(boxId)))
+
+    const $element = $("#comments");
+    data.forEach(comment => {
+        const author = authors.find(user => user.id === comment.authorId);
+        const box = boxes.find(box => box.id === comment.boxId);
+
+        const cardHtml = `
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="pt-3 px-3 rounded flex-grow-1">
+                    <div class="fw-semibold mb-1">${comment.text}</div>
+                    <div class="small text-muted">
+                        Kartei: ${box.title}
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body d-flex flex-column ">
+                    
+                    <!-- Meta Infos -->
+                    <div class="mb-3 small text-muted border-top pt-2 gap-3 ">
+                        <div>👤 Author*in: ${author.username}</div>
+                        <div>📅 Erstellt: ${comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : 'unknown'}</div>
+                        <div>✏️ Aktualisiert:  ${comment.updatedAt ? new Date(comment.updatedAt).toLocaleDateString() : 'unknown'}</div>
+                    </div>
+        
+                    <!-- Delete Button -->
+                    <div class="mt-auto">
+                    <!-- todo: bearbeiten muss verbunden und implementiert werden! dann btn-outline-primary-->
+                        <button class="btn btn-warning btn-sm ">
+                            bearbeiten
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${comment.id}">
+                            löschen
+                        </button>
+                    </div>
+        
+                </div>
+            </div>
+        </div>`;
+        $element.append(cardHtml);
+    })
+}
+
+function deleteComment(commentId){
+    if (confirm("Willst du diesen Kommentar wirklich löschen?")) {
+        delete_comment(commentId).then(
+            comment => {
+                alert("Kommentar " + comment.text + "wurde gelöscht!" );
+                $("#comments").empty();
+                getComments();
+            }
+        ).catch( () => { alert("Fehler beim Löschen."); } );
+    }
+}
+
+
+
