@@ -11,6 +11,11 @@ $(document).ready(async function () {
     const profilepicture = document.getElementById("profilepicture");
     profilepicture.setAttribute('src', profilepictureUrl);
 
+    if (userinfo.admin) {
+        const adminButton = document.getElementById("adminButton");
+        adminButton.style.display = "inline-block";
+    }
+
     let own_boxes = await get_me_ownboxes();
 
     if (own_boxes.length === 0) {

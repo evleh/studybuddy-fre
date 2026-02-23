@@ -23,7 +23,7 @@
                         und kannst in den öffentlichen Karteien schmökern, die andere mit der Community geteilt haben.
                     </p>
                     <div class="d-flex flex-wrap gap-2 mt-4">
-                        <a href="014-admin-home-base.html" class="btn btn-outline-danger shadow-sm">Admin</a>
+                        <a id="adminButton" href="014-admin-home-base.html" class="btn btn-outline-danger shadow-sm" style="display:none">Admin-Bereich</a>
                         <a href="018-view-profile.html" class="btn btn-primary shadow-sm">Profil bearbeiten</a>
                         <button class="btn btn-light border remove-when-logged-out" onclick="window.sb.logout()">Logout</button>
                     </div>
@@ -45,10 +45,12 @@
         <div class="col-12">
             <div class="list-group shadow-sm" id="my-boxes">
 
-            </div>
-            <ul class="list-group list-group-flush mt-2" id="list-of-own-boxes">
 
-            </ul>
+                <ul class="list-group list-group-flush mt-2" id="list-of-own-boxes">
+
+                </ul>
+
+            </div>
 
             <div class="col-12" style="margin-top:5%">
                 <a href="010-new-box.html" class="btn btn-success" style="margin-right: 2%">+ Neue Kartei</a>
