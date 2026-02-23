@@ -11,46 +11,56 @@
 <div class="mx-auto col-lg-10 col-md-12">
     <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
 
-    <div class="container">
-        <h1>Hallo <span class="insert-username-here"></span></h1>
-        <div class="row">
-        <div class="col">
-            <img id="profilepicture" class="img-fluid rounded my-2"
-                 style="max-height: 200px; display: block;">
-        </div>
-        <div class="col">
-                        <div>
-                Schönen, dass du da bist, <span class="insert-user-first-name-here"></span>!<br> Viel Spaß beim Lernen mit StudyBuddy!
+<div class="container py-5">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-5 fw-bold">Hallo <span class="insert-username-here text-primary"></span>!</h1>
+                    <p>
+                        Schön, dass du da bist, <span class="insert-user-first-name-here fw-bold"></span>!<br>
+                        Hier findest du deine persönlichen Lernkarteien
+                        und kannst in den öffentlichen Karteien schmökern, die andere mit der Community geteilt haben.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <a href="014-admin-home-base.html" class="btn btn-outline-danger shadow-sm">Admin</a>
+                        <a href="018-view-profile.html" class="btn btn-primary shadow-sm">Profil bearbeiten</a>
+                        <button class="btn btn-light border remove-when-logged-out" onclick="window.sb.logout()">Logout</button>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <img id="profilepicture" class="img-fluid rounded-circle shadow-sm border"
+                         style="width: 180px; height: 180px; object-fit: cover; display: inline-block;"
+                         alt="Profilbild">
+                </div>
             </div>
         </div>
-        <div class="col">
-            <a href="014-admin-home-base.html" class="btn btn-primary" style="margin: 1%">Admin</a> <!--todo nur anzeigen wenn user admin user ist -->
-            <a href="018-view-profile.html" class="btn btn-primary" style="margin: 1%">Profil bearbeiten</a>
-            <a class="btn btn-primary remove-when-logged-out" style="margin: 1%" onclick="window.sb.logout()">Logout</a>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">Deine Lernkarteien</h3>
         </div>
-    </div>
 
-    <div class="mt-3">
-        <h3>Deine Lernkarteien</h3>
-        <div class="list-group list-group-flush" id="my-boxes"></div>
+        <div class="col-12">
+            <div class="list-group shadow-sm" id="my-boxes">
 
-        <ul class="list-group" id="list-of-own-boxes">
-        </ul>
+            </div>
+            <ul class="list-group list-group-flush mt-2" id="list-of-own-boxes">
 
-        <div class="row mt-3">
-            <a href="010-new-box.html">Neue Lernkartei erstellen</a>
+            </ul>
+
+            <div class="col-12" style="margin-top:5%">
+                <a href="010-new-box.html" class="btn btn-success" style="margin-right: 2%">+ Neue Kartei</a>
+                <a href="003-shared-boxes.html" class="btn btn-warning">Öffentliche Karteien</a>
+            </div>
+
         </div>
+
     </div>
 
-    <div>
-        <!--<div class="row"><h3>Abonnierte Lernkarteien</h2></div>-->
-        <div><a href="003-shared-boxes.html">Geteilte Karteien ansehen</a></div>
-        <!-- <a>Challenge: Lernen</a>
-        Rest der Abbildung ist eine Challenge:
-        Challenge Als registrierter Benutzer möchte ich geteilte Karteien abonnieren und
-         damit lernen können. -->
-    </div>
 </div>
+
 
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

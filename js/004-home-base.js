@@ -10,10 +10,15 @@ $(document).ready(async function () {
     }
     const profilepicture = document.getElementById("profilepicture");
     profilepicture.setAttribute('src', profilepictureUrl);
-    console.log(profilepictureUrl);
 
     let own_boxes = await get_me_ownboxes();
 
+    if (own_boxes.length === 0) {
+        let noBoxes =  `<p>Du hast noch keine eigenen Karteien.
+            Gehe auf <strong>"+ Neue Kartei"</strong>, um deine erste persönliche Kartei anzulegen 
+            - oder schmökere in den öffentlichen Karteien!</p>`
+        $("#my-boxes").append(noBoxes);
+    }
 
     $.each(own_boxes, function (index, item) {
 
