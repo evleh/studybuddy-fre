@@ -6,7 +6,7 @@ function boxIdFromParams() {
     const params = new URLSearchParams(window.location.search);
     return params.get("id")
 }
-let boxId = boxIdFromParams();
+
 
 function setMainHeading(text) {
     $('#main-h1-element').text(text)
@@ -59,5 +59,6 @@ async function show_questions(boxId) {
 }
 
 $(document).ready(() => {
+    let boxId = boxIdFromParams();
     show_questions(boxId)
 });
