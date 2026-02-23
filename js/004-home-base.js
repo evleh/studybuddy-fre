@@ -44,8 +44,10 @@ $(document).ready(async function () {
             "<p><b>Beschreibung:</b> " + item.description + "</p>" +
             //TODO: Wrap boolean isPublic in a nicer way (e.g. colour coded icon)
             "<p><b>Sichtbarkeit:</b> " + statusPublic + "</p>" +
-            '<button class="btn btn-primary btn-questions" style="margin-right: 2%">Fragen ansehen</button>' +
-            '<button class="btn btn-primary btn-edit">Bearbeiten</button>' +
+            '<div class="mb-2">' +
+            '<button class="btn btn-outline-primary btn-questions mx-2">Fragen ansehen</button>' +
+            '<button class="btn btn-outline-primary btn-edit">Bearbeiten</button>' +
+            '</div>' +
             "</li>"
         );
 
