@@ -1,4 +1,4 @@
-import {read_user} from "./bae-connect-users.js";
+import {delete_user, read_user} from "./bae-connect-users.js";
 import {read_all_boxes} from "./bae-connect-boxes.js";
 import {read_all_comments} from "./bae-connect-comments.js";
 import {make_link_from_fileName} from "./bae-connect-files.js";
@@ -12,6 +12,10 @@ $(document).ready(async function() {
         const user = await getUser(userId);
         renderUser(user);
         renderUserActions(user);
+        $(document).on("click", ".delete-btn", function () {
+            const userId = $(this).data("id");
+            deleteUser(userId);
+        });
 
         const boxes = await getBoxes(user.id);
         renderUserBoxes(boxes);
@@ -39,6 +43,7 @@ async function getBoxes(ownerId){
 }
 
 function renderUser(user){
+    console.log(user)
     $("#titel").append(user.name);
     const img = $(`<img src="${make_link_from_fileName(user.foto)}">`)
     $("#profile-pic").append(img);
@@ -52,10 +57,11 @@ function renderUser(user){
 
 
 function renderUserActions(user){
+    console.log("renderUserActions");
     $("#user-actions")
-        .append($(`<button>User bearbeiten</button>`))
-        .append($(`<button>User sperren</button>`))
-        .append($(`<button>User Löschen</button>`))
+        .append($(`<button data-id="${user.id}">User bearbeiten</button>`))
+        // .append($(`<button data-id="${user.id}>User sperren</button>`))
+        .append($(`<button class="delete-btn btn btn btn-outline-danger m-2" data-id="${user.id}">User Löschen</button>`))
 }
 
 function renderUserBoxes(boxes){
@@ -108,4 +114,16 @@ function renderUserComments(comments){
     })
 
     $tbl.append( $("</tbody>"))
+}
+
+function deleteUser(userId){
+    console.log(userId)
+    if (confirm("Willst du diesen User wirklich löschen?")) {
+        delete_user(userId).then(
+            user => {
+                alert("User " + user.username + "wurde gelöscht!" );
+                window.location.href = "014-admin-home-base.html" ;
+            }
+        ).catch( () => { alert("Fehler beim Löschen."); } );
+    }
 }
