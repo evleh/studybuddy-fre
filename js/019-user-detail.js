@@ -1,5 +1,5 @@
 import {delete_user, read_user} from "./bae-connect-users.js";
-import {read_all_boxes, read_box} from "./bae-connect-boxes.js";
+import {delete_box, read_all_boxes, read_box} from "./bae-connect-boxes.js";
 import {delete_comment, read_all_comments} from "./bae-connect-comments.js";
 import {make_link_from_fileName} from "./bae-connect-files.js";
 
@@ -12,17 +12,21 @@ $(document).ready(async function() {
         const user = await getUser(userId);
         renderUser(user);
         renderUserActions(user);
-        $(document).on("click", ".delete-btn", function () {
+        $(document).on("click", ".delete-user-btn", function () {
             const userId = $(this).data("id");
             deleteUser(userId);
         });
 
         const boxes = await getBoxes(user.id);
         renderUserBoxes(boxes);
+        $(document).on("click", ".delete-box-btn", function () {
+            const boxId = $(this).data("id");
+            deleteBox(boxId);
+        });
 
         const comments = await getUserComments(user.id);
         await renderUserComments(comments);
-        $(document).on("click", ".delete-btn", function () {
+        $(document).on("click", ".delete-comment-btn", function () {
             const commentId = $(this).data("id");
             deleteComment(commentId);
         });
@@ -66,7 +70,7 @@ function renderUserActions(user){
     $("#user-actions")
         .append($(`<button data-id="${user.id}">User bearbeiten</button>`))
         // .append($(`<button data-id="${user.id}>User sperren</button>`))
-        .append($(`<button class="delete-btn btn btn btn-outline-danger m-2 btn-sm" data-id="${user.id}">User Löschen</button>`))
+        .append($(`<button class="delete-user-btn btn btn btn-outline-danger m-2 btn-sm" data-id="${user.id}">User Löschen</button>`))
 }
 
 function renderUserBoxes(boxes){
@@ -117,7 +121,7 @@ function renderUserBoxes(boxes){
                             bearbeiten
                         </button>
                     
-                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${box.id}">
+                        <button class="btn btn-outline-danger btn-sm delete-box-btn" data-id="${box.id}">
                             löschen
                         </button>
                        
@@ -170,7 +174,7 @@ async function renderUserComments(data){
         
                     <!-- Delete Button -->
                     <div class="mt-auto">
-                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${comment.id}">
+                        <button class="btn btn-outline-danger btn-sm delete-comment-btn" data-id="${comment.id}">
                             löschen
                         </button>
                     </div>
@@ -200,7 +204,19 @@ function deleteComment(commentId){
             async comment => {
                 alert("Kommentar " + comment.text + "wurde gelöscht!");
                 //todo neu laden
+                window.location.href = window.location.href; // force a re-load
             }
         ).catch( () => { alert("Fehler beim Löschen."); } );
+    }
+}
+
+function deleteBox(boxId){
+    if (confirm("Willst du diese Kartei wirklich löschen?")) {
+        delete_box(boxId).then(
+            async box => {
+                alert("Kartei " + box.title + "wurde gelöscht!");
+                window.location.href = window.location.href; // force a re-load
+            }
+        ).catch( () => { alert("Fehler beim Löschen der kartei."); } );
     }
 }
