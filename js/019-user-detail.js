@@ -28,6 +28,7 @@ $(document).ready(async function() {
         });
 
     } catch (err){
+        $("#titel").append("<div>Fehler beim Laden der User Details.</div>");
         console.log(err);
     }
 
@@ -65,27 +66,68 @@ function renderUserActions(user){
     $("#user-actions")
         .append($(`<button data-id="${user.id}">User bearbeiten</button>`))
         // .append($(`<button data-id="${user.id}>User sperren</button>`))
-        .append($(`<button class="delete-btn btn btn btn-outline-danger m-2" data-id="${user.id}">User Löschen</button>`))
+        .append($(`<button class="delete-btn btn btn btn-outline-danger m-2 btn-sm" data-id="${user.id}">User Löschen</button>`))
 }
 
 function renderUserBoxes(boxes){
-    const $tbl = $("#box-table");
-    const $header = $(`<thead><tr> <td>Titel</td> <td>Erstellt am</td><td>Zuletzt geändert</td></tr></thead>`)
-    $tbl.append($header);
-    $tbl.append( $("<tbody>"))
+    console.log(boxes)
+    const $element = $("#user-boxes")
 
-    $.each(boxes, function (i, box){
-        const createdAt = new Date(box.createdAt);
-        const updatedAt = new Date(box.updatedAt);
-        const $row = $(`<tr> <td>${box.title}</td> <td>${createdAt.toUTCString()}</td><td>${updatedAt.toUTCString()}</td></tr>`);
-        $row.on("click", function () {
-            window.location.href = `019-user-detail.html?id=${user.id}`; // todo wo führt das hin???
-        });
+    let statusPublic = "unknown";
 
-        $tbl.append($row);
+    boxes.forEach(box => {
+        if (box.public === true) {
+            statusPublic = "&#x1F7E2; öffentlich";
+        } else {
+            statusPublic = "&#128993; privat";
+        }
+
+        const cardHtml = `
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="pt-3 px-3 rounded flex-grow-1">
+                    <div class="fw-semibold mb-1 d-flex justify-content-between align-items-center">
+                        <span>${box.title}</span>
+                        <span class="small text-muted">${statusPublic}</span>
+                    </div>
+                    <div class="small text-muted">
+                        Beschreibung: ${box.description}
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body d-flex flex-column ">
+                    
+                    <!-- Meta Infos -->
+                    <div class="mb-3 small text-muted pt-2 gap-3 ">
+                        <div>📅 Erstellt: ${box.createdAt ? new Date(box.createdAt).toLocaleDateString() : 'unknown'}</div>
+                        <div>✏️ Aktualisiert:  ${box.updatedAt ? new Date(box.updatedAt).toLocaleDateString() : 'unknown'}</div>
+                    </div>
+                    
+                    <div class="d-flex gap-3 small text-muted border-top pt-2">
+                                <div><strong class="text-dark">${box.cardIds.length}</strong> Fragen</div>
+                                <div><strong class="text-dark">${box.commentIds.length}</strong> Kommentare</div>
+                                
+                    </div>
+        
+                    <!-- Delete Button -->
+                    <div class="mt-3">
+                    <!-- to do: bearbeiten; dann clas btn-outline-primary --> 
+                        <button onclick="window.location.href='../htmls/011-edit-box.html?id=${box.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${box.id}">
+                            bearbeiten
+                        </button>
+                    
+                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${box.id}">
+                            löschen
+                        </button>
+                       
+                    </div>
+        
+                </div>
+            </div>
+        </div>`;
+        $element.append(cardHtml);
     })
-
-    $tbl.append( $("</tbody>"))
 
 }
 
