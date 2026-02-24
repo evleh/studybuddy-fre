@@ -56,7 +56,7 @@ async function getBoxes(ownerId){
 
 function renderUser(user){
     console.log(user)
-    $("#titel").append(user.name);
+    $("#titel").append(user.username);
     const img = $(`<img src="${make_link_from_fileName(user.foto)}">`)
     $("#profile-pic").append(img);
 
@@ -71,7 +71,9 @@ function renderUser(user){
 function renderUserActions(user){
     console.log("renderUserActions");
     $("#user-actions")
-        .append($(`<button data-id="${user.id}">User bearbeiten</button>`))
+
+        .append($(`<button onclick="window.location.href='../htmls/018-view-profile.html?id=${user.id}'" class="btn btn-outline-primary btn-sm edit-btn">
+                            User bearbeiten</button>`))
         // .append($(`<button data-id="${user.id}>User sperren</button>`))
         .append($(`<button class="delete-user-btn btn btn btn-outline-danger m-2 btn-sm" data-id="${user.id}">User Löschen</button>`))
 }
