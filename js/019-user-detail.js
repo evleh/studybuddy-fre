@@ -32,7 +32,10 @@ $(document).ready(async function() {
         });
 
     } catch (err){
-        $("#titel").append("<div>Fehler beim Laden der User Details.</div>");
+        $("#titel").append("<div>Fehler beim Laden.</div>");
+        $("#user-boxes").append("<div>Fehler beim Laden.</div>");
+        $("#user-comments").append("<div>Fehler beim Laden.</div>");
+
         console.log(err);
     }
 
@@ -74,8 +77,11 @@ function renderUserActions(user){
 }
 
 function renderUserBoxes(boxes){
-    console.log(boxes)
     const $element = $("#user-boxes")
+    if(boxes.length === 0){
+        $element.append("<div>User hat noch keine Karteien erstellt.</div>");
+        return;
+    }
 
     let statusPublic = "unknown";
 
@@ -146,6 +152,11 @@ async function getUserComments(authorId){
 
 async function renderUserComments(data){
     const $element = $("#user-comments");
+    if(data.length === 0){
+        $element.append("<div>User hat noch keine Kommentare erstellt.</div>");
+        return;
+    }
+
     const uniqueBoxIds = [...new Set(data.map(comment => comment.boxId))];
     const boxes = await Promise.all(uniqueBoxIds.map(boxId => read_box(boxId)))
 
