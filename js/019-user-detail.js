@@ -95,7 +95,7 @@ function renderUserBoxes(boxes){
         }
 
         const cardHtml = `
-        <div class="col-md-6">
+        <div class="col-md-6 mb-2">
             <div class="card shadow-sm h-100">
                 <div class="pt-3 px-3 rounded flex-grow-1">
                     <div class="fw-semibold mb-1 d-flex justify-content-between align-items-center">
@@ -166,7 +166,7 @@ async function renderUserComments(data){
         const box = boxes.find(box => box.id === comment.boxId);
 
         const cardHtml = `
-        <div class="col-md-6">
+        <div class="col-md-6 mb-2">
             <div class="card shadow-sm h-100">
                 <div class="pt-3 px-3 rounded flex-grow-1">
                     <div class="fw-semibold mb-1">${comment.text}</div>
