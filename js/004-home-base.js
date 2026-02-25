@@ -1,10 +1,11 @@
 import {get_me_ownboxes, get_me_userinfo} from "./bae-connect-me.js";
 import {make_link_from_fileName} from "./bae-connect-files.js";
+import constants from "./constants.js";
 
 
 $(document).ready(async function () {
     let userinfo = await get_me_userinfo();
-    let profilepictureUrl = "https://cdn.pixabay.com/photo/2016/06/22/21/18/cat-1474092_1280.jpg"
+    let profilepictureUrl = constants.DEFAULT_PROFILE_PIC;
     if (userinfo.foto) {
         profilepictureUrl = make_link_from_fileName(userinfo.foto);
     }

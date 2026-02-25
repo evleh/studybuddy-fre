@@ -64,10 +64,6 @@ async function renderComments(data) {
         
                     <!-- Delete Button -->
                     <div class="mt-auto">
-                    <!-- todo: bearbeiten muss verbunden und implementiert werden! dann btn-outline-primary-->
-                        <button class="btn btn-warning btn-sm ">
-                            bearbeiten
-                        </button>
                         <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${comment.id}">
                             löschen
                         </button>
