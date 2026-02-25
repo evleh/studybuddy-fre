@@ -1,11 +1,13 @@
 import {make_link_from_fileName, upload_file} from "./bae-connect-files.js";
-import {change_user} from "./bae-connect-users.js";
+import {change_user, read_user} from "./bae-connect-users.js";
 import {alertTypes, appendNotification} from "./error-ui.js";
 
 $(document).ready(function () {
+
+    const user = loadUserData()
     // special initialization code here if needed
-    window.sb.selfUserData
-        .then((userData) => {
+    user.then((userData) => {
+            $('#username').append(userData?.username);
             $('#inputDivers')[0].value = userData?.gender;
             $('#firstname')[0].value = userData?.firstname;
             $('#lastname')[0].value = userData?.lastname;
@@ -78,7 +80,8 @@ $(document).ready(function () {
                     } else {
                         changeUserRequest.gender = formData.get('inputDivers')
                     }
-                    let userId = (await window.sb.selfUserData).id
+                    const user = await loadUserData()
+                    let userId = user.id
                     await change_user(userId, changeUserRequest)
                         .then((res) => {
                             appendNotification({message:'Änderung erfolgreich'});
@@ -99,3 +102,16 @@ $(document).ready(function () {
     })()
 
 });
+
+async function loadUserData() {
+    const params = new URLSearchParams(window.location.search);
+    const userIdFromUrl = params.get("id");
+
+    // Admin viewing / editing user profile
+    if (userIdFromUrl) {
+        return await read_user(userIdFromUrl)
+    }
+
+    // View own profile
+    return window.sb.selfUserData;
+}
