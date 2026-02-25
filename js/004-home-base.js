@@ -28,9 +28,7 @@ $(document).ready(async function () {
     $.each(own_boxes, function (index, item) {
 
         let urlEdit = "011-edit-box.html?id="+item.id;
-        //TODO: Refers to 012-new-card as a quick fix
-        // -> make new site to see questions and flip open answers in 007-view-cards!
-        let urlQuestions = "012-new-card.html?id="+item.id;
+        let urlQuestions = "007-view-cards.html?id="+item.id;
         let statusPublic;
         if (item.public === true) {
             statusPublic = "&#x1F7E2; öffentlich";
@@ -42,7 +40,6 @@ $(document).ready(async function () {
             '<li class="list-group-item">' +
             "<p><b>Titel:</b> <b>" + item.title + "</b></p>" +
             "<p><b>Beschreibung:</b> " + item.description + "</p>" +
-            //TODO: Wrap boolean isPublic in a nicer way (e.g. colour coded icon)
             "<p><b>Sichtbarkeit:</b> " + statusPublic + "</p>" +
             '<div class="mb-2">' +
             '<button class="btn btn-outline-primary btn-questions mx-2">Fragen ansehen</button>' +
