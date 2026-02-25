@@ -2,6 +2,7 @@ import {delete_user, read_user} from "./bae-connect-users.js";
 import {delete_box, read_all_boxes, read_box} from "./bae-connect-boxes.js";
 import {delete_comment, read_all_comments} from "./bae-connect-comments.js";
 import {make_link_from_fileName} from "./bae-connect-files.js";
+import constants from "./constants.js";
 
 $(document).ready(async function() {
     const params = new URLSearchParams(window.location.search);
@@ -55,12 +56,11 @@ async function getBoxes(ownerId){
 }
 
 function renderUser(user){
-    console.log(user)
     $("#titel").append(user.username);
-    const img = $(`<img src="${make_link_from_fileName(user.foto)}">`)
+    const img = $(`<img src="${make_link_from_fileName(user.foto, constants.DEFAULT_PROFILE_PIC)}">`)
     $("#profile-pic").append(img);
 
-    $("#profile-info").append($(`<p>Anrede: ${user.gender}</p>`))
+    $("#profile-info").append($(`<p>Gender: ${user.gender}</p>`))
         .append($(`<p>Vorname: ${user.firstname}</p>`))
         .append($(`<p>Nachname: ${user.lastname}</p>`))
         .append($(`<p><a>E-mail: ${user.email}</a></p>`))
@@ -124,7 +124,7 @@ function renderUserBoxes(boxes){
         
                     <!-- Delete Button -->
                     <div class="mt-3">
-                    <!-- to do: bearbeiten; dann clas btn-outline-primary --> 
+    
                         <button onclick="window.location.href='../htmls/011-edit-box.html?id=${box.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${box.id}">
                             bearbeiten
                         </button>
@@ -230,6 +230,6 @@ function deleteBox(boxId){
                 alert("Kartei " + box.title + "wurde gelöscht!");
                 window.location.href = window.location.href; // force a re-load
             }
-        ).catch( () => { alert("Fehler beim Löschen der kartei."); } );
+        ).catch( () => { alert("Fehler beim Löschen der Kartei."); } );
     }
 }
