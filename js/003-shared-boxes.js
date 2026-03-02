@@ -1,51 +1,72 @@
 import {read_public_boxes} from "./bae-connect-public.js";
 
+let allPublicBoxes = [];
+const isLoggedIn = sessionStorage.getItem('accessToken') !== null;
+
 $(document).ready(async function () {
-    //potential changes to be made once data is imported from database (e.g. problems might occur if boxtitles contain html-tags)
-    let public_boxes = await read_public_boxes()
-    let boxtitles = public_boxes.map((box) => box.title);
-    boxtitles.sort()
+    allPublicBoxes = await read_public_boxes();
+    allPublicBoxes.sort((a, b) => a.title.localeCompare(b.title));
 
-    $.each(boxtitles, function (index, item) {
-                 $(document.getElementById("list-of-shared-boxes")).append('<li class="list-group-item">' + item + "</li>");
-             });
-
-    //search function
+    renderBoxList(allPublicBoxes, "#list-of-shared-boxes");
     $("#btn-alle-anzeigen").hide();
 
-    $("#btn-suchen").click(function () {
-        $("#btn-alle-anzeigen").show();
-        $("#btn-suchen").hide();
-        $("#list-of-shared-boxes").hide();
-
-        let searchValue = $('#site-search').val();
-        let searchresults = boxtitles.map(function (item) {
-            if (item.toLowerCase().includes(searchValue.toLowerCase())) {
-                return item;
-            }
-        });
-        searchresults = searchresults.filter(element => element !== undefined);
-        searchresults.sort();
-        console.log(searchresults.length);
-
-        if (searchresults.length === 0) {
-            $(document.getElementById("list-of-search-results")).append('<li class="list-group-item">' + "Zu diesen Suchbegriffen konnten leider keine Lernkarteien gefunden werden." + '</li>');
-        } else {
-            $.each(searchresults, function (index, item) {
-                $(document.getElementById("list-of-search-results")).append('<li class="list-group-item">' + item + "</li>");
-            });
-        }
-        $("#list-of-search-results").show();
-
-    });
-
-    $("#btn-alle-anzeigen").click(function () {
-        $("#btn-alle-anzeigen").hide();
-        $("#btn-suchen").show();
-
-        $("#list-of-search-results").hide();
-        $("#list-of-shared-boxes").show();
-        document.getElementById("list-of-search-results").replaceChildren();
-        document.getElementById('site-search').value = '';
-    });
+    $("#btn-suchen").click(handleSearch);
+    $("#btn-alle-anzeigen").click(resetSearch);
 });
+
+
+function createBoxItemHtml(item) {
+    const boxUrl = `006-view-box.html?id=${item.id}`;
+    const boxLinkButton = `
+        <a href="${boxUrl}" class="btn btn-sm btn-outline-primary logged-in-only">
+            Ansehen
+        </a>`;
+
+    return `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-bold">${item.title}</span>
+            <div>
+                ${isLoggedIn ? boxLinkButton : ''}
+            </div>
+        </li>`;
+}
+
+
+function renderBoxList(boxes, containerId) {
+    const $container = $(containerId);
+    $container.empty();
+
+    if (boxes.length === 0) {
+        $container.append('<li class="list-group-item text-muted">Zu diesen Suchbegriffen konnten leider keine Lernkarteien gefunden werden.</li>');
+    } else {
+        $.each(boxes, (index, item) => {
+            $container.append(createBoxItemHtml(item));
+        });
+    }
+}
+
+
+function handleSearch() {
+    const searchValue = $('#site-search').val().toLowerCase();
+
+    $("#btn-suchen").hide();
+    $("#btn-alle-anzeigen").show();
+    $("#list-of-shared-boxes").hide();
+    $("#list-of-search-results").show();
+
+    const searchResults = allPublicBoxes
+        .filter(item => item.title.toLowerCase().includes(searchValue))
+        .sort((a, b) => a.title.localeCompare(b.title));
+
+    renderBoxList(searchResults, "#list-of-search-results");
+}
+
+
+function resetSearch() {
+    $("#btn-alle-anzeigen").hide();
+    $("#btn-suchen").show();
+
+    $("#list-of-search-results").hide().empty();
+    $("#list-of-shared-boxes").show();
+    $('#site-search').val('');
+}
