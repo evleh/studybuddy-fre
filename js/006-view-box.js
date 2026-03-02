@@ -1,7 +1,8 @@
 import {read_box} from "./bae-connect-boxes.js";
 import {read_user} from "./bae-connect-users.js";
-import {create_comment} from "./bae-connect-comments.js"
-import constants from "./constants.js";
+import {create_comment, read_comment} from "./bae-connect-comments.js"
+import {get_me_userinfo} from "./bae-connect-me.js"
+
 
 function boxIdFromParams() {
     const params = new URLSearchParams(window.location.search);
@@ -23,16 +24,21 @@ async function showBox(boxId) {
 }
 
 //TODO: I need help making this work :(
-async function createComment(boxId) {
+async function createComment(boxId, userId) {
     const form = document.getElementById('new-comment');
-    const commentContainer = document.getElementById('comment-list');
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
         const data = Object.fromEntries(new FormData(form));
 
-        create_comment(data)
+        let post_data = {
+            text: data,
+            authorId: userId,
+            boxId: boxId,
+        }
+
+        create_comment(post_data)
             .then(newComment => {
                 renderComment(newComment);
                 form.reset();
@@ -40,29 +46,40 @@ async function createComment(boxId) {
             .catch(err => console.error("Fehler:", err));
     });
 
-    function renderComment(comment) {
-        const html = `
+}
+
+async function renderComment(comment) {
+    let author = await read_user(comment.authorId)
+    const html = `
         <div class="card mb-2">
             <div class="card-body">
+                <strong>${author.username}</strong><br>
                 ${comment.text} 
             </div>
         </div>`;
-        commentContainer.insertAdjacentHTML('afterbegin', html);
-    }
+    document.getElementById('comment-list').insertAdjacentHTML('afterbegin', html);
 }
 
-async function renderComments () {
+async function renderComments (boxId) {
+    let box = await read_box(boxId);
+    let comments = box.commentIds.map(async (commentId) => {
+        let commentRead = await read_comment(commentId)
+        return commentRead;
+    });
 
+    $("#comment-list").empty();
+    $.each(comments, async function (i, commentPromise) {
+        let comment = await commentPromise;
+        renderComment(comment);
+    });
 }
-
 
 
 $(document).ready(() => {
    let boxId = boxIdFromParams();
+   let userId = get_me_userinfo().id;
    showBox(boxId);
-   createComment(boxId);
-
-
-
+   renderComments(boxId);
+   createComment(boxId, userId);
 
 });

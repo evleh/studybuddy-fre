@@ -23,34 +23,40 @@
             </div>
         </div>
 
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-body">
-                <h5>
-                    Was sagst du dazu?
-                </h5>
-                <p>
-                    Hier kannst du einen Kommentar zu dieser Lernkartei abgeben:
-                </p>
-                <form id="new-comment">
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control needs-validation" placeholder="Dein Kommentar" id="comment" name="comment" style="height: 6rem"></textarea>
-                        <label for="comment">Gib hier deinen Kommentar ein.</label>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h5>
+                            Was sagst du dazu?
+                        </h5>
+                        <p>
+                            Hier kannst du einen Kommentar zu dieser Lernkartei abgeben:
+                        </p>
+                        <form id="new-comment">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control needs-validation" placeholder="Dein Kommentar" id="comment" name="comment" style="height: 6rem"></textarea>
+                                <label for="comment">Gib hier deinen Kommentar ein.</label>
+                            </div>
+
+                            <button id="new-comment-button" class="btn btn-primary">Kommentar erstellen</button>
+                        </form>
+
                     </div>
-
-                    <button id="new-comment-button" class="btn btn-primary">Kommentar erstellen</button>
-                </form>
-
+                </div>
             </div>
-        </div>
 
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-body">
-                <h5>
-                    Was sagen andere dazu?
-                </h5>
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h5>
+                            Was sagen andere dazu?
+                        </h5>
 
-                <div id="comment-list"></div>
+                        <div id="comment-list"></div>
 
+                    </div>
+                </div>
             </div>
         </div>
 
