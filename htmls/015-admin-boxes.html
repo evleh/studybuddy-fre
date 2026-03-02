@@ -20,27 +20,27 @@
             </div>
             <!-- Force next columns to break to new line -->
             <div class="w-100"></div>
-            <div class="offset-md-8 col-4 text-end">
+            <div class="col-8" id="generalTitle">
+                <h3>Alle Kartei: </h3>
+            </div>
+            <div class="col-8" >
+                <h3 id="questionsTitle">Fragen in der Kartei: </h3>
+            </div>
+
+            <div class="col-4 text-end">
                 <a class="btn btn-primary" id="backToBoxes">zurück zu Karteien</a>
             </div>
         </div>
 
         <div class="input-group mb-3">
-            <input type="text" class="form-control mt-3 shadow-sm " id="content-search" placeholder="Kommentare suchen ..."/>
+            <input type="text" class="form-control mt-3 shadow-sm " id="content-search" placeholder="Suchen ..."/>
         </div>
 
         <div id="admin-boxes-content">
 
-                <ul class="list-group" id="list-of-all-boxes"></ul>
+            <div class="row" id="list-of-all-boxes"></div>
 
-                <h2 id="questionsTitle"></h2>
-                <ul class="list-group" id="list-of-questions">
-                    <li></li>
-                </ul>
-
-            </div>
-            <h3 class="row mt-3 mb-2">Lernkarteien:</h3>
-            <div class="row" id="all-boxes"></div>
+            <div class="list-group" id="list-of-questions"></div>
 
             <img class="img-w-margin" src="https://cdn.pixabay.com/photo/2024/05/01/06/40/cat-8731512_1280.jpg">
         </div>

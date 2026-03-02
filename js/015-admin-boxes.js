@@ -44,12 +44,35 @@ async function loadCards(cardIds) {
 /* Functions to render data */
 function renderCards(cards){
     cards.forEach(card => {
-            $("#list-of-questions").append(
-                '<li class="list-group-item">'
-                + "<p><b>Frage: </b>" + card.question + "</p>"
-                + "<p><b>Antwort: </b>" + card.answer + "</p>"
-                + "</li>"
-            );
+        const cardHtml = `
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="pt-3 px-3 rounded flex-grow-1">
+                    <div class="fw-semibold mb-1">Frage: ${card.question}</div>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body d-flex flex-column ">
+                    
+                    <!-- Meta Infos -->
+                    <div class="mb-3 small text-muted pt-2 gap-3 ">
+                        <div>Antwort: ${card.answer} </div>
+                    </div>
+        
+                    <!-- Delete Button -->
+                    <div class="mt-auto border-top">
+                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="">
+                            löschen
+                        </button>
+                    </div>
+        
+                </div>
+            </div>
+        </div>`;
+
+        console.log(card)
+
+        $("#list-of-questions").append(cardHtml);
     });
 }
 
@@ -121,7 +144,7 @@ async function renderBoxes(boxes) {
             </div>
         </div>`;
 
-        $("#all-boxes").append(cardHtml);
+        $("#list-of-all-boxes").append(cardHtml);
 
 
     });
@@ -152,6 +175,7 @@ async function handleShowQuestions() {
 function handleBackToBoxes() {
     $("#questionsTitle").hide().empty();
     $("#list-of-questions").hide().empty();
+    $("#generalTitle").show();
     $("#list-of-all-boxes").show();
     $("#backToBoxes").hide();
 }
@@ -159,8 +183,9 @@ function handleBackToBoxes() {
 /* UI helpers */
 function showQuestionsView(title) {
     $("#list-of-all-boxes").hide();
+    $("#generalTitle").hide();
     $("#backToBoxes").show();
-    $("#questionsTitle").text(title).show();
+    $("#questionsTitle").append(title).show();
     $("#list-of-questions").empty().show();
 }
 
