@@ -1,6 +1,7 @@
 import {read_all_boxes} from "./bae-connect-boxes.js";
 import {read_user} from "./bae-connect-users.js";
 import {read_card} from "./bae-connect-cards.js";
+import {searchCards} from "./util.js";
 
 $(document).ready(function() {
     setupInitialUI();
@@ -13,6 +14,11 @@ async function loadBoxes(){
     try {
         const boxes = await read_all_boxes();
         await renderBoxes(boxes);
+
+        $("#content-search").on("input", function () {
+            const value = $(this).val();
+            searchCards(value);
+        });
     } catch (error) {
         console.log(error)
         $("#admin-boxes-content").append("<div> Fehler beim Laden der Lernkarteien. </div>");
