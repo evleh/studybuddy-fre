@@ -14,6 +14,7 @@ async function loadBoxes(){
         const boxes = await read_all_boxes();
         await renderBoxes(boxes);
     } catch (error) {
+        console.log(error)
         $("#admin-boxes-content").append("<div> Fehler beim Laden der Lernkarteien. </div>");
     }
 }
@@ -53,8 +54,10 @@ async function renderBoxes(boxes) {
     const authors = await Promise.all(
         uniqueAuthorIds.map(id => read_user(id))
     );
-
-    $.each(boxes, function (index, item) {
+    //console.log(boxes)
+    boxes.forEach(item => {
+    //$.each(boxes, function (index, item) {
+        console.log(item)
         let author = authors.find(author => author.id === item.ownerId);
         let statusPublic;
         if (item.public === true) {
@@ -63,16 +66,57 @@ async function renderBoxes(boxes) {
             statusPublic = "&#128993; privat";
         }
 
-        let buttonHtml = `<button class='btn-showQuestions' data-item="${encodeURIComponent(JSON.stringify(item))}" data-title='${item.title.replace(/'/g, "&apos;")}'>Fragen anzeigen</button>`;
 
-        $("#list-of-all-boxes").append('<li class="list-group-item">'
-            + "<p>" + "<b>Titel:</b> " + "<b>" + item.title + "</b>" + "</p>"
-            + "<p>" + "<b>erstellt von:</b> " + author.username + "</p>"
-            + "<p>" + "<b>Beschreibung:</b> " + item.description + "</p>"
-            + "<p>" + "<b>erstellt am:</b> " + new Date(item.createdAt).toLocaleDateString() + "</p>"
-            + "<p>" + "<b>Sichtbarkeit: </b>" + statusPublic + "</p>"
-            + buttonHtml
-            + "</li>");
+
+        const cardHtml = `
+        <div class="col-md-6 mb-2">
+            <div class="card shadow-sm h-100">
+                <div class="pt-3 px-3 rounded flex-grow-1">
+                    <div class="fw-semibold mb-1 d-flex justify-content-between align-items-center">
+                        <span>${item.title}</span>
+                        <span class="small text-muted">${statusPublic}</span>
+                    </div>
+                    <div class="small text-muted">
+                        Beschreibung: ${item.description}
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body d-flex flex-column ">
+                    
+                    <!-- Meta Infos -->
+                    <div class="mb-3 small text-muted pt-2 gap-3 ">
+                        <div>📅 Erstellt: ${item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'unknown'}</div>
+                        <div>✏️ Aktualisiert:  ${item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : 'unknown'}</div>
+                    </div>
+                    
+                    <div class="d-flex gap-3 small text-muted border-top pt-2">
+                                <div><strong class="text-dark">${item.cardIds.length}</strong> Fragen</div>
+                                <div><strong class="text-dark">${item.commentIds.length}</strong> Kommentare</div>
+                                
+                    </div>
+        
+                    <!-- Delete Button -->
+                    <div class="mt-3">
+                        <button class='btn-showQuestions btn btn-outline-primary btn-sm edit-btn' data-item="${encodeURIComponent(JSON.stringify(item))}" data-title='${item.title.replace(/'/g, "&apos;")}'>Fragen anzeigen</button>
+
+    
+                        <button onclick="window.location.href='../htmls/011-edit-box.html?id=${item.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${item.id}">
+                            bearbeiten
+                        </button>
+                    
+                        <button class="btn btn-outline-danger btn-sm delete-box-btn" data-id="${item.id}">
+                            löschen
+                        </button>
+                       
+                    </div>
+        
+                </div>
+            </div>
+        </div>`;
+
+        $("#all-boxes").append(cardHtml);
+
 
     });
 }
