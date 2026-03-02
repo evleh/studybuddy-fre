@@ -57,7 +57,7 @@ async function renderComments(data) {
                     
                     <!-- Meta Infos -->
                     <div class="mb-3 small text-muted border-top pt-2 gap-3 ">
-                        <div>👤 Author*in: ${author.username}</div>
+                        <div>👤 Autor*in: ${author.username}</div>
                         <div>📅 Erstellt: ${comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : 'unknown'}</div>
                         <div>✏️ Aktualisiert:  ${comment.updatedAt ? new Date(comment.updatedAt).toLocaleDateString() : 'unknown'}</div>
                     </div>

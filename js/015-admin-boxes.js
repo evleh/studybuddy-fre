@@ -1,4 +1,4 @@
-import {read_all_boxes} from "./bae-connect-boxes.js";
+import {delete_box, read_all_boxes} from "./bae-connect-boxes.js";
 import {read_user} from "./bae-connect-users.js";
 import {read_card} from "./bae-connect-cards.js";
 import {searchCards} from "./util.js";
@@ -7,6 +7,11 @@ $(document).ready(function() {
     setupInitialUI();
     registerEventHandlers();
     loadBoxes();
+
+    $(document).on("click", ".delete-box-btn", function () {
+        const boxId = $(this).data("id");
+        deleteBox(boxId);
+    });
 });
 
 /* Functions to load data from backend */
@@ -61,6 +66,10 @@ function renderCards(cards){
         
                     <!-- Delete Button -->
                     <div class="mt-auto border-top">
+                        <button onclick="window.location.href='../htmls/012-new-card.html?id=${card.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${card.id}">
+                            bearbeiten
+                        </button>
+                    
                         <button class="btn btn-outline-danger btn-sm delete-btn" data-id="">
                             löschen
                         </button>
@@ -115,6 +124,7 @@ async function renderBoxes(boxes) {
                     
                     <!-- Meta Infos -->
                     <div class="mb-3 small text-muted pt-2 gap-3 ">
+                        <div>👤 Autor*in: ${author.username}</div>
                         <div>📅 Erstellt: ${item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'unknown'}</div>
                         <div>✏️ Aktualisiert:  ${item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : 'unknown'}</div>
                     </div>
@@ -195,3 +205,13 @@ function setupInitialUI() {
     $("#backToBoxes").hide();
 }
 
+function deleteBox(boxId){
+    if (confirm("Willst du diese Kartei wirklich löschen?")) {
+        delete_box(boxId).then(
+            async box => {
+                alert("Kartei " + box.title + "wurde gelöscht!");
+                window.location.href = window.location.href; // force a re-load
+            }
+        ).catch( () => { alert("Fehler beim Löschen der Kartei."); } );
+    }
+}
