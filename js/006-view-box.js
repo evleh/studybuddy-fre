@@ -49,6 +49,7 @@ async function createComment(boxId, userId) {
 }
 
 async function renderComment(comment) {
+    //TODO: See comment on line 15 about read_user being limited to admins
     let author = await read_user(comment.authorId)
     const html = `
         <div class="card mb-2">
