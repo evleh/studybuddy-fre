@@ -32,8 +32,9 @@ async function createComment(boxId, userId) {
 
         const data = Object.fromEntries(new FormData(form));
 
+
         let post_data = {
-            text: data,
+            text: data.comment,
             authorId: userId,
             boxId: boxId,
         }
