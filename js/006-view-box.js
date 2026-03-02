@@ -12,8 +12,6 @@ function boxIdFromParams() {
 
 async function showBox(boxId) {
     let box = await read_box(boxId);
-    //TODO: This only works if the user trying to view the box is admin because read_user is admin only.
-    //Is there another way to get the author's name for regular users? Or can we make read_user accessible for registered users as well?
     let author = await read_user(box.ownerId)
     $('#h1').text(box.title);
     $('#author').text("erstellt von: "+author.username);
@@ -23,7 +21,7 @@ async function showBox(boxId) {
     });
 }
 
-//TODO: I need help making this work :(
+
 async function createComment(boxId, userId) {
     const form = document.getElementById('new-comment');
 
@@ -50,7 +48,6 @@ async function createComment(boxId, userId) {
 }
 
 async function renderComment(comment) {
-    //TODO: See comment on line 15 about read_user being limited to admins
     let author = await read_user(comment.authorId)
     const html = `
         <div class="card mb-2">
