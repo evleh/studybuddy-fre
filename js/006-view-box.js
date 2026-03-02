@@ -65,12 +65,17 @@ async function renderComments (boxId) {
         let commentRead = await read_comment(commentId)
         return commentRead;
     });
+    console.log(comments.length);
+    if (comments.length === 0) {
+        $("#comment-list").append("Zu dieser Kartei wurde noch kein Kommentar abgegeben. Poste hier den ersten Kommentar!")
+    }else {
+        $.each(comments, async function (i, commentPromise) {
+            let comment = await commentPromise;
+            renderComment(comment);
+        });
+    }
 
-    $("#comment-list").empty();
-    $.each(comments, async function (i, commentPromise) {
-        let comment = await commentPromise;
-        renderComment(comment);
-    });
+
 }
 
 
