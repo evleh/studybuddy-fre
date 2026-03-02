@@ -11,15 +11,46 @@
 <body>
     <div class="mx-auto col-lg-10 col-md-12">
         <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
-        <h1 id="h1">Kartei ansehen</h1>
-        <h5 id="author">erstellt von:</h5>
 
         <div class="card shadow-sm border-0 mb-4">
             <div class="card-body">
+                <h1 id="h1">Kartei ansehen</h1>
+                <h5 id="author">erstellt von:</h5>
                 <p id="description">
                     Description
                 </p>
                 <button id="view-cards" class="btn btn-outline-primary remove-when-logged-out" >zu den Karten</button>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5>
+                    Was sagst du dazu?
+                </h5>
+                <p>
+                    Hier kannst du einen Kommentar zu dieser Lernkartei abgeben:
+                </p>
+                <form id="new-comment">
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control needs-validation" placeholder="Dein Kommentar" id="comment" name="comment" style="height: 6rem"></textarea>
+                        <label for="comment">Gib hier deinen Kommentar ein.</label>
+                    </div>
+
+                    <button id="new-comment-button" class="btn btn-primary">Kommentar erstellen</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5>
+                    Was sagen andere dazu?
+                </h5>
+
+                <div id="comment-list"></div>
+
             </div>
         </div>
 
