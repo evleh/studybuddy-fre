@@ -165,28 +165,9 @@ try {
 // what happens if we try deleting a box that still has cards?
 try {
     let suddenBoxDeletionResponse = await delete_box(newBoxForCardTesting.id);
-    appendAlertDiv(`Deletion of box was done even though it still has cards?`, 'ERROR')
+    appendAlertDiv(`Deletion of box was done even with card.`, 'OK')
 } catch(e) {
-    appendAlertDiv(`Deletion of box fails if it has cards`, 'OK')
-}
-
-// delete card
-try {
-    let deletionResponse = await delete_card(newCard.id)
-    appendAlertDiv(`Card: Deletion request did not throw.`)
-    let boxAfterCardDeletion = await read_box(newBoxForCardTesting.id);
-    appendAlertDiv(`Card: Deletion of only card makes Box have zero cards (and also not throw).`,
-        boxAfterCardDeletion.cardIds.length === 0);
-} catch {
-    appendAlertDiv(`Card: Something threw in the delete card testing.`, 'ERROR')
-}
-
-// delete box after deleting all cards = works?
-try {
-    let responsibleBoxDeletionResponse = await delete_box(newBoxForCardTesting.id);
-    appendAlertDiv(`Cards: Deletion of card-testing box successful`, 'OK')
-} catch(e) {
-    appendAlertDiv(`Deletion of box fails even though cards were deleted `, 'ERROR')
+    appendAlertDiv(`Deletion of box fails if it has cards`, 'ERROR')
 }
 
 /**

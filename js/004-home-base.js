@@ -1,10 +1,11 @@
 import {get_me_ownboxes, get_me_userinfo} from "./bae-connect-me.js";
 import {make_link_from_fileName} from "./bae-connect-files.js";
+import constants from "./constants.js";
 
 
 $(document).ready(async function () {
     let userinfo = await get_me_userinfo();
-    let profilepictureUrl = "https://cdn.pixabay.com/photo/2016/06/22/21/18/cat-1474092_1280.jpg"
+    let profilepictureUrl = constants.DEFAULT_PROFILE_PIC;
     if (userinfo.foto) {
         profilepictureUrl = make_link_from_fileName(userinfo.foto);
     }
@@ -28,9 +29,7 @@ $(document).ready(async function () {
     $.each(own_boxes, function (index, item) {
 
         let urlEdit = "011-edit-box.html?id="+item.id;
-        //TODO: Refers to 012-new-card as a quick fix
-        // -> make new site to see questions and flip open answers in 007-view-cards!
-        let urlQuestions = "012-new-card.html?id="+item.id;
+        let urlQuestions = "007-view-cards.html?id="+item.id;
         let statusPublic;
         if (item.public === true) {
             statusPublic = "&#x1F7E2; öffentlich";
@@ -42,7 +41,6 @@ $(document).ready(async function () {
             '<li class="list-group-item">' +
             "<p><b>Titel:</b> <b>" + item.title + "</b></p>" +
             "<p><b>Beschreibung:</b> " + item.description + "</p>" +
-            //TODO: Wrap boolean isPublic in a nicer way (e.g. colour coded icon)
             "<p><b>Sichtbarkeit:</b> " + statusPublic + "</p>" +
             '<div class="mb-2">' +
             '<button class="btn btn-outline-primary btn-questions mx-2">Fragen ansehen</button>' +
