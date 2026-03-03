@@ -77,10 +77,20 @@ function show_single_question_and_wait(cardid, cardIds) {
     });
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 async function show_questions(boxId) {
     let box = await read_box(boxId);
     let cardIds = box.cardIds;
     setMainHeading(`Kartei: '${box.title}'`);
+
+    shuffleArray(cardIds);
 
     while (cardIds.length > 0) {
         let currentRound = [...cardIds];
@@ -88,6 +98,7 @@ async function show_questions(boxId) {
         for (let id of currentRound) {
             await show_single_question_and_wait(id, cardIds);
         }
+        shuffleArray(cardIds);
     }
     $("#div-for-questions").html(`
     <div class="card p-4 shadow-sm">

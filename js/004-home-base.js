@@ -44,8 +44,8 @@ $(document).ready(async function () {
             "<p><b>Beschreibung:</b> " + item.description + "</p>" +
             "<p><b>Sichtbarkeit:</b> " + statusPublic + "</p>" +
             '<div class="mb-2">' +
-            '<button class="btn btn-outline-success btn-study mx-2">Lernen</button>' +
-            '<button class="btn btn-outline-primary btn-questions mx-2">zur Fragenliste</button>' +
+            '<button class="btn btn-outline-success btn-study me-2">Lernen</button>' +
+            '<button class="btn btn-outline-primary btn-questions me-2">zur Fragenliste</button>' +
             '<button class="btn btn-outline-primary btn-edit">Bearbeiten</button>' +
             '</div>' +
             "</li>"
