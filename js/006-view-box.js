@@ -19,6 +19,9 @@ async function showBox(boxId) {
     $('#view-cards').on('click', function() {
         window.location.href = `007-view-cards.html?id=${boxId}`;
     });
+    $('#study').on('click', function() {
+        window.location.href = `007a-study-cards.html?id=${boxId}`;
+    });
 }
 
 

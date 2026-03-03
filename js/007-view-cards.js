@@ -60,5 +60,6 @@ async function show_questions(boxId) {
 
 $(document).ready(() => {
     let boxId = boxIdFromParams();
-    show_questions(boxId)
+    $("#linkToStudy").attr("href", "007a-study-cards.html?id=" + boxId);
+    show_questions(boxId);
 });
