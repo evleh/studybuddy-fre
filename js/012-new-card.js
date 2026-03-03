@@ -68,6 +68,19 @@ $(document).ready(async function() {
             'answer': formData.get('answer')
         };
 
+        // catch conditions of "empty string" for both question and answer.
+        // cancel whatever action would be and do a notification instead
+        if (cardToCreate.question.length === 0 ||  cardToCreate.answer.length === 0) {
+            appendNotification({
+                message: 'Frage und Antwort dürfen beide nicht leer sein.',
+                type: alertTypes.ERROR
+            });
+            newCardForm.checkValidity();
+            newCardForm.classList.add('was-validated');
+            return;
+
+        }
+
         // TODO media upload and clearing of form
         let imageField = formData.get('imageInput');
         if (imageField.name !== '') {
