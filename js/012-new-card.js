@@ -2,6 +2,7 @@ import {read_box} from "./bae-connect-boxes.js";
 import {change_card, create_card, delete_card, read_card} from "./bae-connect-cards.js";
 import {delete_uploaded_file, make_link_from_fileName, upload_file} from "./bae-connect-files.js";
 import {alertTypes, appendNotification} from "./error-ui.js";
+import {read_user} from "./bae-connect-users.js";
 
 const domIdOfCardDataForm = 'new-card-form';
 const domIdOfMainButton = 'new-card-button';
@@ -28,6 +29,10 @@ async function readBoxAndQuestionData() {
             console.log("error")
             return Promise.resolve("aaaaaaaaaaaa"); // to be able to wait at the read_box level.
         })
+
+    // insert author name
+    const author = await read_user(box.ownerId);
+    $("#author").append(author.username);
 
     // does this work?
     let cards = box.cardIds.map(async (cardId) => {
