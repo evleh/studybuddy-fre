@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>StudyBuddy Registrieren</title>
@@ -96,19 +96,7 @@
             <button id="hidepwrep" type="button" class="btn btn-warning" onclick="showpassword('passwordrep')">Passwort verstecken</button>
         </div>
 
-        <script>
-            function showpassword (inputid) {
-                const passwordfield = document.getElementById(inputid);
-                if(passwordfield.type === "password") {
-                    passwordfield.type = "text";
-                }
-                else {passwordfield.type = "password";}
-            }
-        </script>
         <p>(mind. 12 Zeichen, muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.)</p>
-
-
-
 
 
         <div class="input-group mb-3">
@@ -128,6 +116,7 @@
 
 <script type="module" src="../js/default-document-ready-stuff.js"></script>
 <script type="module" src="../js/registering.js"></script>
+<script src="../js/showpassword.js"</script>
 <script>
 
     $(document).ready(function() {
