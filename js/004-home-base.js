@@ -30,6 +30,7 @@ $(document).ready(async function () {
 
         let urlEdit = "011-edit-box.html?id="+item.id;
         let urlQuestions = "007-view-cards.html?id="+item.id;
+        let urlStudy = "007a-study-cards.html?id="+item.id;
         let statusPublic;
         if (item.public === true) {
             statusPublic = "&#x1F7E2; öffentlich";
@@ -43,11 +44,16 @@ $(document).ready(async function () {
             "<p><b>Beschreibung:</b> " + item.description + "</p>" +
             "<p><b>Sichtbarkeit:</b> " + statusPublic + "</p>" +
             '<div class="mb-2">' +
-            '<button class="btn btn-outline-primary btn-questions mx-2">Fragen ansehen</button>' +
+            '<button class="btn btn-outline-success btn-study mx-2">Lernen</button>' +
+            '<button class="btn btn-outline-primary btn-questions mx-2">zur Fragenliste</button>' +
             '<button class="btn btn-outline-primary btn-edit">Bearbeiten</button>' +
             '</div>' +
             "</li>"
         );
+
+        listItem.find('.btn-study').on('click', function() {
+            window.location.href = urlStudy;
+        });
 
         listItem.find('.btn-edit').on('click', function() {
             window.location.href = urlEdit;
