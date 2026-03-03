@@ -1,6 +1,6 @@
 import {delete_box, read_all_boxes} from "./bae-connect-boxes.js";
 import {read_user} from "./bae-connect-users.js";
-import {read_card} from "./bae-connect-cards.js";
+import {delete_card, read_card} from "./bae-connect-cards.js";
 import {searchCards} from "./util.js";
 
 $(document).ready(function() {
@@ -12,6 +12,14 @@ $(document).ready(function() {
         const boxId = $(this).data("id");
         deleteBox(boxId);
     });
+
+    $(document).on("click", ".delete-card-btn", function () {
+        const cardId = $(this).data("id");
+        deleteCard(cardId);
+    });
+
+
+
 });
 
 /* Functions to load data from backend */
@@ -50,27 +58,27 @@ async function loadCards(cardIds) {
 function renderCards(cards){
     cards.forEach(card => {
         const cardHtml = `
-        <div class="col-md-6">
+        <div class="col-md-6 mb-2">
             <div class="card shadow-sm h-100">
                 <div class="pt-3 px-3 rounded flex-grow-1">
-                    <div class="fw-semibold mb-1">Frage: ${card.question}</div>
+                    <div class="fw-semibold">Frage: ${card.question}</div>
                 </div>
 
                 <!-- Body -->
                 <div class="card-body d-flex flex-column ">
                     
                     <!-- Meta Infos -->
-                    <div class="mb-3 small text-muted pt-2 gap-3 ">
+                    <div class="mb-1 small text-muted gap-3 ">
                         <div>Antwort: ${card.answer} </div>
                     </div>
         
                     <!-- Delete Button -->
-                    <div class="mt-auto border-top">
-                        <button onclick="window.location.href='../htmls/012-new-card.html?id=${card.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${card.id}">
+                    <div class="mt-1">
+                        <button onclick="window.location.href='../htmls/012-new-card.html?id=${card.boxId}&cardId=${card.id}'" class="btn btn-outline-primary btn-sm edit-btn mt-2" data-id="${card.id}">
                             bearbeiten
                         </button>
                     
-                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="">
+                        <button class="btn btn-outline-danger btn-sm delete-card-btn mt-2" data-id="${card.id}">
                             löschen
                         </button>
                     </div>
@@ -79,7 +87,6 @@ function renderCards(cards){
             </div>
         </div>`;
 
-        console.log(card)
 
         $("#list-of-questions").append(cardHtml);
     });
@@ -213,5 +220,17 @@ function deleteBox(boxId){
                 window.location.href = window.location.href; // force a re-load
             }
         ).catch( () => { alert("Fehler beim Löschen der Kartei."); } );
+    }
+}
+
+function deleteCard(cardId){
+    if (confirm("Willst du diese Frage wirklich löschen?")) {
+        delete_card(cardId).then(
+            async card => {
+                alert("Frage " + card.question + "wurde gelöscht!");
+                // todo currently reload, reloads the box view
+                window.location.href = window.location.href; // force a re-load
+            }
+        ).catch( () => { alert("Fehler beim Löschen."); } );
     }
 }
