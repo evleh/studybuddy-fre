@@ -1,6 +1,7 @@
 import constants from "./constants.js";
 import { initFormValidation } from "./formValidation.js";
 import {change_box, delete_box} from "./bae-connect-boxes.js";
+import {read_user} from "./bae-connect-users.js";
 
 $(document).ready(function() {
     initFormValidation();
@@ -45,7 +46,9 @@ function loadBox(boxId){
     })
 }
 
-function renderBox(data){
+async function renderBox(data) {
+    const author = await read_user(data.id);
+    $('#author').append(author.username)
     $('#box-title').val(data.title);
     $('#box-description').val(data.description);
     $('#is-public-box').prop('checked', data.public);

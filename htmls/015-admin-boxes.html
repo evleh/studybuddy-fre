@@ -10,34 +10,39 @@
 <body>
 <div class="mx-auto col-lg-10 col-md-12">
     <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
-    <div class="container">
+    <div class="container mh-3">
         <div class="row">
-            <div class="col">
-                <h1>Lernkarteien </h1>
-                <div>
-                    <h3>Hallo <span class="insert-username-here"></span></h3>
-                </div>
+            <div class="col-8">
+                <h1>Lernkarteien moderieren</h1>
             </div>
-            <div class="col">
-                <a href="014-admin-home-base.html" class="btn btn-primary">zurück zum Admin-Bereich</a>
+            <div class="col-4 text-end">
+                <a href="014-admin-home-base.html" class="btn btn-primary">zur Admin-Übersicht</a>
+            </div>
+            <!-- Force next columns to break to new line -->
+            <div class="w-100"></div>
+            <div class="col-8" id="generalTitle">
+                <h3>Alle Kartei: </h3>
+            </div>
+            <div class="col-8" >
+                <h3 id="questionsTitle">Fragen in der Kartei: </h3>
             </div>
 
-            <div class="col">
+            <div class="col-4 text-end">
                 <a class="btn btn-primary" id="backToBoxes">zurück zu Karteien</a>
             </div>
-            <div id="admin-boxes-content">
+        </div>
 
-                <ul class="list-group" id="list-of-all-boxes">
-                </ul>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control mt-3 shadow-sm " id="content-search" placeholder="Suchen ..."/>
+        </div>
 
-                <h2 id="questionsTitle"></h2>
-                <ul class="list-group" id="list-of-questions">
-                    <li></li>
-                </ul>
+        <div id="admin-boxes-content">
 
-            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-3" id="list-of-all-boxes"></div>
 
-            <img class="img-w-margin" src="https://cdn.pixabay.com/photo/2024/05/01/06/40/cat-8731512_1280.jpg">
+            <div class="row row-cols-1 row-cols-md-2 g-3" id="list-of-questions"></div>
+
+            <img class="img-w-margin" style="width: 100%" src="https://cdn.pixabay.com/photo/2024/05/01/06/40/cat-8731512_1280.jpg">
         </div>
     </div>
 </div>
