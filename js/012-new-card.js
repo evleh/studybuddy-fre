@@ -7,52 +7,16 @@ import {read_user} from "./bae-connect-users.js";
 const domIdOfCardDataForm = 'new-card-form';
 const domIdOfMainButton = 'new-card-button';
 const secretStashName = 'stateStashCardEditId'
-
-function boxIdFromParams() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id")
-}
-
-
-
-async function readBoxAndQuestionData() {
-    // get query-parameters from url
-    const boxId = boxIdFromParams();
-
-    let box = await read_box(boxId)
-        .then((box) => {
-            renderFormNewCard(box)
-            return Promise.resolve(box); // to be able to wait at the read_box level.
-        })
-        .catch(() => {
-            // Todo: ordentlich machen wenn request nicht durchgeht
-            console.log("error")
-            return Promise.resolve("aaaaaaaaaaaa"); // to be able to wait at the read_box level.
-        })
-
-    // insert author name
-    const author = await read_user(box.ownerId);
-    $("#author").append(author.username);
-
-    // does this work?
-    let cards = box.cardIds.map(async (cardId) => {
-        let cardRead = await read_card(cardId)
-        return cardRead;
-    });
-
-    renderCards(cards);
-}
-
-function clearSecretStash() {
-    delete window[secretStashName];
-}
+const domIdCancelEditButton = 'cancel-edit-button';
+let cancelEditButton;
 
 /**
  * entry point after document.ready
  */
 $(document).ready(async function() {
-
     await readBoxAndQuestionData();
+    cancelEditButton = document.getElementById(domIdCancelEditButton);
+
 
     const newCardForm = document.getElementById(domIdOfCardDataForm);
     newCardForm.addEventListener('submit', async event => {
@@ -139,16 +103,77 @@ $(document).ready(async function() {
 
     });
 
-    cancelEditButton = $(`<button id="cancel-edit-button" class="btn btn-primary">Bearbeiten abbrechen</button>`)
-    cancelEditButton.hide()
-    $(newCardForm).append(cancelEditButton);
-    cancelEditButton.click(event => {
-        cancelEditButton.hide();
+    cancelEditButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        cancelEditButton.classList.add('d-none');
         setUIToCreate();
         clearSecretStash();
-    })
+    });
+
 });
-let cancelEditButton;
+
+
+function boxIdFromParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id")
+}
+
+function cardIdFromParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("cardId")
+}
+
+
+async function readBoxAndQuestionData() {
+    // get query-parameters from url
+    const boxId = boxIdFromParams();
+
+
+    let box = await read_box(boxId)
+        .then((box) => {
+            renderFormNewCard(box)
+            return Promise.resolve(box); // to be able to wait at the read_box level.
+        })
+        .catch(() => {
+            // Todo: ordentlich machen wenn request nicht durchgeht
+            console.log("error")
+            return Promise.resolve("aaaaaaaaaaaa"); // to be able to wait at the read_box level.
+        })
+
+    // insert author name
+    const author = await read_user(box.ownerId);
+    $("#author").append(author.username);
+
+    // does this work?
+    let cards = box.cardIds.map(async (cardId) => {
+        let cardRead = await read_card(cardId)
+        return cardRead;
+    });
+
+    renderCards(cards);
+
+    // if page is accessed from admin-view to edit a card
+    const cardId = cardIdFromParams();
+    if(cardId !== null){
+        window[secretStashName] = cardId;
+
+        const card = await read_card(cardId);
+
+        resetForm(); // clear the image if set
+        setUIToEdit();
+        document.getElementById('question').value = card.question;
+        document.getElementById('answer').value = card.answer;
+        setCardPreviewImage(card);
+    }
+    console.log(cardId);
+}
+
+function clearSecretStash() {
+    delete window[secretStashName];
+}
+
+
+
 
 function renderFormNewCard(data){
     $('#box-title').empty().append(data.title);
@@ -168,14 +193,14 @@ function setTitleOfMainButton(title) {
 function setUIToEdit() {
     setTitleOfMainButton('Frage ändern')
     setTitleOfSubForm("Frage bearbeiten");
-    cancelEditButton.show();
+    $('#cancel-edit-button').removeClass('d-none');
 }
 function setUIToCreate() {
     resetForm()
     setTitleOfMainButton('Frage erstellen')
     setTitleOfSubForm("Neue Frage:");
     clearCardImagePreview();
-    cancelEditButton.hide()
+    $('#cancel-edit-button').addClass('d-none');
 }
 
 function clearCardImagePreview() {
