@@ -200,7 +200,6 @@ async function renderUserComments(data){
 }
 
 function deleteUser(userId){
-    console.log(userId)
     if (confirm("Willst du diesen User wirklich löschen?")) {
         delete_user(userId).then(
             user => {
