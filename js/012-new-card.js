@@ -17,7 +17,6 @@ $(document).ready(async function() {
     await readBoxAndQuestionData();
     cancelEditButton = document.getElementById(domIdCancelEditButton);
 
-
     const newCardForm = document.getElementById(domIdOfCardDataForm);
     newCardForm.addEventListener('submit', async event => {
         // event handler function for pressing new card button
@@ -156,7 +155,6 @@ async function readBoxAndQuestionData() {
     const cardId = cardIdFromParams();
     if(cardId !== null){
         window[secretStashName] = cardId;
-
         const card = await read_card(cardId);
 
         resetForm(); // clear the image if set
@@ -165,20 +163,15 @@ async function readBoxAndQuestionData() {
         document.getElementById('answer').value = card.answer;
         setCardPreviewImage(card);
     }
-    console.log(cardId);
 }
 
 function clearSecretStash() {
     delete window[secretStashName];
 }
 
-
-
-
 function renderFormNewCard(data){
     $('#box-title').empty().append(data.title);
 }
-
 
 function resetForm() {
     document.getElementById(domIdOfCardDataForm).reset();

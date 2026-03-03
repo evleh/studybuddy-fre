@@ -3,10 +3,10 @@ import {read_user} from "./bae-connect-users.js";
 import {delete_card, read_card} from "./bae-connect-cards.js";
 import {searchCards} from "./util.js";
 
-$(document).ready(function() {
+$(document).ready(async function () {
     setupInitialUI();
     registerEventHandlers();
-    loadBoxes();
+    await loadBoxes();
 
     $(document).on("click", ".delete-box-btn", function () {
         const boxId = $(this).data("id");
@@ -17,8 +17,6 @@ $(document).ready(function() {
         const cardId = $(this).data("id");
         deleteCard(cardId);
     });
-
-
 
 });
 
@@ -87,7 +85,6 @@ function renderCards(cards){
             </div>
         </div>`;
 
-
         $("#list-of-questions").append(cardHtml);
     });
 }
@@ -99,10 +96,8 @@ async function renderBoxes(boxes) {
     const authors = await Promise.all(
         uniqueAuthorIds.map(id => read_user(id))
     );
-    //console.log(boxes)
+
     boxes.forEach(item => {
-    //$.each(boxes, function (index, item) {
-        console.log(item)
         let author = authors.find(author => author.id === item.ownerId);
         let statusPublic;
         if (item.public === true) {
@@ -110,8 +105,6 @@ async function renderBoxes(boxes) {
         } else {
             statusPublic = "&#128993; privat";
         }
-
-
 
         const cardHtml = `
         <div class="col-md-6 mb-2">
@@ -138,15 +131,16 @@ async function renderBoxes(boxes) {
                     
                     <div class="d-flex gap-3 small text-muted border-top pt-2">
                                 <div><strong class="text-dark">${item.cardIds.length}</strong> Fragen</div>
-                                <div><strong class="text-dark">${item.commentIds.length}</strong> Kommentare</div>
-                                
+                                <div><strong class="text-dark">${item.commentIds.length}</strong> Kommentare</div>  
                     </div>
         
-                    <!-- Delete Button -->
+                    <!-- All the buttons  -->
                     <div class="mt-3">
-                        <button class='btn-showQuestions btn btn-outline-primary btn-sm edit-btn' data-item="${encodeURIComponent(JSON.stringify(item))}" data-title='${item.title.replace(/'/g, "&apos;")}'>Fragen anzeigen</button>
+                    
+                        <button class='btn-showQuestions btn btn-outline-primary btn-sm edit-btn' 
+                            data-item="${encodeURIComponent(JSON.stringify(item))}" data-title='${item.title.replace(/'/g, "&apos;")}'>Fragen anzeigen
+                        </button>
 
-    
                         <button onclick="window.location.href='../htmls/011-edit-box.html?id=${item.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${item.id}">
                             bearbeiten
                         </button>
@@ -156,14 +150,11 @@ async function renderBoxes(boxes) {
                         </button>
                        
                     </div>
-        
                 </div>
             </div>
         </div>`;
 
         $("#list-of-all-boxes").append(cardHtml);
-
-
     });
 }
 
@@ -228,8 +219,8 @@ function deleteCard(cardId){
         delete_card(cardId).then(
             async card => {
                 alert("Frage " + card.question + "wurde gelöscht!");
-                // todo currently reload, reloads the box view
-                window.location.href = window.location.href; // force a re-load
+                // force a reload: currently reload, reloads the box view
+                window.location.href = window.location.href;
             }
         ).catch( () => { alert("Fehler beim Löschen."); } );
     }
