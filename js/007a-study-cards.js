@@ -84,6 +84,7 @@ async function show_questions(boxId) {
 
     while (cardIds.length > 0) {
         let currentRound = [...cardIds];
+        currentRound.sort(() => Math.random() - 0.5);
         for (let id of currentRound) {
             await show_single_question_and_wait(id, cardIds);
         }
