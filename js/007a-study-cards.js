@@ -90,15 +90,15 @@ async function show_questions(boxId) {
     let cardIds = box.cardIds;
     setMainHeading(`Kartei: '${box.title}'`);
 
-    shuffleArray(cardIds);
+
 
     while (cardIds.length > 0) {
         let currentRound = [...cardIds];
-        currentRound.sort(() => Math.random() - 0.5);
+        shuffleArray(currentRound)
         for (let id of currentRound) {
             await show_single_question_and_wait(id, cardIds);
         }
-        shuffleArray(cardIds);
+
     }
     $("#div-for-questions").html(`
     <div class="card p-4 shadow-sm">
