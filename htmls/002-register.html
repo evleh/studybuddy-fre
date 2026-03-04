@@ -8,106 +8,105 @@
 <body>
 <div class="mx-auto col-lg-10 col-md-12">
 
-    <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here">
+    <nav class="navbar navbar-expand-lg bg-info" id="insert-navbar-here"></nav>
 
-    </nav>
-
-    <h1>Anmeldung: </h1>
-    <p>Registriere dich jetzt bei StudyBuddy und werde Teil unserer katzenaffinen Lerncommunity!
-        Lege deine eigenen Lernkarteien an oder bediene dich am täglich wachsenden Repertoire der Community.
-        StudyBuddy, wo Lernen zur guilty pleasure wird.
-        Viel Spaß beim Lernen!<br>
-    </p>
-
-    <!-- after example at https://getbootstrap.com/docs/5.3/forms/validation/ -->
-    <form action="#" id="registerform" method="post" class="needs-validation" novalidate>
-
-
-
-        <div>Gender:</div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="weiblich" value="weiblich">
-            <label class="form-check-label" for="weiblich">
-                weiblich
-            </label>
+    <div class="container mx-3">
+        <div class="mx-2">
+            <h1>Anmeldung: </h1>
+            <p>Registriere dich jetzt bei StudyBuddy und werde Teil unserer katzenaffinen Lerncommunity!
+                Lege deine eigenen Lernkarteien an oder bediene dich am täglich wachsenden Repertoire der Community.
+                StudyBuddy, wo Lernen zur guilty pleasure wird.
+                Viel Spaß beim Lernen!<br>
+            </p>
         </div>
 
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="männlich" value="männlich">
-            <label class="form-check-label" for="männlich">
-                männlich
-            </label>
-        </div>
+        <!-- after example at https://getbootstrap.com/docs/5.3/forms/validation/ -->
+        <form action="#" id="registerform" method="post" class="needs-validation mx-3" novalidate>
 
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="radio" name="gender" id="divers" value=inputDivers checked>
-            <label class="form-check-label" for="divers">
-                <input type="text" aria-label="Gender divers" id="inputDivers" maxlength="30" class="form-control"  value="" placeholder="field can be left empty">
-            </label>
-        </div>
+            <div>Gender:</div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="weiblich" value="weiblich">
+                <label class="form-check-label" for="weiblich">
+                    weiblich
+                </label>
+            </div>
 
-        <!-- floating labels!? https://getbootstrap.com/docs/5.3/forms/floating-labels/ -->
-        <div class="form-floating mb-3">
-            <input type="text" name="firstname" id="firstname" class="form-control" required placeholder="Vorname">
-            <label for="firstname">Vorname</label>
-        </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="männlich" value="männlich">
+                <label class="form-check-label" for="männlich">
+                    männlich
+                </label>
+            </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" name="lastname" id="lastname" class="form-control" required placeholder="Nachname">
-            <label for="lastname">Nachname</label>
-        </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="gender" id="divers" value=inputDivers checked>
+                <label class="form-check-label" for="divers">
+                    <input type="text" aria-label="Gender divers" id="inputDivers" maxlength="30" class="form-control"  value="" placeholder="field can be left empty">
+                </label>
+            </div>
 
-        <div  class="form-floating mb-3">
-            <input type="email" name="email" id="email"  class="form-control" required placeholder="emailadresse@beispiel.com   ">
-            <label for="email">E-Mail</label>
-        </div>
+            <!-- floating labels!? https://getbootstrap.com/docs/5.3/forms/floating-labels/ -->
+            <div class="form-floating mb-3">
+                <input type="text" name="firstname" id="firstname" class="form-control" required placeholder="Vorname">
+                <label for="firstname">Vorname</label>
+            </div>
 
-        <!-- after example @ https://getbootstrap.com/docs/5.3/forms/form-control/#datalists -->
-        <!-- not quite working with col-form-label? also slightly undersupported -->
-        <div>
-            <label for="landDataList" class="form-label">Land</label>
-            <input name="country" class="form-control" list="datalistOptions" id="landDataList" placeholder="Type to search..." required>
-            <datalist id="datalistOptions" class="insert-country-list-options-here-plz">
-                <option value="AT">Österreich</option>
-                <option value="DE">Deutschland</option>
-                <option value="CH">Schweiz</option>
-            </datalist>
-        </div>
-        <!-- but otoh its not clear yet if selects + client validation work well together. TODO -->
-        <!-- https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#built-in_form_validation_examples -->
+            <div class="form-floating mb-3">
+                <input type="text" name="lastname" id="lastname" class="form-control" required placeholder="Nachname">
+                <label for="lastname">Nachname</label>
+            </div>
 
+            <div class="form-floating mb-3">
+                <input type="email" name="email" id="email"  class="form-control" required placeholder="emailadresse@beispiel.com   ">
+                <label for="email">E-Mail</label>
+            </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" name="name" id="name" required class="form-control" placeholder="UserName">
-            <label for="name">UserName</label>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
-            <label for="password">Passwort</label>
-            <button id="showpw" type="button" class="btn btn-success" onclick="showpassword('password')">Passwort anzeigen</button>
-            <button id="hidepw" type="button" class="btn btn-warning" onclick="showpassword('password')">Passwort verstecken</button>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="password" name="passwordrep" id="passwordrep" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
-            <label for="passwordrep">Passwort wiederholen:</label>
-            <button id="showpwrep" type="button" class="btn btn-success" onclick="showpassword('passwordrep')">Passwort anzeigen</button>
-            <button id="hidepwrep" type="button" class="btn btn-warning" onclick="showpassword('passwordrep')">Passwort verstecken</button>
-        </div>
-
-        <p>(mind. 12 Zeichen, muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.)</p>
+            <!-- after example @ https://getbootstrap.com/docs/5.3/forms/form-control/#datalists -->
+            <!-- not quite working with col-form-label? also slightly undersupported -->
+            <div class="form-floating mb-3">
+                <input name="country" class="form-control" list="datalistOptions" id="landDataList" placeholder="Type to search..." required>
+                <label for="landDataList" class="form-label">Land</label>
+                <datalist id="datalistOptions" class="insert-country-list-options-here-plz">
+                    <option value="AT">Österreich</option>
+                    <option value="DE">Deutschland</option>
+                    <option value="CH">Schweiz</option>
+                </datalist>
+            </div>
+            <!-- but otoh its not clear yet if selects + client validation work well together. TODO -->
+            <!-- https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation#built-in_form_validation_examples -->
 
 
-        <div class="input-group mb-3">
-            <button type="submit" class="btn btn-primary">Registrieren</button>
-        </div>
+            <div class="form-floating mb-3">
+                <input type="text" name="name" id="name" required class="form-control" placeholder="Username">
+                <label for="name">Username</label>
+            </div>
 
+            <div class="form-floating mb-3">
+                <input type="password" name="password" id="password" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
+                <label for="password">Passwort</label>
+                <button id="showpw" type="button" class="btn btn-success" onclick="showpassword('password')">Passwort anzeigen</button>
+                <button id="hidepw" type="button" class="btn btn-warning" onclick="showpassword('password')">Passwort verstecken</button>
+            </div>
 
-    </form>
-    <div class="row" style="height: 6rem;"><div class="span i-cant-get-big-margins-or-something-better-to-work-to-create-whitespace-under-the-form">
-        &nbsp;
-    </div></div>
+            <div class="form-floating mb-3">
+                <input type="password" name="passwordrep" id="passwordrep" minlength="12" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{12,}$" required class="form-control" placeholder="Password"  >
+                <label for="passwordrep">Passwort wiederholen:</label>
+                <button id="showpwrep" type="button" class="btn btn-success" onclick="showpassword('passwordrep')">Passwort anzeigen</button>
+                <button id="hidepwrep" type="button" class="btn btn-warning" onclick="showpassword('passwordrep')">Passwort verstecken</button>
+            </div>
+
+            <p>(mind. 12 Zeichen, muss Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.)</p>
+
+            <div class="input-group mb-3">
+                <button type="submit" class="btn btn-primary">Registrieren</button>
+            </div>
+
+        </form>
+        <div class="row" style="height: 6rem;"><div class="span i-cant-get-big-margins-or-something-better-to-work-to-create-whitespace-under-the-form">
+            &nbsp;
+        </div></div>
+
+    </div>
 
 </div>
 
@@ -116,66 +115,9 @@
 
 <script type="module" src="../js/default-document-ready-stuff.js"></script>
 <script type="module" src="../js/registering.js"></script>
-<script src="../js/showpassword.js"</script>
-<script>
+<script type="module" src="../js/002-register.js"></script>
+<script src="../js/showpassword.js"></script>
 
-    $(document).ready(function() {
-        // initialization code here
-        $('.insert-country-list-options-here-plz').load('elements/countrylist1.html');
-
-        // example code from https://getbootstrap.com/docs/5.3/forms/validation/
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (() => {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    } else {
-                        // stop event or be submitted/posted to the frontend (directly) without delay.
-                        event.preventDefault()
-                        event.stopPropagation()
-
-                        console.log(`[dev] if you a reading this, then register-form validation must have passed. commence the registering!`)
-                        window.sb.register()
-                            .then(
-                                (success) => {
-                                    // your redirect code here.
-                                    console.log(`[dev] registration & authToken fetch allegedly successful. so ..`)
-                                    console.log(`[dev] .. redirecting. To see this message, toggle "Preserve logs" in the console.`)
-                                    window.sb.queueNotificationForNextLoad({
-                                        type: window.sb.alertTypes.SUCCESS,
-                                        title: 'Registrierung erfolgreich abgeschlossen',
-                                        message: 'Herzlich willkommen, und viel Spaß in StudyBuddy!'
-                                    })
-                                    history.pushState(null, "", "004-home-base.html") // TODO: do a post-register welcome screen?
-                                    history.forward(); history.go()
-                                })
-                            .catch((error) => {
-                                window.sb.appendNotification({
-                                    title: 'Registrierung nicht erfolgreich',
-                                    type: window.sb.alertTypes.ERROR,
-                                    message: error.message,
-                                    scrollIntoView: true
-                                })
-                            })
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-
-    });
-
-
-</script>
 
 </body>
 </html>
