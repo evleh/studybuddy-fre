@@ -26,7 +26,6 @@ function renderUsers(data){
 
     const $element = $("#users");
     data.forEach(user => {
-        console.log(user)
         const cardHtml = `
             <div class="col-md-6">
                 <div class="card shadow-sm h-100">

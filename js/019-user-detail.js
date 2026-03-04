@@ -6,8 +6,9 @@ import constants from "./constants.js";
 
 $(document).ready(async function() {
     const params = new URLSearchParams(window.location.search);
-    console.log(params.size)
-    const userId = params.size === 0 ? "1657" : params.get("id")
+
+    // "empty" will throw an error display of error messages
+    const userId = params.size === 0 ? "empty" : params.get("id")
 
     try {
         const user = await getUser(userId);
@@ -69,7 +70,6 @@ function renderUser(user){
 
 
 function renderUserActions(user){
-    console.log("renderUserActions");
     $("#user-actions")
 
         .append($(`<button onclick="window.location.href='../htmls/018-view-profile.html?id=${user.id}'" class="btn btn-outline-primary btn-sm edit-btn">
@@ -200,7 +200,6 @@ async function renderUserComments(data){
 }
 
 function deleteUser(userId){
-    console.log(userId)
     if (confirm("Willst du diesen User wirklich löschen?")) {
         delete_user(userId).then(
             user => {
