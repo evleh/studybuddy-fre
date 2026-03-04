@@ -28,8 +28,8 @@ function htmlForBasicQuestionDisplayCard(question) {
         `   <div class="card-header d-flex justify-content-between align-items-center">`,
         `       <span>${question.question}</span>`,
         `       ${mediaHtml}`,
-        `       <button id="btn-answer" class="btn btn-sm btn-outline-secondary" type="button" `,
-        `               data-bs-toggle="collapse" data-bs-target="#${collapseId}">`,
+        `       <button id="btn-answer" class="btn btn-sm btn-primary" type="button" `,
+        `               data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-label="Antwort zeigen für ${question.question}">`,
         `           Antwort zeigen`,
         `       </button>`,
         `   </div>`,
@@ -110,7 +110,8 @@ async function show_questions(boxId) {
             <div class="col-md-6 text-center mb-3 mb-md-0">
                 <img class="img-fluid rounded shadow" 
                      style="max-height: 250px; width: 100%; object-fit: cover;" 
-                     src="https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg">
+                     src="https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg"
+                     alt="Hier ist ein Bild von einem herzigen Kätzchen.">
             </div>
             
             <div class="col-md-6 d-grid gap-2">
