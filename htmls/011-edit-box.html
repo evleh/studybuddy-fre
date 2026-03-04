@@ -19,17 +19,19 @@
         <form id="edit-box" class="needs-validation" novalidate>
 
             <div class="form-floating mb-3">
-                <div class="row">
-                    <div class="col-3"><h1>Kartei: </h1></div>
-                    <div class="col">
-                        <input type="text" name="box-title" id="box-title" class="form-control" required placeholder="Titel">
+                <div class="d-flex align-items-stretch">
+                    <div class="me-2">
+                        <h1 class="mb-0">Kartei:</h1>
+                    </div>
+
+                    <div class="flex-grow-1 mb-2 ">
+                        <input type="text" name="box-title" id="box-title" class="form-control h-100" required placeholder="Titel">
                         <div class="invalid-feedback">Bitte gib deiner neuen Kartei einen Namen.</div>
                     </div>
                 </div>
-
             </div>
 
-            <div class="row mb-3">
+            <div class="row mb-2 mt-2">
                 <div class="col-12">
                     <h3 id="author">erstellt von: </h3>
                 </div>
@@ -46,10 +48,13 @@
                 </label>
             </div>
 
-            <div class="row">
-                <button id="update-box" type="submit" class="btn btn-primary col-3">Speichern</button>
-                <button id="delete-box" type="submit" class="btn btn-danger col-3">Löschen</button>
-                <button id="view-cards" type="submit" class="btn btn-primary col-3">Zu den Fragen</button>
+            <div class="d-flex justify-content-between mx-1">
+                <div>
+                    <button id="update-box" type="submit" class="btn btn-primary me-1">Speichern</button>
+                    <button id="delete-box" type="submit" class="btn btn-danger">Löschen</button>
+
+                </div>
+                <button id="view-cards" type="submit" class="btn btn-outline-primary">Zu den Fragen</button>
             </div>
 
 
