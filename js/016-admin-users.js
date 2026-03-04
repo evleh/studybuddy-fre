@@ -33,9 +33,9 @@ function renderUsers(data){
             
                         <!-- Content -->
                         <div>
-                            <h5 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                            <h3 class="mb-1 d-flex align-items-center gap-2">
                                 ${user.username}${user.admin ? '<span class="badge bg-danger ms-auto">Admin</span>' : ''}
-                            </h5>
+                            </h3>
                             <div class="text-muted">${user.firstname} ${user.lastname}</div>
                             <div class="text-muted small mb-2">${user.email}</div>
             
@@ -53,7 +53,8 @@ function renderUsers(data){
                         <!-- Button -->
                         <div class="mt-3">
                             <a href="019-user-detail.html?id=${user.id}" 
-                               class="btn btn-outline-primary btn-sm w-100">
+                               class="btn btn-outline-primary btn-sm w-100"
+                               aria-label="Details ansehen für${user.username}">
                                Details ansehen
                             </a>
                         </div>
