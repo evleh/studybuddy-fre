@@ -110,6 +110,7 @@ function deleteBox(e, boxId){
                     scrollIntoView: true
                 });
             }
+            $("#main").hide();
         })
         .catch(() => {
             console.log("Löschen nicht erfolgreich");
