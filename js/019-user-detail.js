@@ -58,7 +58,7 @@ async function getBoxes(ownerId){
 
 function renderUser(user){
     $("#titel").append(user.username);
-    const img = $(`<img src="${make_link_from_fileName(user.foto, constants.DEFAULT_PROFILE_PIC)}">`)
+    const img = $(`<img src="${make_link_from_fileName(user.foto, constants.DEFAULT_PROFILE_PIC)}" alt="Profilbild">`)
     $("#profile-pic").append(img);
 
     $("#profile-info").append($(`<p>Gender: ${user.gender}</p>`))
@@ -125,11 +125,11 @@ function renderUserBoxes(boxes){
                     <!-- Delete Button -->
                     <div class="mt-3">
     
-                        <button onclick="window.location.href='../htmls/011-edit-box.html?id=${box.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${box.id}">
+                        <button onclick="window.location.href='../htmls/011-edit-box.html?id=${box.id}'" class="btn btn-outline-primary btn-sm edit-btn mb-1" data-id="${box.id}">
                             bearbeiten
                         </button>
                     
-                        <button class="btn btn-outline-danger btn-sm delete-box-btn" data-id="${box.id}">
+                        <button class="btn btn-outline-danger btn-sm delete-box-btn mb-1" data-id="${box.id}">
                             löschen
                         </button>
                        
