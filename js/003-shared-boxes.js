@@ -17,8 +17,9 @@ $(document).ready(async function () {
 
 function createBoxItemHtml(item) {
     const boxUrl = `006-view-box.html?id=${item.id}`;
+    const boxTitle = item.title;
     const boxLinkButton = `
-        <a href="${boxUrl}" class="btn btn-sm btn-outline-primary logged-in-only">
+        <a href="${boxUrl}" class="btn btn-sm btn-outline-primary logged-in-only" aria-label="${boxTitle} ansehen">
             Ansehen
         </a>`;
 

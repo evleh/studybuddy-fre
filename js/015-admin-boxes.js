@@ -137,15 +137,15 @@ async function renderBoxes(boxes) {
                     <!-- All the buttons  -->
                     <div class="mt-3">
                     
-                        <button class='btn-showQuestions btn btn-outline-primary btn-sm edit-btn' 
+                        <button class='btn-showQuestions btn btn-outline-primary btn-sm edit-btn mb-1' 
                             data-item="${encodeURIComponent(JSON.stringify(item))}" data-title='${item.title.replace(/'/g, "&apos;")}'>Fragen anzeigen
                         </button>
 
-                        <button onclick="window.location.href='../htmls/011-edit-box.html?id=${item.id}'" class="btn btn-outline-primary btn-sm edit-btn" data-id="${item.id}">
+                        <button onclick="window.location.href='../htmls/011-edit-box.html?id=${item.id}'" class="btn btn-outline-primary btn-sm edit-btn mb-1" data-id="${item.id}">
                             bearbeiten
                         </button>
                     
-                        <button class="btn btn-outline-danger btn-sm delete-box-btn" data-id="${item.id}">
+                        <button class="btn btn-outline-danger btn-sm delete-box-btn mb-1" data-id="${item.id}">
                             löschen
                         </button>
                        
