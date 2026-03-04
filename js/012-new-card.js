@@ -141,7 +141,7 @@ async function readBoxAndQuestionData() {
 
     // insert author name
     const author = await read_user(box.ownerId);
-    $("#author").append(author.username);
+    $("#author").text('Erstellt von: '+author.username);
 
     // does this work?
     let cards = box.cardIds.map(async (cardId) => {
